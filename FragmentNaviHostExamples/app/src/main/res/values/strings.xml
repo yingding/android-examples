@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">FragmentNaviHostExamples</string>
+    <string name="fragment_page_view_text">Page View Fragment</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+</resources>
