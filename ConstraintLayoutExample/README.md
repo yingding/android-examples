@@ -23,6 +23,10 @@ After added sampledata in app folder:
 Build -> Make Project
 ```
 
-Section 9:
-https://codelabs.developers.google.com/codelabs/constraint-layout/index.html?index=..%2F..io2018#10
+## Known Issues
+There is a issue with barrier rendering in Android Studio 3.3.2, Using Android Studio 3.4.0 to see the barriers in the graphic editor.
+
+## Current Example Status
+Section 12 of [Code Lab](
+https://codelabs.developers.google.com/codelabs/constraint-layout/index.html?index=..%2F..io2018#11)
 
