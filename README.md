@@ -5,5 +5,5 @@ This repository provides some android example as template for building apps quic
 # Dependencies
 
 All projects in this repository are based on:
-* android lib
+* androidx lib
 * complineSDK 28.0.3 
