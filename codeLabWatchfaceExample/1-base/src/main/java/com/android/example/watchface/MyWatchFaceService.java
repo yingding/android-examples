@@ -98,6 +98,11 @@ public class MyWatchFaceService extends CanvasWatchFaceService {
         private float mCenterY;
         private float mScale = 1;
 
+        /**
+         * Initiate new classes such as the bitmap image object for our background, etc.
+         * This method is once run when the Engine is first started.
+         * @param holder
+         */
         @Override
         public void onCreate(SurfaceHolder holder) {
             super.onCreate(holder);
@@ -143,6 +148,14 @@ public class MyWatchFaceService extends CanvasWatchFaceService {
             updateTimer();
         }
 
+        /**
+         * Get the dimension of the screen, used this method to resize any screen element required for drawing.
+         * This method is expected to only be run once at the start.
+         * @param holder
+         * @param format
+         * @param width
+         * @param height
+         */
         @Override
         public void onSurfaceChanged(SurfaceHolder holder, int format, int width, int height) {
             super.onSurfaceChanged(holder, format, width, height);
@@ -164,6 +177,13 @@ public class MyWatchFaceService extends CanvasWatchFaceService {
             mSecondHandLength = mCenterX - 20;
         }
 
+        /**
+         * This method renders every frame on the watchface canvas.
+         * Since it runs on every frame, we will try to keep this as fast as possible.
+         * No image resizing or object creation shall be done in this method.
+         * @param canvas
+         * @param bounds
+         */
         @Override
         public void onDraw(Canvas canvas, Rect bounds) {
             long now = System.currentTimeMillis();
