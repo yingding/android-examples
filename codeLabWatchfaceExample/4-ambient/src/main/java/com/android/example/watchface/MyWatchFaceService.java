@@ -162,6 +162,10 @@ public class MyWatchFaceService extends CanvasWatchFaceService {
             invalidate();
         }
 
+        /**
+         * this method will be called, when the watch is going into or out of ambient mode.
+         * @param inAmbientMode
+         */
         @Override
         public void onAmbientModeChanged(boolean inAmbientMode) {
             super.onAmbientModeChanged(inAmbientMode);
