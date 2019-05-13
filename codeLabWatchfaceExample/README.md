@@ -7,16 +7,17 @@ and customize it to our needs, keeping best practices for the platform in mind.
 This is the code part of the watch face codelab.
 The code lab consists of 5 steps.
 
-A [site](https://watchface-codelab.appspot.com) to guide you through
-the code lab is available.
+Current [Page](https://codelabs.developers.google.com/codelabs/watchface/index.html#0) and
+a deprecated [site](https://watchface-codelab.appspot.com) to guide you through
+the code lab are available.
 
 To get started open the site and follow the instructions.
 
 Pre-requisites
 --------------
 
-- Android SDK v23
-- Android Build Tools v23.3.0
+- Android SDK v28
+- Android Build Tools v28.0.3
 - Android Support Repository
 
 Getting Started
@@ -55,3 +56,7 @@ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
 WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
 License for the specific language governing permissions and limitations under
 the License.
+
+Revised
+-------
+This project and examples are revised and updated by the owner of this repository
