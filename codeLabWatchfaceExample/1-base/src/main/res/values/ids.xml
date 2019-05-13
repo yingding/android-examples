@@ -16,5 +16,5 @@
   -->
 
 <resources>
-    <item name="message_update" type="id" />
+    <item name="message_update" type="id"/>
 </resources>

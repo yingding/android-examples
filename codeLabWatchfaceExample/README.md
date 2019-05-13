@@ -60,3 +60,9 @@ the License.
 Revised
 -------
 This project and examples are revised and updated by the owner of this repository
+
+Notice
+-------
+* If you can not interact with the watchface in emulator, press the shortly the power or back button to deactivate the ambient mode.
+
+

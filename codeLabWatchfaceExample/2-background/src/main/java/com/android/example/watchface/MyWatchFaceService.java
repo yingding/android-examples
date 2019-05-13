@@ -31,7 +31,6 @@ import android.os.Message;
 import android.support.wearable.watchface.CanvasWatchFaceService;
 import android.support.wearable.watchface.WatchFaceStyle;
 import android.view.SurfaceHolder;
-
 import java.util.Calendar;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
@@ -133,7 +132,7 @@ public class MyWatchFaceService extends CanvasWatchFaceService {
         @Override
         public void onTimeTick() {
             super.onTimeTick();
-            invalidate();
+            invalidate(); // manually trigger onDaw() with invalidate()
         }
 
         @Override
@@ -195,7 +194,7 @@ public class MyWatchFaceService extends CanvasWatchFaceService {
 
             final float minutesRotation = mCalendar.get(Calendar.MINUTE) * 6f;
 
-            final float hourHandOffset = mCalendar.get(Calendar.MINUTE) / 2f;
+            final float hourHandOffset = mCalendar.get(Calendar.MINUTE) / 2f; // 30 degree total for 60 minutes, each min has offset 1/2f
             final float hoursRotation = (mCalendar.get(Calendar.HOUR) * 30) + hourHandOffset;
 
             // save the canvas state before we begin to rotate it

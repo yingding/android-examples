@@ -130,7 +130,7 @@ public class MyWatchFaceService extends CanvasWatchFaceService {
         @Override
         public void onTimeTick() {
             super.onTimeTick();
-            invalidate();
+            invalidate(); // manually trigger onDaw() with invalidate()
         }
 
         @Override
