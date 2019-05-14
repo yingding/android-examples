@@ -50,6 +50,7 @@ public class ComplicationWatchFaceService extends CanvasWatchFaceService {
     private static final int LEFT_COMPLICATION_ID = 0;
     private static final int RIGHT_COMPLICATION_ID = 1;
 
+    // initialize array in java with {}
     private static final int[] COMPLICATION_IDS = {LEFT_COMPLICATION_ID, RIGHT_COMPLICATION_ID};
 
     // Left and right dial supported types.
@@ -149,6 +150,7 @@ public class ComplicationWatchFaceService extends CanvasWatchFaceService {
          * the complication data on the watch face.
          */
         private SparseArray<ComplicationDrawable> mComplicationDrawableSparseArray;
+        // use SparseArray to avoid boxing/Unboxing an int in android
 
         private final BroadcastReceiver mTimeZoneReceiver =
                 new BroadcastReceiver() {
