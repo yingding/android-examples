@@ -32,7 +32,6 @@ import android.support.wearable.watchface.CanvasWatchFaceService;
 import android.support.wearable.watchface.WatchFaceStyle;
 import android.view.SurfaceHolder;
 
-import com.android.example.watchface.R;
 
 import java.util.Calendar;
 import java.util.TimeZone;
