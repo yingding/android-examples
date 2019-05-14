@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.example.watchface;
+package com.example.android.watchface;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -31,6 +31,9 @@ import android.os.Message;
 import android.support.wearable.watchface.CanvasWatchFaceService;
 import android.support.wearable.watchface.WatchFaceStyle;
 import android.view.SurfaceHolder;
+
+import com.android.example.watchface.R;
+
 import java.util.Calendar;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
@@ -80,7 +83,10 @@ public class MyWatchFaceService extends CanvasWatchFaceService {
 
         private boolean mRegisteredTimeZoneReceiver = false;
 
-        private static final float STROKE_WIDTH = 3f;
+        // Feel free to change these values and see what happens to the watch face.
+        private static final float HAND_END_CAP_RADIUS = 8f; // 16 is the width of the hand // change to 4f
+        private static final float STROKE_WIDTH = 4f; // border of the line width.
+        private static final int SHADOW_RADIUS = 6;
 
         private Calendar mCalendar;
 
@@ -113,12 +119,13 @@ public class MyWatchFaceService extends CanvasWatchFaceService {
             final int backgroundResId = R.drawable.custom_background;
 
             mBackgroundBitmap = BitmapFactory.decodeResource(getResources(), backgroundResId);
-
             mHandPaint = new Paint();
             mHandPaint.setColor(Color.WHITE);
             mHandPaint.setStrokeWidth(STROKE_WIDTH);
             mHandPaint.setAntiAlias(true);
             mHandPaint.setStrokeCap(Paint.Cap.ROUND);
+            mHandPaint.setShadowLayer(SHADOW_RADIUS, 0, 0, Color.BLACK);
+            mHandPaint.setStyle(Paint.Style.STROKE);
 
             mCalendar = Calendar.getInstance();
         }
@@ -132,7 +139,7 @@ public class MyWatchFaceService extends CanvasWatchFaceService {
         @Override
         public void onTimeTick() {
             super.onTimeTick();
-            invalidate(); // manually trigger onDaw() with invalidate()
+            invalidate();
         }
 
         @Override
@@ -163,13 +170,13 @@ public class MyWatchFaceService extends CanvasWatchFaceService {
              */
             mCenterX = mWidth / 2f;
             mCenterY = mHeight / 2f;
-            mScale = ((float) width) / (float) mBackgroundBitmap.getWidth();
+            mScale = ((float) width) / (float) mBackgroundBitmap.getWidth(); //squared watchface
             /*
              * Calculate the lengths of the watch hands and store them in member variables.
              */
-            mHourHandLength = mCenterX - 80;
-            mMinuteHandLength = mCenterX - 40;
-            mSecondHandLength = mCenterX - 20;
+            mHourHandLength = mCenterX * 0.5f;
+            mMinuteHandLength = mCenterX * 0.7f;
+            mSecondHandLength = mCenterX * 0.9f;
 
             mBackgroundBitmap = Bitmap.createScaledBitmap(mBackgroundBitmap,
                     (int) (mBackgroundBitmap.getWidth() * mScale),
@@ -194,25 +201,33 @@ public class MyWatchFaceService extends CanvasWatchFaceService {
 
             final float minutesRotation = mCalendar.get(Calendar.MINUTE) * 6f;
 
-            final float hourHandOffset = mCalendar.get(Calendar.MINUTE) / 2f; // 30 degree total for 60 minutes, each min has offset 1/2f
+            final float hourHandOffset = mCalendar.get(Calendar.MINUTE) / 2f;
             final float hoursRotation = (mCalendar.get(Calendar.HOUR) * 30) + hourHandOffset;
 
             // save the canvas state before we begin to rotate it
             canvas.save();
 
-            canvas.rotate(hoursRotation, mCenterX, mCenterY);
-            canvas.drawLine(mCenterX, mCenterY, mCenterX, mCenterY - mHourHandLength, mHandPaint);
+            canvas.rotate(hoursRotation, mCenterX, mCenterY); // rotate canvas to the hour degree
+            drawHand(canvas, mHourHandLength); // draw hour hand
 
-            canvas.rotate(minutesRotation - hoursRotation, mCenterX, mCenterY);
-            canvas.drawLine(mCenterX, mCenterY, mCenterX, mCenterY - mMinuteHandLength, mHandPaint);
+            canvas.rotate(minutesRotation - hoursRotation, mCenterX, mCenterY); // rotate to the minutes degree, since the hour rotation is done, only the deference between minutesRotation and hoursRotation need be dawn.
+            drawHand(canvas, mMinuteHandLength); // draw minute hand
 
             if (!mAmbient) {
                 canvas.rotate(secondsRotation - minutesRotation, mCenterX, mCenterY);
-                canvas.drawLine(mCenterX, mCenterY, mCenterX, mCenterY - mSecondHandLength,
-                        mHandPaint);
+                canvas.drawLine(mCenterX, mCenterY - HAND_END_CAP_RADIUS, mCenterX,
+                        mCenterY - mSecondHandLength, mHandPaint);
             }
+            canvas.drawCircle(mCenterX, mCenterY, HAND_END_CAP_RADIUS, mHandPaint);
             // restore the canvas' original orientation.
             canvas.restore();
+        }
+
+        // canvas left top is (0, 0) ?
+        private void drawHand(Canvas canvas, float handLength) {
+            canvas.drawRoundRect(mCenterX - HAND_END_CAP_RADIUS, mCenterY - handLength,
+                    mCenterX + HAND_END_CAP_RADIUS, mCenterY + HAND_END_CAP_RADIUS,
+                    HAND_END_CAP_RADIUS, HAND_END_CAP_RADIUS, mHandPaint);
         }
 
         @Override

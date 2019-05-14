@@ -17,7 +17,7 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.android.example.watchface" >
+    package="com.example.android.watchface" >
 
     <uses-feature android:name="android.hardware.type.watch" />
 
@@ -31,7 +31,7 @@
         android:theme="@android:style/Theme.DeviceDefault"
         tools:ignore="MissingApplicationIcon">
         <service
-            android:name=".MyWatchFaceService"
+            android:name="com.example.android.watchface.MyWatchFaceService"
             android:label="@string/my_analog_name"
             android:permission="android.permission.BIND_WALLPAPER" >
             <meta-data

@@ -14,28 +14,20 @@
  * limitations under the License.
  */
 
-package com.android.example.watchface;
+package com.example.android.watchface;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-// import android.support.v7.graphics.Palette;
-import androidx.palette.graphics.Palette;
 import android.support.wearable.watchface.CanvasWatchFaceService;
 import android.support.wearable.watchface.WatchFaceStyle;
-import android.util.Log;
 import android.view.SurfaceHolder;
 
 import java.util.Calendar;
@@ -87,10 +79,7 @@ public class MyWatchFaceService extends CanvasWatchFaceService {
 
         private boolean mRegisteredTimeZoneReceiver = false;
 
-        // Feel free to change these values and see what happens to the watch face.
-        private static final float HAND_END_CAP_RADIUS = 4f;
-        private static final float STROKE_WIDTH = 4f;
-        private static final int SHADOW_RADIUS = 6;
+        private static final float STROKE_WIDTH = 3f;
 
         private Calendar mCalendar;
 
@@ -99,25 +88,9 @@ public class MyWatchFaceService extends CanvasWatchFaceService {
 
         private boolean mAmbient;
 
-        private Bitmap mBackgroundBitmap;
-        private Bitmap mGrayBackgroundBitmap;
-        private int mWatchHandColor;
-        private int mWatchHandShadowColor;
-
         private float mHourHandLength;
         private float mMinuteHandLength;
         private float mSecondHandLength;
-
-        /**
-         * Whether the display supports fewer bits for each color in ambient mode.
-         * When true, we disable anti-aliasing in ambient mode.
-         */
-        private boolean mLowBitAmbient;
-        /**
-         * Whether the display supports burn in protection in ambient mode.
-         * When true, remove the background in ambient mode.
-         */
-        private boolean mBurnInProtection;
 
         private int mWidth;
         private int mHeight;
@@ -125,6 +98,11 @@ public class MyWatchFaceService extends CanvasWatchFaceService {
         private float mCenterY;
         private float mScale = 1;
 
+        /**
+         * Initiate new classes such as the bitmap image object for our background, etc.
+         * This method is once run when the Engine is first started.
+         * @param holder
+         */
         @Override
         public void onCreate(SurfaceHolder holder) {
             super.onCreate(holder);
@@ -134,52 +112,13 @@ public class MyWatchFaceService extends CanvasWatchFaceService {
             mBackgroundPaint = new Paint();
             mBackgroundPaint.setColor(Color.BLACK);
 
-            /*
-             * Toggle the backgroundResIds to see
-             * the change of colors due to palette doing its magic.
-             */
-            final int backgroundResId = R.drawable.custom_background;
-            //final int backgroundResId = R.drawable.custom_background2;
-
-            mBackgroundBitmap = BitmapFactory.decodeResource(getResources(), backgroundResId);
             mHandPaint = new Paint();
             mHandPaint.setColor(Color.WHITE);
             mHandPaint.setStrokeWidth(STROKE_WIDTH);
             mHandPaint.setAntiAlias(true);
             mHandPaint.setStrokeCap(Paint.Cap.ROUND);
-            mHandPaint.setShadowLayer(SHADOW_RADIUS, 0, 0, Color.BLACK);
-            mHandPaint.setStyle(Paint.Style.STROKE);
-
-            // Asynchronous call to generate Palette
-            Palette.from(mBackgroundBitmap).generate(
-                    new Palette.PaletteAsyncListener() {
-                        public void onGenerated(Palette palette) {
-                            /*
-                             * Sometimes, palette is unable to generate a color palette
-                             * so we need to check that we have one.
-                             */
-                            if (palette != null) {
-                                Log.d("onGenerated", palette.toString());
-                                mWatchHandColor = palette.getVibrantColor(Color.WHITE);
-                                mWatchHandShadowColor = palette.getDarkMutedColor(Color.BLACK);
-                                setWatchHandColor();
-                            }
-                    }
-            });
-
-
 
             mCalendar = Calendar.getInstance();
-        }
-
-        private void setWatchHandColor() {
-            if (mAmbient) {
-                mHandPaint.setColor(Color.WHITE);
-                mHandPaint.setShadowLayer(SHADOW_RADIUS, 0, 0, Color.BLACK);
-            } else {
-                mHandPaint.setColor(mWatchHandColor);
-                mHandPaint.setShadowLayer(SHADOW_RADIUS, 0, 0, mWatchHandShadowColor);
-            }
         }
 
         @Override
@@ -189,16 +128,9 @@ public class MyWatchFaceService extends CanvasWatchFaceService {
         }
 
         @Override
-        public void onPropertiesChanged(Bundle properties) {
-            super.onPropertiesChanged(properties);
-            mLowBitAmbient = properties.getBoolean(PROPERTY_LOW_BIT_AMBIENT, false);
-            mBurnInProtection = properties.getBoolean(PROPERTY_BURN_IN_PROTECTION, false);
-        }
-
-        @Override
         public void onTimeTick() {
             super.onTimeTick();
-            invalidate();
+            invalidate(); // manually trigger onDaw() with invalidate()
         }
 
         @Override
@@ -206,10 +138,6 @@ public class MyWatchFaceService extends CanvasWatchFaceService {
             super.onAmbientModeChanged(inAmbientMode);
             if (mAmbient != inAmbientMode) {
                 mAmbient = inAmbientMode;
-                if (mLowBitAmbient || mBurnInProtection) {
-                    mHandPaint.setAntiAlias(!inAmbientMode);
-                }
-                setWatchHandColor();
                 invalidate();
             }
 
@@ -220,6 +148,14 @@ public class MyWatchFaceService extends CanvasWatchFaceService {
             updateTimer();
         }
 
+        /**
+         * Get the dimension of the screen, used this method to resize any screen element required for drawing.
+         * This method is expected to only be run once at the start.
+         * @param holder
+         * @param format
+         * @param width
+         * @param height
+         */
         @Override
         public void onSurfaceChanged(SurfaceHolder holder, int format, int width, int height) {
             super.onSurfaceChanged(holder, format, width, height);
@@ -233,47 +169,28 @@ public class MyWatchFaceService extends CanvasWatchFaceService {
              */
             mCenterX = mWidth / 2f;
             mCenterY = mHeight / 2f;
-            mScale = ((float) width) / (float) mBackgroundBitmap.getWidth();
             /*
              * Calculate the lengths of the watch hands and store them in member variables.
              */
-            mHourHandLength = mCenterX * 0.5f;
-            mMinuteHandLength = mCenterX * 0.7f;
-            mSecondHandLength = mCenterX * 0.9f;
-
-            mBackgroundBitmap = Bitmap.createScaledBitmap(mBackgroundBitmap,
-                    (int) (mBackgroundBitmap.getWidth() * mScale),
-                    (int) (mBackgroundBitmap.getHeight() * mScale), true);
-
-            if (!mBurnInProtection || !mLowBitAmbient) {
-                initGrayBackgroundBitmap();
-            }
+            mHourHandLength = mCenterX - 80;
+            mMinuteHandLength = mCenterX - 40;
+            mSecondHandLength = mCenterX - 20;
         }
 
-        private void initGrayBackgroundBitmap() {
-            mGrayBackgroundBitmap = Bitmap.createBitmap(mBackgroundBitmap.getWidth(),
-                    mBackgroundBitmap.getHeight(), Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(mGrayBackgroundBitmap);
-            Paint grayPaint = new Paint();
-            ColorMatrix colorMatrix = new ColorMatrix();
-            colorMatrix.setSaturation(0);
-            ColorMatrixColorFilter filter = new ColorMatrixColorFilter(colorMatrix);
-            grayPaint.setColorFilter(filter);
-            canvas.drawBitmap(mBackgroundBitmap, 0, 0, grayPaint);
-        }
-
+        /**
+         * This method renders every frame on the watchface canvas.
+         * Since it runs on every frame, we will try to keep this as fast as possible.
+         * No image resizing or object creation shall be done in this method.
+         * @param canvas
+         * @param bounds
+         */
         @Override
         public void onDraw(Canvas canvas, Rect bounds) {
             long now = System.currentTimeMillis();
             mCalendar.setTimeInMillis(now);
 
-            if (mAmbient && (mLowBitAmbient || mBurnInProtection)) {
-                canvas.drawColor(Color.BLACK);
-            } else if (mAmbient) {
-                canvas.drawBitmap(mGrayBackgroundBitmap, 0, 0, mBackgroundPaint);
-            } else {
-                canvas.drawBitmap(mBackgroundBitmap, 0, 0, mBackgroundPaint);
-            }
+            // Draw the background.
+            canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), mBackgroundPaint);
 
             /*
              * These calculations reflect the rotation in degrees per unit of time, e.g.,
@@ -292,29 +209,18 @@ public class MyWatchFaceService extends CanvasWatchFaceService {
             canvas.save();
 
             canvas.rotate(hoursRotation, mCenterX, mCenterY);
-            drawHand(canvas, mHourHandLength);
+            canvas.drawLine(mCenterX, mCenterY, mCenterX, mCenterY - mHourHandLength, mHandPaint);
 
             canvas.rotate(minutesRotation - hoursRotation, mCenterX, mCenterY);
-            drawHand(canvas, mMinuteHandLength);
+            canvas.drawLine(mCenterX, mCenterY, mCenterX, mCenterY - mMinuteHandLength, mHandPaint);
 
-            /*
-             * Make sure the "seconds" hand is drawn only when we are in interactive mode.
-             * Otherwise we only update the watch face once a minute.
-             */
             if (!mAmbient) {
                 canvas.rotate(secondsRotation - minutesRotation, mCenterX, mCenterY);
-                canvas.drawLine(mCenterX, mCenterY - HAND_END_CAP_RADIUS, mCenterX,
-                        mCenterY - mSecondHandLength, mHandPaint);
+                canvas.drawLine(mCenterX, mCenterY, mCenterX, mCenterY - mSecondHandLength,
+                        mHandPaint);
             }
-            canvas.drawCircle(mCenterX, mCenterY, HAND_END_CAP_RADIUS, mHandPaint);
             // restore the canvas' original orientation.
             canvas.restore();
-        }
-
-        private void drawHand(Canvas canvas, float handLength) {
-            canvas.drawRoundRect(mCenterX - HAND_END_CAP_RADIUS, mCenterY - handLength,
-                    mCenterX + HAND_END_CAP_RADIUS, mCenterY + HAND_END_CAP_RADIUS,
-                    HAND_END_CAP_RADIUS, HAND_END_CAP_RADIUS, mHandPaint);
         }
 
         @Override
@@ -332,10 +238,10 @@ public class MyWatchFaceService extends CanvasWatchFaceService {
             }
 
             /*
-             * Whether the timer should be running depends on whether we're visible
-             * (as well as whether we're in ambient mode),
-             * so we may need to start or stop the timer.
-             */
+            * Whether the timer should be running depends on whether we're visible
+            * (as well as whether we're in ambient mode),
+            * so we may need to start or stop the timer.
+            */
             updateTimer();
         }
 
