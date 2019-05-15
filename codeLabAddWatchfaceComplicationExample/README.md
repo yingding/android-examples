@@ -1,3 +1,12 @@
+# Updated to SDK 28
+
+This example is updated to SDK 28 by the owner of the repository.
+
+# Further documentation
+
+* Android Developer Online Doc of [Complications](https://developer.android.com/training/wearables/watch-faces/complications)
+* Customizing style of complication for watchfaces with [ComplicationDrawable](https://developer.android.com/reference/android/support/wearable/complications/rendering/ComplicationDrawable)
+
 # complications
 
 This folder contains the source code for a Google I/O 2016 codelab.
@@ -22,3 +31,5 @@ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 License for the specific language governing permissions and limitations under
 the License.
 ```
+
+
