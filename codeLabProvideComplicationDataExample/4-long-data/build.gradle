@@ -1,0 +1,36 @@
+apply plugin: 'com.android.application'
+
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+
+    buildToolsVersion rootProject.buildToolsVersion
+
+    defaultConfig {
+        applicationId "com.example.android.wearable.complicationsdataprovider"
+
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // UI
+    implementation "androidx.percentlayout:percentlayout:$rootProject.androidxLibraryVersion"
+    implementation "androidx.legacy:legacy-support-v4:$rootProject.androidxLibraryVersion"
+    implementation "androidx.recyclerview:recyclerview:$rootProject.androidxLibraryVersion"
+
+    implementation "com.google.android.gms:play-services-wearable:$rootProject.googlePlayServicesClientVersion"
+    implementation "com.google.android.support:wearable:$rootProject.wearableSupportLibraryVersion"
+    compileOnly "com.google.android.wearable:wearable:$rootProject.wearableSupportLibraryVersion"
+}
