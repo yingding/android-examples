@@ -39,7 +39,8 @@
         android:id="@+id/top_navigation_drawer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:navigation_style="single_page"/>
+        app:navigationStyle="multiPage"/>
+    <!-- or use singlePage -->
 
     <androidx.wear.widget.drawer.WearableActionDrawerView
         android:id="@+id/bottom_action_drawer"
