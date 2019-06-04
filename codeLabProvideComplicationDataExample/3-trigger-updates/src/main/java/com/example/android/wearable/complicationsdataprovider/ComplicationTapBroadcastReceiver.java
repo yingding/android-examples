@@ -44,6 +44,7 @@ public class ComplicationTapBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Bundle extras = intent.getExtras();
         ComponentName provider = extras.getParcelable(EXTRA_PROVIDER_COMPONENT);
+        // The componentName of our complication.
         int complicationId = extras.getInt(EXTRA_COMPLICATION_ID);
 
         // Retrieve data via SharedPreferences.
@@ -74,6 +75,13 @@ public class ComplicationTapBroadcastReceiver extends BroadcastReceiver {
         Intent intent = new Intent(context, ComplicationTapBroadcastReceiver.class);
         intent.putExtra(EXTRA_PROVIDER_COMPONENT, provider);
         intent.putExtra(EXTRA_COMPLICATION_ID, complicationId);
+
+        // A PendingIntent specifies an action to take in the future.
+        // It lets you pass a future Intent to another application and allow that application
+        // to execute that Intent as if it had the same permissions as your application,
+        // whether or not your application is still around when the Intent is eventually invoked.
+        // It is a token that you give to a foreign application which allows the foreign application
+        // to use your application’s permissions to execute a predefined piece of code.
 
         // Pass complicationId as the requestCode to ensure that different complications get
         // different intents.

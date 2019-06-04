@@ -42,6 +42,7 @@
             <meta-data
                 android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
                 android:value="0"/>
+            <!-- 0 update frequence. Since we will be telling the system only when data has changed. -->
         </service>
 
         <receiver android:name=".ComplicationTapBroadcastReceiver"/>
