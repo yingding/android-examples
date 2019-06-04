@@ -19,8 +19,10 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.wearable.activity.WearableActivity;
-import android.support.wearable.view.drawer.WearableActionDrawer;
-import android.support.wearable.view.drawer.WearableNavigationDrawer;
+// import android.support.wearable.view.drawer.WearableActionDrawer;
+import androidx.wear.widget.drawer.WearableActionDrawerView;
+import androidx.wear.widget.drawer.WearableNavigationDrawerView;
+// import android.support.wearable.view.drawer.WearableNavigationDrawer;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -30,8 +32,8 @@ public class MainActivity extends WearableActivity {
 
     private static final Section DEFAULT_SECTION = Section.Sun;
 
-    private WearableNavigationDrawer mWearableNavigationDrawer;
-    private WearableActionDrawer mWearableActionDrawer;
+    private WearableNavigationDrawerView mWearableNavigationDrawer;
+    private WearableActionDrawerView mWearableActionDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
