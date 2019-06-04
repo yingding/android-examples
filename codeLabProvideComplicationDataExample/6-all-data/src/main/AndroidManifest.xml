@@ -36,6 +36,15 @@
                 <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST"/>
             </intent-filter>
 
+            <!-- The order in which types are listed has no significance.
+                 In the case where a watch face supports multiple types in a single complication slot,
+                 the watch face will determine which types it prefers.-->
+            <!-- RANGED_VALUE,SHORT_TEXT,LONG_TEXT
+
+            In this case, the watch face prefers the ranged data type over the short and long types,
+            but if the complication only supported the short text type,
+            the data would still show up because the watch face supports all three data types.
+            -->
             <meta-data
                 android:name="android.support.wearable.complications.SUPPORTED_TYPES"
                 android:value="SHORT_TEXT,LONG_TEXT,RANGED_VALUE"/>
