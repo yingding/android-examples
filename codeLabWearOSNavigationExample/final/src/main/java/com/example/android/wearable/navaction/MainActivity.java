@@ -99,6 +99,10 @@ public class MainActivity extends WearableActivity {
             return mContext.getDrawable(SectionFragment.Section.values()[index].drawableRes);
         }
 
+        // TODO: https://developer.android.com/training/wearables/ui/ui-nav-actions
+        // https://codelabs.developers.google.com/codelabs/wear-nav-action/index.html?index=..%2F..index#3
+
+
 //        @Override
 //        public boolean onMenuItemClick(MenuItem item) {
 //            SectionFragment.Section selectedSection = SectionFragment.Section.values()[index];
