@@ -61,21 +61,28 @@ public class CustomComplicationProviderService extends ComplicationProviderServi
     public void onComplicationUpdate(
             int complicationId, int dataType, ComplicationManager complicationManager) {
         Log.d(TAG, "onComplicationUpdate() id: " + complicationId);
+        // getClass() outputs "class com.example.android.wearable.complicationsdataprovider.CustomComplicationProviderService"
+        // Log.d(TAG, "class is :" + getClass());
 
         // Used to create a unique key to use with SharedPreferences for this complication.
         ComponentName thisProvider = new ComponentName(this, getClass());
+        // Log.d(TAG, "ComponentName is :" + thisProvider);
+        // componentName outputs:
+        // ComponentInfo{com.example.android.wearable.complicationsdataprovider/com.example.android.wearable.complicationsdataprovider.CustomComplicationProviderService}
 
         // Retrieves your data, in this case, we grab an incrementing number from SharedPrefs.
         SharedPreferences preferences =
                 getSharedPreferences(
                         ComplicationTapBroadcastReceiver.COMPLICATION_PROVIDER_PREFERENCES_FILE_KEY,
-                        0);
+                        0); // 0 is Context.MODE_PRIVATE
         int number =
                 preferences.getInt(
                         ComplicationTapBroadcastReceiver.getPreferenceKey(
                                 thisProvider, complicationId),
                         0);
         String numberText = String.format(Locale.getDefault(), "%d!", number);
+        // Log.d(TAG, "Default Locale: " + Locale.getDefault());
+        // output Locale: en_US
 
         ComplicationData complicationData = null;
 
