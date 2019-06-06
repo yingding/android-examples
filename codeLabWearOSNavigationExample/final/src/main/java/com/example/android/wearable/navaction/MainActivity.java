@@ -43,9 +43,14 @@ public class MainActivity extends WearableActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Top navigation drawer
         mWearableNavigationDrawer =
                 (WearableNavigationDrawerView) findViewById(R.id.top_navigation_drawer);
-        mWearableNavigationDrawer.setAdapter(new NavigationAdapter(this));
+        NavigationAdapter navigationAdapter = new NavigationAdapter(this);
+        mWearableNavigationDrawer.setAdapter(navigationAdapter);
+        mWearableNavigationDrawer.addOnItemSelectedListener(navigationAdapter);
+        // Peeks navigation drawer on the top.
+        mWearableNavigationDrawer.getController().peekDrawer();
 
         final SectionFragment sunSection = SectionFragment.getSection(DEFAULT_SECTION);
         getFragmentManager()
@@ -53,11 +58,15 @@ public class MainActivity extends WearableActivity {
                 .replace(R.id.fragment_container, sunSection)
                 .commit();
 
+        // Bottom action drawer
         mWearableActionDrawer = (WearableActionDrawerView) findViewById(R.id.bottom_action_drawer);
+        // Peeks action drawer on the bottom.
+        // mWearableActionDrawer.getController().peekDrawer();
         mWearableActionDrawer.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                // mWearableActionDrawer.closeDrawer();
+                // close the action drawer wenn a menuItem is selected.
+                mWearableActionDrawer.getController().closeDrawer();
                 switch (menuItem.getItemId()) {
                     case R.id.action_edit:
                         Toast.makeText(
@@ -80,7 +89,7 @@ public class MainActivity extends WearableActivity {
     }
 
     private final class NavigationAdapter
-            extends WearableNavigationDrawerView.WearableNavigationDrawerAdapter {
+            extends WearableNavigationDrawerView.WearableNavigationDrawerAdapter implements WearableNavigationDrawerView.OnItemSelectedListener {
 
         private final Context mContext;
         private Section mCurrentSection = DEFAULT_SECTION;
@@ -99,34 +108,34 @@ public class MainActivity extends WearableActivity {
             return mContext.getDrawable(SectionFragment.Section.values()[index].drawableRes);
         }
 
-        // TODO: https://developer.android.com/training/wearables/ui/ui-nav-actions
-        // https://codelabs.developers.google.com/codelabs/wear-nav-action/index.html?index=..%2F..index#3
 
+         // TODO: https://developer.android.com/training/wearables/ui/ui-nav-actions
+         // https://codelabs.developers.google.com/codelabs/wear-nav-action/index.html?index=..%2F..index#3
 
-//        @Override
-//        public boolean onMenuItemClick(MenuItem item) {
-//            SectionFragment.Section selectedSection = SectionFragment.Section.values()[index];
-//
-//            // Only replace the fragment if the section is changing.
-//            if (selectedSection == mCurrentSection) {
-//                return;
-//            }
-//            mCurrentSection = selectedSection;
-//
-//            final SectionFragment sectionFragment = SectionFragment.getSection(selectedSection);
-//            getFragmentManager()
-//                    .beginTransaction()
-//                    .replace(R.id.fragment_container, sectionFragment)
-//                    .commit();
-//
-//            // No actions are available for the settings specific fragment, so the drawer
-//            // is locked closed. For all other SelectionFragments, it is unlocked.
-//            if (selectedSection == SectionFragment.Section.Settings) {
-//                mWearableActionDrawer.lockDrawerClosed();
-//            } else {
-//                mWearableActionDrawer.unlockDrawer();
-//            }
-//        }
+        @Override
+        public void onItemSelected(int pos) {
+            SectionFragment.Section selectedSection = SectionFragment.Section.values()[pos];
+
+            // Only replace the fragment if the section is changing.
+            if (selectedSection == mCurrentSection) {
+                return;
+            }
+            mCurrentSection = selectedSection;
+
+            final SectionFragment sectionFragment = SectionFragment.getSection(selectedSection);
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, sectionFragment)
+                    .commit();
+
+            // No actions are available for the settings specific fragment, so the drawer
+            // is locked closed. For all other SelectionFragments, it is unlocked.
+            if (selectedSection == SectionFragment.Section.Settings) {
+                mWearableActionDrawer.setLockedWhenClosed(true); //.lockDrawerClosed();
+            } else {
+                mWearableActionDrawer.setIsLocked(false); // unlockDrawer();
+            }
+        }
 
         @Override
         public int getCount() {
