@@ -39,7 +39,7 @@
         android:id="@+id/top_navigation_drawer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:navigationStyle="singlePage"/>
+        app:navigationStyle="multiPage"/>
     <!-- use multiPage or singlePage -->
 
     <androidx.wear.widget.drawer.WearableActionDrawerView
@@ -50,7 +50,7 @@
         app:showOverflowInPeek="true"/>
     <!-- set the showOverflowInPeek flag to display
          just the overflow icon (three vertical dots)
-         without the first action show
+         without the first action showing by default
          https://developer.android.com/training/wearables/ui/ui-nav-actions
     -->
 
