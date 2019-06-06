@@ -21,19 +21,26 @@ import android.os.Bundle;
 import android.support.wearable.activity.WearableActivity;
 import androidx.wear.widget.drawer.WearableActionDrawerView;
 import androidx.wear.widget.drawer.WearableNavigationDrawerView;
-
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 import com.example.android.wearable.navaction.SectionFragment.Section;
 
 /**
+ * This class originally stems from the google codelab. It is modified by the author and further adopted to androidx lib and objects.
+ *
+ * A further manually reselect of section is added to the onResume() method by the author to demonstrate the capability to programmatically
+ * set a section fragment other than the default section.
+ *
+ * @Auther: Yingding Wang
+ *
  * Reference from
  * https://developer.android.com/training/wearables/ui/ui-nav-actions
  */
 public class MainActivity extends WearableActivity {
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     private static final Section DEFAULT_SECTION = Section.Sun;
+    private static final int LOADED_SECTION_INDEX = Section.valueOf(Section.Earth.name()).ordinal();
 
     private WearableNavigationDrawerView mWearableNavigationDrawer;
     private WearableActionDrawerView mWearableActionDrawer;
@@ -49,6 +56,7 @@ public class MainActivity extends WearableActivity {
         NavigationAdapter navigationAdapter = new NavigationAdapter(this);
         mWearableNavigationDrawer.setAdapter(navigationAdapter);
         mWearableNavigationDrawer.addOnItemSelectedListener(navigationAdapter);
+
         // Peeks navigation drawer on the top.
         mWearableNavigationDrawer.getController().peekDrawer();
 
@@ -90,6 +98,14 @@ public class MainActivity extends WearableActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // set the current selected item other than the default sectionFragment
+        // this is called in onResume() since the ui widget and all resource shalled be loaded ahead in onCreate() method.
+        mWearableNavigationDrawer.setCurrentItem(LOADED_SECTION_INDEX, false);
+    }
+
     private final class NavigationAdapter
             extends WearableNavigationDrawerView.WearableNavigationDrawerAdapter implements WearableNavigationDrawerView.OnItemSelectedListener {
 
@@ -109,9 +125,6 @@ public class MainActivity extends WearableActivity {
         public Drawable getItemDrawable(int index) {
             return mContext.getDrawable(SectionFragment.Section.values()[index].drawableRes);
         }
-
-
-         // TODO: https://developer.android.com/training/wearables/ui/ui-nav-actions
 
         /**
          * OnItemSelectedListener must be added to the WearableNaviationDrawerView explicitly.
