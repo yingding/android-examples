@@ -61,11 +61,13 @@ public class MainActivity extends WearableActivity {
         // Bottom action drawer
         mWearableActionDrawer = (WearableActionDrawerView) findViewById(R.id.bottom_action_drawer);
         // Peeks action drawer on the bottom.
+        // Todo: the peeked action draw doesn't hide
         // mWearableActionDrawer.getController().peekDrawer();
+
         mWearableActionDrawer.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                // close the action drawer wenn a menuItem is selected.
+                // close the action drawer when a menuItem is selected and the appropriate action is triggered.
                 mWearableActionDrawer.getController().closeDrawer();
                 switch (menuItem.getItemId()) {
                     case R.id.action_edit:
@@ -110,8 +112,14 @@ public class MainActivity extends WearableActivity {
 
 
          // TODO: https://developer.android.com/training/wearables/ui/ui-nav-actions
-         // https://codelabs.developers.google.com/codelabs/wear-nav-action/index.html?index=..%2F..index#3
 
+        /**
+         * OnItemSelectedListener must be added to the WearableNaviationDrawerView explicitly.
+         *
+         * This OnItemSelectedListener can either be implemented by the activity or by the private NavigationAdapter.
+         *
+         * @param pos
+         */
         @Override
         public void onItemSelected(int pos) {
             SectionFragment.Section selectedSection = SectionFragment.Section.values()[pos];
@@ -128,10 +136,13 @@ public class MainActivity extends WearableActivity {
                     .replace(R.id.fragment_container, sectionFragment)
                     .commit();
 
-            // No actions are available for the settings specific fragment, so the drawer
-            // is locked closed. For all other SelectionFragments, it is unlocked.
+            // No actions are available for the settings specific fragment,
+            // so the drawer is closed and also locked.
+            // For all other SelectionFragments, the action drawer is available and unlocked.
             if (selectedSection == SectionFragment.Section.Settings) {
-                mWearableActionDrawer.setLockedWhenClosed(true); //.lockDrawerClosed();
+                mWearableActionDrawer.getController().closeDrawer();
+                mWearableActionDrawer.setIsLocked(true);
+                //lockDrawerClosed();
             } else {
                 mWearableActionDrawer.setIsLocked(false); // unlockDrawer();
             }
