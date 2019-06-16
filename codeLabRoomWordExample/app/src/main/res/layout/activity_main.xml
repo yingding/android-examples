@@ -31,4 +31,10 @@
         android:src="@drawable/ic_add_black_24dp"/>
         // app:srcCompat="@android:drawable/ic_add_black_24.dp"/>
 
+    <!-- using android studio add vector assets to add material icons to the drawable folder:
+        1. In the layout/activity_main.xml file, select File > New > Vector Asset.
+        2. Click the Android robot icon in the Icon: field, then select the Action category and  + ("add") asset.
+        3. Change the layout file code from app:srcCompat to android:src="@drawable/xxxx.dp" for the fab.
+     -->
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
