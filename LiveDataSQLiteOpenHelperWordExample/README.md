@@ -1,3 +1,6 @@
+# LiveData with SQLiteOpenHelper instead of Room
+This example is a modification of the CodeLab Room with ViewModel example. Instead of Room, SQLiteOpenHelper is used.
+
 # Android Room with a View - Java  
 Example for using ViewModel, LiveData and Room
 * https://codelabs.developers.google.com/codelabs/android-room-with-a-view/index.html#0
@@ -23,3 +26,4 @@ https://developer.android.com/topic/libraries/architecture/paging.html
 * [Android Persistence codelab](https://codelabs.developers.google.com/codelabs/android-persistence/#0) (LiveData, Room, DAO)
 * [Andorid lifecycle-aware components codelab](https://codelabs.developers.google.com/codelabs/android-lifecycles/#0) (ViewModel, LiveData, LifecycleOwner, LifecycleRegistryOwner)
 * [Architecture Component code samples](https://github.com/googlesamples/android-architecture-components)
+* [Livedata and Transformations](https://medium.com/androiddevelopers/livedata-beyond-the-viewmodel-reactive-patterns-using-transformations-and-mediatorlivedata-fda520ba00b7)
