@@ -28,7 +28,7 @@ buildscript {
         targetSdkVersion = 28
 
         // App dependencies
-        androidGradlePluginVersion = '3.4.1'
+        androidGradlePluginVersion = '3.4.2'
 
         // App dependencies
         androidxLibraryVersion = '1.0.0'
