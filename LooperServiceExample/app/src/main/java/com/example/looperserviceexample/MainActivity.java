@@ -11,6 +11,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
 
+    public final static String KEY_INT_REPEATS = "repeats";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,8 +24,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SyncTCPService.class);
+                Bundle data = new Bundle();
+                data.putInt(KEY_INT_REPEATS, 5);
+                intent.putExtras(data);
                 startService(intent);
             }
         });
     }
+
+
 }

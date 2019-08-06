@@ -2,6 +2,7 @@ package com.example.looperserviceexample;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -22,6 +23,8 @@ import androidx.annotation.Nullable;
  *
  */
 public class SyncTCPService extends Service {
+    private static final String KEY_COUNTS = "C";
+    private static final String KEY_CURRENT_JOB = "J";
 
     private static final String TAG = SyncTCPService.class.getSimpleName();
 
@@ -42,6 +45,11 @@ public class SyncTCPService extends Service {
          */
         @Override
         public void handleMessage(Message msg) {
+
+            Bundle repeats = msg.getData();
+            int count = getCount(repeats);
+            int jobId = getCurrent(repeats);
+
             long endTime = System.currentTimeMillis() + 5 * 1000;
             while (System.currentTimeMillis() < endTime) {
                 synchronized (this) {
@@ -54,8 +62,30 @@ public class SyncTCPService extends Service {
             }
             // stop the service using the startId, so that we don't stop
             // the service in the middle of handling another job
-            Log.v(TAG, "arg1 is: " + String.valueOf(msg.arg1));
-            stopSelf(msg.arg1);
+            Log.v(TAG, "arg1 is: " + String.valueOf(msg.arg1) +  " current job id is: " + jobId );
+
+            // increase the job ID
+            jobId ++;
+
+            if (jobId < count) {
+                Message msg_new = mServiceHandler.obtainMessage();
+                msg_new.arg1 = msg.arg1; // does startId indicate how many time the startService is called for starting this service?
+                // Service is created in android as singleTon
+
+                repeats.putInt(KEY_CURRENT_JOB, jobId);
+                msg_new.setData(repeats);
+                mServiceHandler.sendMessage(msg_new);
+
+            } else {
+                stopSelf(msg.arg1);
+            }
+        }
+
+        private int getCount(Bundle data) {
+            return data.getInt(KEY_COUNTS);
+        }
+        private int getCurrent(Bundle data) {
+            return data.getInt(KEY_CURRENT_JOB);
         }
     }
 
@@ -81,15 +111,28 @@ public class SyncTCPService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
 
+        Bundle data = intent.getExtras();
+        int count = data.getInt(MainActivity.KEY_INT_REPEATS); // time to repeat
+
         // For each start request, send a message to start a job and deliver the
         // start ID so we know which request we're stopping when we finish the job
         Message msg = mServiceHandler.obtainMessage();
-        msg.arg1 = startId;
+        msg.arg1 = startId; // does startId indicate how many time the startService is called for starting this service?
+                            // Service is created in android as singleTon
+
+        Bundle repeats = new Bundle();
+        repeats.putInt(KEY_COUNTS, count);
+        repeats.putInt(KEY_CURRENT_JOB, 0);
+        msg.setData(repeats);
+
         mServiceHandler.sendMessage(msg);
 
         // If we get killed, after returning from here, restart
         return START_STICKY;
     }
+
+
+
 
     @Nullable
     @Override
