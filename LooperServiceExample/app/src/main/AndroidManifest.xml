@@ -16,6 +16,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- service -->
+        <service android:name=".SyncTCPService" android:exported="false" android:description="@string/sync_tcp_service_description">
+        </service>
+        <!-- exported set to false to stops other apps from starting your service, even when using an explicit intent -->
+        <!-- users can see services running on their device, to show the description of service to the user uses android:description so that the user
+             will not kill the service, the description must be saved in strings.xml otherwise you will get an error of incompatibility
+             for AndroidManifest.xml -->
+
     </application>
 
 </manifest>

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">LooperServiceExample</string>
+    <string name="sync_tcp_service_description">stila app service to synchronized data to server</string>
 </resources>
