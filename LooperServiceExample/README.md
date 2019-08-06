@@ -39,7 +39,9 @@ You need to make two modifications to your project.
 
 # Further thoughts
 
-If press the fab 3 times you got the output in Logcat
+## press the fab 3 times instantly
+
+you got the output in Logcat
 ```console
 2019-08-06 18:04:59.808 8441-8465/com.example.looperserviceexample V/SyncTCPService: arg1 is: 1 current job id is: 0
 2019-08-06 18:05:04.849 8441-8465/com.example.looperserviceexample V/SyncTCPService: arg1 is: 2 current job id is: 0
@@ -63,3 +65,27 @@ this means the onStartCommand is called 3 times, that is what the arg1 params is
 Since there is only one Looper, the handleMessage method are executed sequentially.
 
 Use two different type of SerivceHandler to asynchronously start a work and also to asynchronously call finish current work and start new work.
+
+##  press the fab 3 times with delay
+
+you got the output in Logcat
+```console
+2019-08-06 18:21:08.241 8772-8802/com.example.looperserviceexample V/SyncTCPService: arg1 is: 1 current job id is: 0
+2019-08-06 18:21:13.282 8772-8802/com.example.looperserviceexample V/SyncTCPService: arg1 is: 1 current job id is: 1
+2019-08-06 18:21:18.293 8772-8802/com.example.looperserviceexample V/SyncTCPService: arg1 is: 1 current job id is: 2
+2019-08-06 18:21:23.321 8772-8802/com.example.looperserviceexample V/SyncTCPService: arg1 is: 2 current job id is: 0
+2019-08-06 18:21:28.338 8772-8802/com.example.looperserviceexample V/SyncTCPService: arg1 is: 1 current job id is: 3
+2019-08-06 18:21:33.346 8772-8802/com.example.looperserviceexample V/SyncTCPService: arg1 is: 2 current job id is: 1
+2019-08-06 18:21:38.365 8772-8802/com.example.looperserviceexample V/SyncTCPService: arg1 is: 3 current job id is: 0
+2019-08-06 18:21:43.381 8772-8802/com.example.looperserviceexample V/SyncTCPService: arg1 is: 1 current job id is: 4
+2019-08-06 18:21:48.389 8772-8802/com.example.looperserviceexample V/SyncTCPService: arg1 is: 2 current job id is: 2
+2019-08-06 18:21:53.430 8772-8802/com.example.looperserviceexample V/SyncTCPService: arg1 is: 3 current job id is: 1
+2019-08-06 18:21:58.448 8772-8802/com.example.looperserviceexample V/SyncTCPService: arg1 is: 2 current job id is: 3
+2019-08-06 18:22:03.490 8772-8802/com.example.looperserviceexample V/SyncTCPService: arg1 is: 3 current job id is: 2
+2019-08-06 18:22:08.505 8772-8802/com.example.looperserviceexample V/SyncTCPService: arg1 is: 2 current job id is: 4
+2019-08-06 18:22:13.548 8772-8802/com.example.looperserviceexample V/SyncTCPService: arg1 is: 3 current job id is: 3
+2019-08-06 18:22:18.585 8772-8802/com.example.looperserviceexample V/SyncTCPService: arg1 is: 3 current job id is: 4
+2019-08-06 18:22:18.596 8772-8772/com.example.looperserviceexample V/SyncTCPService: Service destroyed!
+```
+
+the service instance is destroyed, only if all the startId are finished with stopSelf(startId) called.
