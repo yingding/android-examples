@@ -16,8 +16,10 @@
 
 package com.example.background;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
+// import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.AndroidViewModel; // need to use the application context for the workmanager
 import androidx.work.Constraints;
 import androidx.work.Data;
 import androidx.work.ExistingWorkPolicy;
@@ -26,6 +28,7 @@ import androidx.work.WorkContinuation;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
+import android.app.Application;
 import android.net.Uri;
 import android.text.TextUtils;
 
@@ -36,15 +39,16 @@ import com.example.background.workers.SaveImageToFileWorker;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class BlurViewModel extends ViewModel {
+public class BlurViewModel extends AndroidViewModel {
 
     private Uri mImageUri;
     private WorkManager mWorkManager;
     private LiveData<List<WorkInfo>> mSavedWorkInfo;
     private Uri mOutputUri; // final uri of the blurred picture
 
-    public BlurViewModel() {
-        mWorkManager = WorkManager.getInstance();
+    public BlurViewModel(@NonNull Application application) {
+        super(application);
+        mWorkManager = WorkManager.getInstance(application);
         mWorkManager.pruneWork(); // for clean all job status in your codebase, since WorkManager saves all WorkInfo from previous call.
         mSavedWorkInfo = mWorkManager.getWorkInfosByTagLiveData(Constants.TAG_OUTPUT);
     }
