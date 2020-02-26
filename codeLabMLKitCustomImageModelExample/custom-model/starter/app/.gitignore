@@ -1,3 +1,5 @@
 /build
 
 google-service.json
+
+*.tflite

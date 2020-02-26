@@ -96,14 +96,66 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     /** Firebase model interpreter used for the local model from assets */
     private lateinit var modelInterpreter: FirebaseModelInterpreter
 
+//    /** Initialize a local model interpreter from assets file */
+//    private fun createLocalModelInterpreter(): FirebaseModelInterpreter {
+//        throw NotImplementedError("TODO: complete this section")
+//    }
+
     /** Initialize a local model interpreter from assets file */
     private fun createLocalModelInterpreter(): FirebaseModelInterpreter {
-        throw NotImplementedError("TODO: complete this section")
+        // Select the first available .tflite file as our local model
+        val localModelName = resources.assets.list("")?.firstOrNull { it.endsWith(".tflite") }
+            ?: throw(RuntimeException("Don't forget to add the tflite file to your assets folder"))
+        Log.d(TAG, "Local model found: $localModelName")
+
+        // Create an interpreter with the local model asset
+        val localModel =
+            FirebaseCustomLocalModel.Builder().setAssetFilePath(localModelName).build()
+        val localInterpreter = FirebaseModelInterpreter.getInstance(
+            FirebaseModelInterpreterOptions.Builder(localModel).build())!!
+        Log.d(TAG, "Local model interpreter initialized")
+
+        // Return the interpreter
+        return localInterpreter
     }
+
+//    /** Initialize a remote model interpreter from Firebase server */
+//    private suspend fun createRemoteModelInterpreter(): FirebaseModelInterpreter {
+//        throw NotImplementedError("TODO: complete this section")
+//    }
 
     /** Initialize a remote model interpreter from Firebase server */
     private suspend fun createRemoteModelInterpreter(): FirebaseModelInterpreter {
-        throw NotImplementedError("TODO: complete this section")
+        return suspendCancellableCoroutine { cont ->
+            runOnUiThread {
+                Toast.makeText(baseContext, "Downloading model...", Toast.LENGTH_LONG).show()
+            }
+
+            // Define conditions required for our model to be downloaded. We only request Wi-Fi.
+            val conditions =
+                FirebaseModelDownloadConditions.Builder().requireWifi().build()
+
+            // Build a remote model object by specifying the name you assigned the model
+            // when you uploaded it in the Firebase console.
+            val remoteModel =
+                FirebaseCustomRemoteModel.Builder(REMOTE_MODEL_NAME).build()
+            val manager = FirebaseModelManager.getInstance()
+            manager.download(remoteModel, conditions).addOnCompleteListener {
+                if (!it.isSuccessful) cont.resumeWithException(
+                    RuntimeException("Remote model failed to download", it.exception))
+
+                val msg = "Remote model successfully downloaded"
+                runOnUiThread { Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show() }
+                Log.d(TAG, msg)
+
+                val remoteInterpreter = FirebaseModelInterpreter.getInstance(
+                    FirebaseModelInterpreterOptions.Builder(remoteModel).build())!!
+                Log.d(TAG, "Remote model interpreter initialized")
+
+                // Return the interpreter via continuation object
+                cont.resume(remoteInterpreter)
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -124,17 +176,46 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         // Load the model interpreter in a coroutine
         lifecycleScope.launch(Dispatchers.IO) {
-            //modelInterpreter = createLocalModelInterpreter()
-            //modelInterpreter = createRemoteModelInterpreter()
+            // modelInterpreter = createLocalModelInterpreter()
+            modelInterpreter = createRemoteModelInterpreter()
             runOnUiThread { button_run.isEnabled = true }
         }
 
     }
 
+//    /** Uses model to make predictions and interpret output into likely labels. */
+//    private fun runModelInference() = selectedImage?.let { image ->
+//        throw NotImplementedError("TODO: complete this section")
+//    }
+
     /** Uses model to make predictions and interpret output into likely labels. */
     private fun runModelInference() = selectedImage?.let { image ->
-        throw NotImplementedError("TODO: complete this section")
+
+        // Create input data.
+        val imgData = convertBitmapToByteBuffer(image)
+
+        try {
+            // Create model inputs from our image data.
+            val modelInputs = FirebaseModelInputs.Builder().add(imgData).build()
+
+            // Perform inference using our model interpreter.
+            modelInterpreter.run(modelInputs, modelInputOutputOptions).continueWith {
+                val inferenceOutput = it.result?.getOutput<Array<ByteArray>>(0)!!
+
+                // Display labels on the screen using an overlay
+                val topLabels = getTopLabels(inferenceOutput)
+                graphic_overlay.clear()
+                graphic_overlay.add(LabelGraphic(graphic_overlay, topLabels))
+                topLabels
+            }
+
+        } catch (exc: FirebaseMLException) {
+            val msg = "Error running model inference"
+            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+            Log.e(TAG, msg, exc)
+        }
     }
+
 
     /** Gets the top labels in the results. */
     @Synchronized
