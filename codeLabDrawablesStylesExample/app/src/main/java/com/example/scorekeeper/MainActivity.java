@@ -11,8 +11,15 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+
+    private int mScore1;
+    private int mScore2;
+
+    private TextView mScoreTextView1;
+    private TextView mScoreTextView2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        mScoreTextView1 = findViewById(R.id.score_1);
+        mScoreTextView2 = findViewById(R.id.score_2);
     }
 
     @Override
@@ -52,5 +62,37 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void decreaseScore(View view) {
+        int viewId = view.getId();
+
+        switch (viewId) {
+            // If it was on Team1
+            case R.id.decreaseTeam1:
+                mScore1--;
+                mScoreTextView1.setText(String.valueOf(mScore1));
+                break;
+            case R.id.decreaseTeam2:
+                mScore2--;
+                mScoreTextView2.setText(String.valueOf(mScore2));
+                break;
+        }
+    }
+
+    public void increaseScore(View view) {
+        int viewId = view.getId();
+
+        switch (viewId) {
+            // If it was on Team1
+            case R.id.increaseTeam1:
+                mScore1++;
+                mScoreTextView1.setText(String.valueOf(mScore1));
+                break;
+            case R.id.increaseTeam2:
+                mScore2++;
+                mScoreTextView2.setText(String.valueOf(mScore2));
+                break;
+        }
     }
 }

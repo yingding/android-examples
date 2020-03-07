@@ -42,7 +42,8 @@
             android:layout_centerVertical="true"
             android:src="@drawable/ic_remove_black_40dp"
             android:contentDescription=
-                "@string/minus_button_description" />
+                "@string/minus_button_description"
+            android:onClick="decreaseScore"/>
 
         <TextView
             android:id="@+id/score_1"
@@ -61,7 +62,8 @@
             android:layout_centerVertical="true"
             android:src="@drawable/ic_add_black_40dp"
             android:contentDescription=
-                "@string/plus_button_description" />
+                "@string/plus_button_description"
+            android:onClick="increaseScore"/>
 
 
 
@@ -88,7 +90,8 @@
             android:layout_centerVertical="true"
             android:src="@drawable/ic_remove_black_40dp"
             android:contentDescription=
-                "@string/minus_button_description" />
+                "@string/minus_button_description"
+            android:onClick="decreaseScore"/>
 
         <TextView
             android:id="@+id/score_2"
@@ -107,7 +110,8 @@
             android:layout_centerVertical="true"
             android:src="@drawable/ic_add_black_40dp"
             android:contentDescription=
-                "@string/plus_button_description" />
+                "@string/plus_button_description"
+            android:onClick="increaseScore"/>
     </RelativeLayout>
 </LinearLayout>
 
