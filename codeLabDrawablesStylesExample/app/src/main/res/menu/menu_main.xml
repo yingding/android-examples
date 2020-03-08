@@ -7,4 +7,8 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/night_mode"
+        android:title="@string/night_mode"
+        ></item>
 </menu>

@@ -1,7 +1,8 @@
 <resources>
 
     <!-- Base application theme. Android Default Theme, with a light background and a dark actionbar -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!-- style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar" -->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -27,8 +28,8 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
     <style name="ScoreButtons" parent="Widget.AppCompat.Button">
-        <item name="android:background">@drawable/button_background</item>
-        <item name="android:tint">@color/colorPrimary</item>
+        <item name="android:background">@drawable/animated_button_background</item><!-- changeable background while pressed -->
+        <item name="android:tint">@color/animated_button_text_color</item><!-- changeable background text color while pressed -->
     </style>
 
     <style name="PlusButtons" parent="ScoreButtons">
