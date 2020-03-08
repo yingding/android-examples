@@ -15,6 +15,7 @@
 
     <!-- No AppBar Elevation for androidx AppCompat
     https://stackoverflow.com/questions/12246388/remove-shadow-below-actionbar
+    https://stackoverflow.com/a/27203224
     -->
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <!-- remove shadow below action bar -->
