@@ -1,6 +1,6 @@
 <resources>
 
-    <!-- Base application theme. -->
+    <!-- Base application theme. Android Default Theme, with a light background and a dark actionbar -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -14,7 +14,21 @@
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="ScoreButtons" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/button_background</item>
+    </style>
+
+    <style name="PlusButtons" parent="ScoreButtons">
+        <item name="android:src">@drawable/ic_add_black_40dp</item>
+        <item name="android:description">@string/plus_button_description</item>
+    </style>
+
+    <!-- contentDescripton attribute is for visually impaired users f.g. read out loud by talk back to provide a label -->
+    <style name="MinusButtons" parent="ScoreButtons">
+        <item name="android:src">@drawable/ic_remove_black_40dp</item>
+        <item name="android:description">@string/minus_button_description</item>
+    </style>
 
 </resources>

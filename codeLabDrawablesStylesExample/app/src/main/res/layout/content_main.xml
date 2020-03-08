@@ -10,9 +10,8 @@
     tools:showIn="@layout/activity_main">
 
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
 
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -33,17 +32,18 @@
             android:layout_centerHorizontal="true"
             android:text="@string/team_1" />
 
+        <!-- Left one button customized by attributes and the rest button with custom styles -->
         <ImageButton
             android:id="@+id/decreaseTeam1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_width="@dimen/button__size"
+            android:layout_height="@dimen/button__size"
             android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_remove_black_40dp"
-            android:contentDescription=
-                "@string/minus_button_description"
-            android:onClick="decreaseScore"/>
+            android:background="@drawable/button_background"
+            android:contentDescription="@string/minus_button_description"
+            android:onClick="decreaseScore"
+            android:src="@drawable/ic_remove_black_40dp" />
 
         <TextView
             android:id="@+id/score_1"
@@ -53,19 +53,17 @@
             android:layout_centerVertical="true"
             android:text="@string/initial_count" />
 
+        <!-- style inherent parent button widget and also the animations -->
         <ImageButton
             android:id="@+id/increaseTeam1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/button__size"
+            android:layout_height="@dimen/button__size"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_add_black_40dp"
-            android:contentDescription=
-                "@string/plus_button_description"
-            android:onClick="increaseScore"/>
-
-
+            style="@style/PlusButtons"
+            android:onClick="increaseScore"
+             />
 
     </RelativeLayout>
 
@@ -83,15 +81,13 @@
 
         <ImageButton
             android:id="@+id/decreaseTeam2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_width="@dimen/button__size"
+            android:layout_height="@dimen/button__size"
             android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_remove_black_40dp"
-            android:contentDescription=
-                "@string/minus_button_description"
-            android:onClick="decreaseScore"/>
+            style="@style/MinusButtons"
+            android:onClick="decreaseScore" />
 
         <TextView
             android:id="@+id/score_2"
@@ -103,15 +99,15 @@
 
         <ImageButton
             android:id="@+id/increaseTeam2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/button__size"
+            android:layout_height="@dimen/button__size"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_add_black_40dp"
-            android:contentDescription=
-                "@string/plus_button_description"
-            android:onClick="increaseScore"/>
+            android:background="@drawable/button_background"
+            android:contentDescription="@string/plus_button_description"
+            android:onClick="increaseScore"
+            android:src="@drawable/ic_add_black_40dp" />
     </RelativeLayout>
 </LinearLayout>
 
