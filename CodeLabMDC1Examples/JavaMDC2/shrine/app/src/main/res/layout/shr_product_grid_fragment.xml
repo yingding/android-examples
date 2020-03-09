@@ -11,13 +11,27 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <!-- TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="You did it!"
             android:textAllCaps="true"
-            android:textSize="16sp" />
+            android:textSize="16sp" / -->
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!-- app:navigationIcon adds a navi icon in the app bar -->
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/app_bar"
+                style="@style/Widget.Shrine.Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:navigationIcon="@drawable/shr_menu"
+                app:title="@string/shr_app_name" />
+        </com.google.android.material.appbar.AppBarLayout>
+
 
     </LinearLayout>
 </FrameLayout>
