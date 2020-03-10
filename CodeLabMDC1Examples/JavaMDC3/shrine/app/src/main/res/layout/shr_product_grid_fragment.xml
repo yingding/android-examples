@@ -21,7 +21,8 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:elevation="0dp" >
             <!-- app:navigationIcon adds a navi icon in the app bar -->
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/app_bar"
@@ -36,14 +37,17 @@
              0dp is fine otherwise the card is not disappear directly under appbar -->
         <!-- Use tools to show the gridLayout
              https://stackoverflow.com/questions/45561951/is-there-a-way-to-show-a-preview-of-a-recyclerviews-contents-as-grid-in-the-and
+
+             no padding for the nestedScrollView
+                         android:paddingStart="@dimen/shr_product_grid_spacing"
+            android:paddingEnd="@dimen/shr_product_grid_spacing"
         -->
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="0dp"
             android:background="@color/productGridBackgroundColor"
-            android:paddingStart="@dimen/shr_product_grid_spacing"
-            android:paddingEnd="@dimen/shr_product_grid_spacing"
+            android:elevation="6dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -55,6 +59,7 @@
                 tools:listitem="@layout/shr_product_card"
                 tools:orientations="vertical"
                 tools:spanCount="2"
+                tools:itemDecoration="ProductionGridItemDecoration"
                 />
 
         </androidx.core.widget.NestedScrollView>

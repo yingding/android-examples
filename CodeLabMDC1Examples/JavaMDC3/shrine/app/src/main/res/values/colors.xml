@@ -15,6 +15,7 @@
     <color name="loginPageBackgroundColor">#FFFFFF</color>
     <color name="productGridBackgroundColor">#FFFFFF</color>
 
+    <!-- not used any more, used directly the ?attr/colorPrimaryDark -->
     <color name="textInputOutlineColor">@color/colorPrimaryDark</color>
 
 
