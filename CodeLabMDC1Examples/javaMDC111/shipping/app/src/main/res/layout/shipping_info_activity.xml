@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".ShippingInfoActivity">
 
+ <com.google.android.material.card.MaterialCardView
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:layout_margin="16dp"
+     app:contentPadding="16dp">
+
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -15,6 +21,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/name_text_input"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:errorEnabled="true">
@@ -23,11 +30,12 @@
           android:id="@+id/name_edit_text"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:hint="@string/label_name"/>
+          android:hint="@string/label_name" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/address_text_input"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:errorEnabled="true">
@@ -36,11 +44,12 @@
           android:id="@+id/address_edit_text"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:hint="@string/label_address"/>
+          android:hint="@string/label_address" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/city_text_input"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:errorEnabled="true">
@@ -49,7 +58,7 @@
           android:id="@+id/city_edit_text"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:hint="@string/label_city"/>
+          android:hint="@string/label_city" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
@@ -59,6 +68,7 @@
 
       <com.google.android.material.textfield.TextInputLayout
           android:id="@+id/state_text_input"
+          style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_weight=".5"
@@ -68,11 +78,12 @@
             android:id="@+id/state_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/label_state"/>
+            android:hint="@string/label_state" />
       </com.google.android.material.textfield.TextInputLayout>
 
       <com.google.android.material.textfield.TextInputLayout
           android:id="@+id/zip_text_input"
+          style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_weight=".5"
@@ -82,12 +93,13 @@
             android:id="@+id/zip_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/label_zip"/>
+            android:hint="@string/label_zip" />
       </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/save_button"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -95,4 +107,5 @@
         android:text="@string/label_save"/>
 
   </LinearLayout>
+ </com.google.android.material.card.MaterialCardView>
 </ScrollView>
