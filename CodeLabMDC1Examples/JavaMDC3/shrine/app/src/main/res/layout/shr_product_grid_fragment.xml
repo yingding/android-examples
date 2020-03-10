@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProductGridFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="You did it!"
+            android:textAllCaps="true"
+            android:textSize="16sp" / -->
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!-- app:navigationIcon adds a navi icon in the app bar -->
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/app_bar"
+                style="@style/Widget.Shrine.Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:navigationIcon="@drawable/shr_menu"
+                app:title="@string/shr_app_name" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <!-- Not adding additional margin top of 56dp,
+             0dp is fine otherwise the card is not disappear directly under appbar -->
+        <!-- Use tools to show the gridLayout
+             https://stackoverflow.com/questions/45561951/is-there-a-way-to-show-a-preview-of-a-recyclerviews-contents-as-grid-in-the-and
+        -->
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="0dp"
+            android:background="@color/productGridBackgroundColor"
+            android:paddingStart="@dimen/shr_product_grid_spacing"
+            android:paddingEnd="@dimen/shr_product_grid_spacing"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:itemCount="10"
+                tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                tools:listitem="@layout/shr_product_card"
+                tools:orientations="vertical"
+                tools:spanCount="2"
+                />
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </LinearLayout>
+</FrameLayout>
