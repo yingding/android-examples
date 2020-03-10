@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:name="com.google.codelabs.mdc.java.shrine.application.ShrineApplication"
-        android:theme="@style/Theme.Shrine">
+        android:theme="@style/Theme.Shrine.Autumn">
         <!-- TODO: change the app theme to @style/Theme.Shrine.Autumn or @style/Theme.Shrine to switch between the themes -->
         <activity android:name=".MainActivity">
             <intent-filter>
