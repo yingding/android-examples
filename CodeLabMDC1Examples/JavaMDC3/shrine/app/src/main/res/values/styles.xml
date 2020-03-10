@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- define the name of color as attribute with no namespace -->
     <!-- https://stackoverflow.com/questions/6860886/custom-attributes-in-styles-xml/16413432#16413432 -->
-    <declare-styleable name="textInputOutlineColor">
+    <declare-styleable name="customStylesCommonVariables">
         <attr name="textInputOutlineColor" format="color"/>
         <attr name="textColorPrimary" format="color"/>
     </declare-styleable>
