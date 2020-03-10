@@ -13,10 +13,9 @@
 
     <color name="toolbarIconColor">@color/textColorPrimary</color> <!-- change the toolbar icon color to textColorPrimary -->
     <color name="loginPageBackgroundColor">#FFFFFF</color>
-    <color name="productGridBackgroundColor">#FFFFFF</color>
+    <color name="productGridBackgroundColor">#FFFBFA</color>
 
     <!-- not used any more, used directly the ?attr/colorPrimaryDark -->
     <color name="textInputOutlineColor">@color/colorPrimaryDark</color>
-
 
 </resources>
