@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- old color palette
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#DADCE0</color>
+    <color name="colorAccent">#E0E0E0</color>
+    -->
+
+    <color name="colorPrimary">#E0E0E0</color> <!-- Button and Wigdet background Color -->
+    <color name="colorPrimaryDark">#FBB8AC</color> <!-- color of the status bar: top status bar -->
+    <color name="colorAccent">#FEDBD0</color>
+    <color name="textColorPrimary">#442C2E</color>
+
+    <color name="toolbarIconColor">@color/textColorPrimary</color> <!-- change the toolbar icon color to textColorPrimary -->
+    <color name="loginPageBackgroundColor">#FFFFFF</color>
+    <color name="productGridBackgroundColor">#FFFFFF</color>
+
+    <!-- not used any more, used directly the ?attr/colorPrimaryDark -->
+    <color name="textInputOutlineColor">@color/colorPrimaryDark</color>
+
+
+</resources>
