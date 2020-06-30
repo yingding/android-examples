@@ -9,6 +9,10 @@ This project aims at providing a basic example regarding the use of `Jetpack Nav
 * upgrade to gradle 3.6.3
 * upgrade to all newest stable API libraries except the constraintLayout 2.0.0-beta (1.1.3 stable)
 
+# Current final state
+
+* https://codelabs.developers.google.com/codelabs/android-navigation/index.html#4
+
 # Android Navigation codelab
 
 Content: https://codelabs.developers.google.com/codelabs/android-navigation/
