@@ -95,7 +95,7 @@
         <!-- TODO END STEP 11.1 -->
     </fragment>
     <fragment
-        android:id="@+id/settings_fragment"
+        android:id="@+id/settings_dest"
         android:name="com.example.android.codelabs.navigation.SettingsFragment"
         android:label="@string/settings"
         tools:layout="@layout/settings_fragment"/>

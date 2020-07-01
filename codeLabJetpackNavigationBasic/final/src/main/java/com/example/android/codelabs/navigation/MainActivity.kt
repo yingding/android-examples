@@ -25,8 +25,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
+
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.onNavDestinationSelected
 import com.google.android.material.navigation.NavigationView
 
 /**
@@ -116,14 +119,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
+        // return super.onOptionsItemSelected(item)
         // TODO STEP 9.2 - Have Navigation UI Handle the item selection - make sure to delete
         //  the old return statement above
-//        // Have the NavigationUI look for an action or destination matching the menu
-//        // item id and navigate there if found.
-//        // Otherwise, bubble up to the parent.
-//        return item.onNavDestinationSelected(findNavController(R.id.my_nav_host_fragment))
-//                || super.onOptionsItemSelected(item)
+        // Have the NavigationUI look for an action or destination matching the menu
+        // item id and navigate there if found.
+        // Otherwise, bubble up to the parent.
+
+        // the id of the menu item must be the same as the id of the destination in mobile_navigation.xml (e.g. @+id/settings_dest)
+        return item.onNavDestinationSelected(findNavController(R.id.my_nav_host_fragment))
+                || super.onOptionsItemSelected(item)
         // TODO END STEP 9.2
     }
 
