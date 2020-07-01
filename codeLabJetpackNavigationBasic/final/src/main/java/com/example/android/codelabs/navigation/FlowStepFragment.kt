@@ -53,6 +53,7 @@ class FlowStepFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // trigger the next button to navigate with the next action, this id of action must be the same both on layout flow step one and two fragment.
         view.findViewById<View>(R.id.next_button).setOnClickListener(
             Navigation.createNavigateOnClickListener(R.id.next_action)
         )
