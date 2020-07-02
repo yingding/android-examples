@@ -11,7 +11,7 @@ This project aims at providing a basic example regarding the use of `Jetpack Nav
 
 # Current final state
 
-* https://codelabs.developers.google.com/codelabs/android-navigation/index.html?index=..%2F..index#8
+* https://codelabs.developers.google.com/codelabs/android-navigation/index.html?index=..%2F..index#9
 
 # Android Navigation codelab
 
