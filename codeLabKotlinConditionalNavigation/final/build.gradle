@@ -37,6 +37,16 @@ android {
     dataBinding {
         enabled = true
     }
+
+    // activate Java 8 Language features
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    // Java 8 for Kotlin
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
