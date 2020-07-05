@@ -37,6 +37,16 @@ android {
     dataBinding {
         enabled = true
     }
+
+    // activate Java 8 Language features
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    // Java 8 for Kotlin
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
@@ -53,7 +63,7 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navigationVersion"
     implementation "androidx.preference:preference-ktx:$rootProject.preferenceVersion"
 
-    // add firebase dependency: firebase-auth SDK allows management of authenticated users of android application 
+    // add firebase dependency: firebase-auth SDK allows management of authenticated users of android application
     implementation "com.firebaseui:firebase-ui-auth:$rootProject.firebaseAuthVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.kotlinVersion"
 
