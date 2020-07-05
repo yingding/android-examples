@@ -1,2 +1,5 @@
 /build
 *.iml
+
+# exclude the firebase app config json file.
+google-services.json
