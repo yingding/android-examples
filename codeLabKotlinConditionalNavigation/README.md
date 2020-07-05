@@ -1,3 +1,27 @@
+# Introduction
+
+this example is based on Google Kotlin Android Codelab "Android Login with FirebaseUI" and "Android Conditional Navigation with Login"
+
+## Changes made by the author of this repository
+
+Author of the repository has made the following changes to the original codes:
+ 
+* upgrade all libs into currently stable ones (time of creation July 2020)
+* added start, final and app module (start is the start module to play with the code, final is the solution module and app module is used by author for self study)
+* adding the central rootProject variables in root level build.gradle file to enable quick SDK upgrade for all modules
+* firebase project integration file `google-services.json` are NOT included, please use your own firebase config json file by following the [instruction](https://codelabs.developers.google.com/codelabs/advanced-android-kotlin-training-login/#3)
+
+## Author's self study progress for App Module
+
+Step 1 with Firebase UI
+
+* https://codelabs.developers.google.com/codelabs/advanced-android-kotlin-training-login/#3
+
+Step 2 with Conditional Navigation with Login
+
+* https://codelabs.developers.google.com/codelabs/advanced-android-kotlin-training-login-navigation/index.html#0
+
+
 # Implementing Login with Navigation on Android with FirebaseUI
 
 This is part of the Advanced Android in Kotlin course. You'll get
