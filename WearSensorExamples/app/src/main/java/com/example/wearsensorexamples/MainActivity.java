@@ -60,7 +60,14 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
 
     private void registerSensor() {
         if (mHeartRateSensor != null && mSensorListener != null) {
-            // register Listener
+            /*
+             * register Listener with SENSOR_DELAY_NORMAL 200 milliseconds , which is equal to sampling rate 5Hz
+             *
+             * Source: https://stackoverflow.com/questions/17337504/need-to-read-android-sensors-with-fixed-sampling-rate
+             *
+             * us = mu seconds = microseconds
+             */
+            // TODO use registerListener(Listener, Sensor, int SamplingPeriodUs, int maxReportLatencyUs) to avoid the Application Process interupts to same energy
             mSensorManager.registerListener(mSensorListener, mHeartRateSensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
     }
