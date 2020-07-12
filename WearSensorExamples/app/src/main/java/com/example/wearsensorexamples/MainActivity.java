@@ -1,7 +1,9 @@
 package com.example.wearsensorexamples;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -28,6 +30,7 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
     private HeartRateSensorEventListener mSensorListener;
     private static final String BODY_PERMISSION = Manifest.permission.BODY_SENSORS;
     private static final int ID_PERMISSION_REQUEST_READ_BODY_SENSORS = 1;
+    private AlertDialog permissionRationalDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +40,25 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
         mTextView = (TextView) findViewById(R.id.text);
 
         setUpSensorResources();
+        setUpPermissionRationalDialog();
 
         // Enables Always-on
         // setAmbientEnabled();
+    }
+
+    private void setUpPermissionRationalDialog() {
+        permissionRationalDialog = new AlertDialog.Builder(this)
+                .setCancelable(false)
+                .setTitle("Sensor permission necessary")
+                .setMessage("Please grant body sensor permission to measure heart rate ...")
+                .setPositiveButton("ALLOW", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        requestPermission();
+                    }
+                })
+                .setNegativeButton("NOT NOW", null)
+                .create();
     }
 
     private void setUpSensorResources() {
@@ -90,19 +109,36 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
 
     /**
      * https://developer.android.com/training/articles/wear-permissions
+     *
+     * Runtime permission doc:
+     * https://guides.codepath.com/android/Understanding-App-Permissions
      */
     private void validPermission() {
         int code = ContextCompat.checkSelfPermission(this, BODY_PERMISSION);
         Log.v(TAG, "Permission is " + (code == PackageManager.PERMISSION_GRANTED ? "GRANTED": "DENIED") );
         if (code == PackageManager.PERMISSION_DENIED) {
             if (shouldShowRequestPermissionRationale(BODY_PERMISSION)) {
-                // show a rationale
+                // show a rationale UI
+                if (MainActivity.this.permissionRationalDialog != null) {
+                    MainActivity.this.permissionRationalDialog.show();
+                }
+//                ContextCompat.getMainExecutor(MainActivity.this).execute(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Toast.makeText(MainActivity.this, R.string.text_toast_show_rational, Toast.LENGTH_LONG)
+//                                .show();
+//                    }
+//                });
                 Log.v(TAG, "need show request rational!");
             } else {
-                // request permission
-                ActivityCompat.requestPermissions(this, new String[]{BODY_PERMISSION}, ID_PERMISSION_REQUEST_READ_BODY_SENSORS);
+                requestPermission();
             }
-        }
+        } // has permission can register sensor
+    }
+
+    private void requestPermission() {
+        // request permission
+        ActivityCompat.requestPermissions(this, new String[]{BODY_PERMISSION}, ID_PERMISSION_REQUEST_READ_BODY_SENSORS);
     }
 
     @Override

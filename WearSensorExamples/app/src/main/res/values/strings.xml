@@ -5,4 +5,5 @@
     values-round/strings.xml for round devices.
     -->
     <string name="text_heart_rate_value">Heart Rate is %1$f (BPM)</string><!-- f for float, d for decimal-->
+    <string name="text_toast_show_rational">Please allow Body Sensor access</string>
 </resources>
