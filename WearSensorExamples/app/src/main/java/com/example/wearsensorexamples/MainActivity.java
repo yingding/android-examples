@@ -9,6 +9,7 @@ import android.hardware.SensorEventCallback;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.wearable.activity.WearableActivity;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,11 +19,12 @@ import androidx.core.content.ContextCompat;
 import java.util.List;
 
 public class MainActivity extends WearableActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
+    private static final String TAG = "WearHeartRateTest";
 
     private TextView mTextView;
     private SensorManager mSensorManager;
     private Sensor mHeartRateSensor;
-    private static final boolean SENSOR_WAKE_UP_STATE = true;
+    private static final boolean SENSOR_WAKE_UP_STATE = false;
     private HeartRateSensorEventListener mSensorListener;
     private static final String BODY_PERMISSION = Manifest.permission.BODY_SENSORS;
     private static final int ID_PERMISSION_REQUEST_READ_BODY_SENSORS = 1;
@@ -37,7 +39,7 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
         setUpSensorResources();
 
         // Enables Always-on
-        setAmbientEnabled();
+        // setAmbientEnabled();
     }
 
     private void setUpSensorResources() {
@@ -72,6 +74,9 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
 
     private void updateTextView(final float heartRate) {
         if (mTextView != null) {
+            Log.v(TAG, String.format("UpdateTextView is called with heart rate: %f", heartRate));
+
+            // Warning: the formatting string in android string must follow the java.String.format syntax
             mTextView.setText(MainActivity.this.getString(R.string.text_heart_rate_value, heartRate));
         }
     }
@@ -81,9 +86,11 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
      */
     private void validPermission() {
         int code = ContextCompat.checkSelfPermission(this, BODY_PERMISSION);
+        Log.v(TAG, "Permission is " + (code == PackageManager.PERMISSION_GRANTED ? "GRANTED": "DENIED") );
         if (code == PackageManager.PERMISSION_DENIED) {
             if (shouldShowRequestPermissionRationale(BODY_PERMISSION)) {
                 // show a rationale
+                Log.v(TAG, "need show request rational!");
             } else {
                 // request permission
                 ActivityCompat.requestPermissions(this, new String[]{BODY_PERMISSION}, ID_PERMISSION_REQUEST_READ_BODY_SENSORS);
@@ -96,6 +103,7 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
         super.onResume();
         validPermission();
         registerSensor();
+        Log.v(TAG, "onResume called");
     }
 
     @Override
@@ -127,6 +135,7 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
             if (event.sensor.getType() == Sensor.TYPE_HEART_RATE) {
                 if (event.accuracy != SensorManager.SENSOR_STATUS_UNRELIABLE && event.accuracy != SensorManager.SENSOR_STATUS_NO_CONTACT) {
                     if (event.values != null && event.values.length > 0) {
+                        Log.v("Wear", String.format("%f", event.values[0]));
                         // show the heart rate value
                         MainActivity.this.updateTextView(event.values[0]);
                     }
