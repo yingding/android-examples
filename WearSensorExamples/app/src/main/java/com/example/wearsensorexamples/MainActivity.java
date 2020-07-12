@@ -133,7 +133,10 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
             } else {
                 requestPermission();
             }
-        } // has permission can register sensor
+        } else {
+            // has permission can register sensor
+            registerSensor();
+        }
     }
 
     private void requestPermission() {
@@ -145,7 +148,7 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
     protected void onResume() {
         super.onResume();
         validPermission();
-        registerSensor();
+        // registerSensor();
         Log.v(TAG, "onResume called");
     }
 
