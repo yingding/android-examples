@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.wearsensorexamples">
 
+    <!-- permission used for always on -->
+    <!-- https://developer.android.com/training/wearables/apps/always-on -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <uses-feature android:name="android.hardware.type.watch" />

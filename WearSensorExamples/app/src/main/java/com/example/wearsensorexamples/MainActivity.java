@@ -43,7 +43,8 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
         setUpPermissionRationalDialog();
 
         // Enables Always-on
-        // setAmbientEnabled();
+        // Reference: https://developer.android.com/training/wearables/apps/always-on
+        setAmbientEnabled();
     }
 
     private void setUpPermissionRationalDialog() {
