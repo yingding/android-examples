@@ -11,12 +11,20 @@
 
     <!-- boxedEdges put all child elements within the BoxInset -->
     <!-- Wearables Layout Training https://developer.android.com/training/wearables/ui/layouts -->
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/inner_frame_layout_padding"
+        android:orientation="vertical"
         app:boxedEdges="all"
         tools:ignore="MissingPrefix">
+
+        <TextView
+            android:id="@+id/sensorInfoText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_heart_rate_value"
+            android:paddingBottom="@dimen/inner_frame_layout_padding"/>
 
         <TextView
             android:id="@+id/text"
@@ -24,5 +32,5 @@
             android:layout_height="wrap_content"
             android:text="@string/text_heart_rate_value" />
 
-    </FrameLayout>
+    </LinearLayout>
 </androidx.wear.widget.BoxInsetLayout>

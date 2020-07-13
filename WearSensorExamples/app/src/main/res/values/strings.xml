@@ -4,6 +4,9 @@
     This string is used for square devices and overridden by hello_world in
     values-round/strings.xml for round devices.
     -->
-    <string name="text_heart_rate_value">Heart Rate is %1$f (BPM)</string><!-- f for float, d for decimal-->
+    <string name="text_hr_sensor_info">Vendor: %1$s, name: %2$s, version: %3$d, sampling rate: %4$d, resolution: %5$.1f, max BPM: %6$.1f</string>
+    <!-- float formation with .2f from reference: https://stackoverflow.com/questions/703396/how-to-nicely-format-floating-numbers-to-string-without-unnecessary-decimal-0/1276096#1276096 -->
+    <string name="text_no_sensor_info">Sensor not available</string>
+    <string name="text_heart_rate_value">At %1$s,\nheart rate is %2$.3f (BPM)</string><!-- f for float, d for decimal-->
     <string name="text_toast_show_rational">Please allow Body Sensor access</string>
 </resources>

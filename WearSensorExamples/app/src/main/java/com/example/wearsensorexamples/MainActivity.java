@@ -24,6 +24,7 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
     private static final String TAG = "WearHeartRateTest";
 
     private TextView mTextView;
+    private TextView sensorInfoTextView;
     private SensorManager mSensorManager;
     private Sensor mHeartRateSensor;
     private static final boolean SENSOR_WAKE_UP_STATE = false;
@@ -31,6 +32,7 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
     private static final String BODY_PERMISSION = Manifest.permission.BODY_SENSORS;
     private static final int ID_PERMISSION_REQUEST_READ_BODY_SENSORS = 1;
     private AlertDialog permissionRationalDialog;
+    private static final int SAMPLING_RATE_1HZ_MICRO_SECS = 1000000; // 10e6 to micro seconds 10e-6
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +40,14 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
         setContentView(R.layout.activity_main);
 
         mTextView = (TextView) findViewById(R.id.text);
+        sensorInfoTextView = findViewById(R.id.sensorInfoText);
 
         setUpSensorResources();
         setUpPermissionRationalDialog();
 
         // Enables Always-on
         // Reference: https://developer.android.com/training/wearables/apps/always-on
-        setAmbientEnabled();
+        // setAmbientEnabled();
     }
 
     private void setUpPermissionRationalDialog() {
@@ -82,13 +85,34 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
         if (mHeartRateSensor != null && mSensorListener != null) {
             /*
              * register Listener with SENSOR_DELAY_NORMAL 200 milliseconds , which is equal to sampling rate 5Hz
-             *
              * Source: https://stackoverflow.com/questions/17337504/need-to-read-android-sensors-with-fixed-sampling-rate
              *
              * us = mu seconds = microseconds
+             * Delay (sampling rate) Delay normal = 200 millis,
              */
             // TODO use registerListener(Listener, Sensor, int SamplingPeriodUs, int maxReportLatencyUs) to avoid the Application Process interupts to same energy
             mSensorManager.registerListener(mSensorListener, mHeartRateSensor, SensorManager.SENSOR_DELAY_NORMAL);
+            mSensorManager.registerListener(mSensorListener, mHeartRateSensor, SAMPLING_RATE_1HZ_MICRO_SECS);
+        }
+    }
+
+    /**
+     * Reference: https://developer.android.com/guide/topics/sensors/sensors_overview
+     */
+    private void updateSensorInfoText() {
+        if (sensorInfoTextView != null) {
+            if (mHeartRateSensor != null) {
+                String vendor = mHeartRateSensor.getVendor();
+                String name = mHeartRateSensor.getName();
+                int version = mHeartRateSensor.getVersion();
+                long minDelay = mHeartRateSensor.getMinDelay(); //https://developer.android.com/guide/topics/sensors/sensors_overview (aka sampling rate)
+                // if minDelay is zero, it is a NON Streaming sensor. It only report when there is a change in the parameters it is sensing.
+                float resolution = mHeartRateSensor.getResolution();
+                float maxRange = mHeartRateSensor.getMaximumRange();
+                sensorInfoTextView.setText(MainActivity.this.getString(R.string.text_hr_sensor_info, vendor, name, version, minDelay, resolution, maxRange));
+            } else {
+                sensorInfoTextView.setText(MainActivity.this.getString(R.string.text_no_sensor_info));
+            }
         }
     }
 
@@ -99,12 +123,12 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
         }
     }
 
-    private void updateTextView(final float heartRate) {
+    private void updateTextView(final float heartRate, long utcTimestampMilli) {
         if (mTextView != null) {
             Log.v(TAG, String.format("UpdateTextView is called with heart rate: %f", heartRate));
 
             // Warning: the formatting string in android string must follow the java.String.format syntax
-            mTextView.setText(MainActivity.this.getString(R.string.text_heart_rate_value, heartRate));
+            mTextView.setText(MainActivity.this.getString(R.string.text_heart_rate_value, SensorEventTimeUtil.convertUtcTimestamp2LocalTimeStr(utcTimestampMilli)[0], heartRate));
         }
     }
 
@@ -149,6 +173,7 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
     protected void onResume() {
         super.onResume();
         validPermission();
+        updateSensorInfoText();
         // registerSensor();
         Log.v(TAG, "onResume called");
     }
@@ -182,12 +207,25 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
             if (event.sensor.getType() == Sensor.TYPE_HEART_RATE) {
                 if (event.accuracy != SensorManager.SENSOR_STATUS_UNRELIABLE && event.accuracy != SensorManager.SENSOR_STATUS_NO_CONTACT) {
                     if (event.values != null && event.values.length > 0) {
-                        Log.v("Wear", String.format("%f", event.values[0]));
+                        Log.v("Wear", String.format("sensor value: %f", event.values[0]));
+                        Log.v("Wear", String.format("sensor nano timestamp : %d", event.timestamp));
+
+                        outputEventUTCTimestamps(event.timestamp);
+
                         // show the heart rate value
-                        MainActivity.this.updateTextView(event.values[0]);
+                        MainActivity.this.updateTextView(event.values[0], SensorEventTimeUtil.getTimestampUtcBySensorEventTime(event.timestamp));
                     }
                 }
             }
         }
+    }
+
+    private void outputEventUTCTimestamps(long sensorEventNano) {
+        Long[] utcTimestamps = SensorEventTimeUtil.convert2UtcTimestamps(sensorEventNano);
+        Log.v(TAG, String.format("Event UTC timestamp:\nEventSysCurrentMilli: %d\nDateTime+sensor,SysNanoDiff: %d\n" +
+                "SysCurMilli+sensor,SysNanoDiff: %d\nSysCurMilli+sensor,SysElapseRTDiff: %d", utcTimestamps));
+        String[] utcTimeStrs = SensorEventTimeUtil.convertUtcTimestamp2LocalTimeStr(utcTimestamps);
+        Log.v(TAG, String.format("Event UTC time string:\nEventSysCurrentMilli: %s\nDateTime+sensor,SysNanoDiff: %s\n" +
+                "SysCurMilli+sensor,SysNanoDiff: %s\nSysCurMilli+sensor,SysElapseRTDiff: %s", utcTimeStrs));
     }
 }
