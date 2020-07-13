@@ -7,23 +7,19 @@ import android.os.SystemClock;
 import java.util.Date;
 
 /**
- * based on the Stack Overflow Reference:
- * https://stackoverflow.com/questions/5500765/accelerometer-sensorevent-timestamp
- *
- * This class {@link SensorEventTimeUtil} is implemented to convert the sensor event timestamp to a utc timestamp of sensor measurement.
+ * Based on the <a href="https://stackoverflow.com/questions/5500765/accelerometer-sensorevent-timestamp">Stack Overflow Reference</a>,
+ * this class {@link SensorEventTimeUtil} provides methods to convert {@link android.hardware.SensorEvent#timestamp}
+ * to an utc timestamp indicating the utc time of the sensor measurement.
  */
 public final class SensorEventTimeUtil {
 
-    // https://stackoverflow.com/questions/1459656/how-to-get-the-current-time-in-yyyy-mm-dd-hhmisec-millisecond-format-in-java
+    /**
+     * @see <a href="https://stackoverflow.com/questions/1459656/how-to-get-the-current-time-in-yyyy-mm-dd-hhmisec-millisecond-format-in-java">StackOverflow discussion regarding SimpleDateFormat</a>
+     */
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS zz");
     private static final String UTC_TZ_ID_STR = "UTC";
-    private static final long MILLION = 1000000L; // DO NOT change this number
+    private static final long MILLION = 1000000L; // WARNING: DO NOT change this number
 
-    /**
-     * Nano time ns = 10e-9 , micro us = 1000 * ns = 10e-6, milli = 10e-3, e for exponential
-     * @param sensorNanoTime
-     * @return
-     */
     @Deprecated
     public static long getMilli1(long sensorNanoTime) {
         return new Date().getTime() + (sensorNanoTime - System.nanoTime()) / MILLION;
@@ -35,23 +31,38 @@ public final class SensorEventTimeUtil {
     }
 
     /**
-     * convert the sensor timestamp which is the sensor time elapsed in nano seconds to the system up time.
-     * @param sensorNanoTime
-     * @return utc timestamp with milli seconds
+     * this method converts {@link android.hardware.SensorEvent#timestamp},
+     * which is the sensor time elapsed in nano seconds to the system uptime to an utc timestamp.
+     *
+     * @param sensorNanoTime timestamp in ns (nano seconds = 10e-9) originated from {@link android.hardware.SensorEvent#timestamp}
+     * @return utc timestamp in ms (millisecond == 10e-3)
      */
     public static long getTimestampUtcBySensorEventTime(long sensorNanoTime) {
-        // Nano time ns = 10e-9 , micro us = 1000 * ns = 10e-6, milli = 10e-3, e for exponential
+        // Nano Seconds (ns, 10e-9), micro seconds (us, 10e-6), milli seconds (ms, 10e-3), where "e" is the abbreviation of exponential
         return System.currentTimeMillis() + (sensorNanoTime - SystemClock.elapsedRealtimeNanos()) / MILLION;
     }
 
-    private long getMilli0() {
+    /**
+     * convenient method for {@link System#currentTimeMillis()}
+     * @return utc timestamp of now in ms (milliseconds)
+     */
+    public static long nowInMillis() {
         return System.currentTimeMillis();
     }
 
     /**
-     * optimized time comparison output to get the event.timestamp to utc timestamp of event
-     * @param sensorNanoTime
-     * @return Long[] which can be used to the varargs for String.format("", Long[])
+     * this method implements different approachs proposed by
+     * <a href="https://stackoverflow.com/questions/5500765/accelerometer-sensorevent-timestamp">StackOverflow Discussion></a>
+     * to convert {@link android.hardware.SensorEvent#timestamp} to an utc timestamp.
+     *
+     * timestamps array::
+     * The 1st element is: System.currentTimeMillis()
+     * The 2nd element is: Date().getTime() + (sensorNanoTime - System.nanoTime()) / 1000000L
+     * The 3rd element is: System.currentTimeMillis() + (sensorNanoTime - System.nanoTime()) / 1000000L;
+     * The 4th element is: System.currentTimeMillis() + (sensorNanoTime - SystemClock.elapsedRealtimeNanos()) / 1000000L;
+     *
+     * @param sensorNanoTime timestamp in nano secs originated from {@link android.hardware.SensorEvent#timestamp}
+     * @return Long[]; a Long array of timestamps, which can be used as input Varargs for {@link String#format(String, Object[])}
      */
     public static Long[] convert2UtcTimestamps(long sensorNanoTime) {
         long sysDateTime = new Date().getTime();
@@ -72,6 +83,11 @@ public final class SensorEventTimeUtil {
         return utcs;
     }
 
+    /**
+     * this method converts the given list of utc timestamps in the milliseconds to utc time string of the system default local timezone time.
+     * @param utcTSMillis varargs Long[]
+     * @return String[] local timezone time string in the format of {@link SensorEventTimeUtil#sdf}
+     */
     public static String[] convertUtcTimestamp2LocalTimeStr(Long... utcTSMillis) {
         Calendar cal = Calendar.getInstance(); // calendar instance get the default system tz
         TimeZone localTZ = cal.getTimeZone(); // read default sys tz
@@ -98,15 +114,10 @@ public final class SensorEventTimeUtil {
      *
      * @param utcTSMilli utc timestamp in the unit of milliseconds (ms)
      * @param localTZ desired timezone to show the time in utc time string format
-     * @param cal an instance of calendar, which is used for internal calculation (Calender.getInstance() ), if this method is called in a loop this parameter can be reused
-     * @return time string with the local time of the given timezone object in utc time string format
+     * @param cal an arbitrary calendar instance like {@link android.icu.util.Calendar#getInstance()} to host temporal value. When this method is called in a loop, this Calendar param can be reused.
+     * @return time string of the local time regarding the given timezone in the format of {@link SensorEventTimeUtil#sdf}
      */
-    public static String convertUtcTimestamp2LocalTimeStr(long utcTSMilli, TimeZone localTZ, Calendar cal) {
-        // Calendar cal = Calendar.getInstance(); // calendar instance get the default system tz
-        // TimeZone localTZ = cal.getTimeZone(); // read default sys tz
-        /* debug: is it local time? */
-        // Log.d("Local Time Zone: ", localTZ.getDisplayName());
-
+    private static String convertUtcTimestamp2LocalTimeStr(long utcTSMilli, TimeZone localTZ, Calendar cal) {
         // reset utc tz
         cal.setTimeZone(TimeZone.getTimeZone(UTC_TZ_ID_STR)); // reset the calendar instance tz to utc
         // set time with utc time milli
