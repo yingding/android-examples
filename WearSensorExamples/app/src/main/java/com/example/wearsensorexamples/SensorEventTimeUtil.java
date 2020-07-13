@@ -25,10 +25,12 @@ public final class SensorEventTimeUtil {
      * @param sensorNanoTime
      * @return
      */
+    @Deprecated
     public static long getMilli1(long sensorNanoTime) {
         return new Date().getTime() + (sensorNanoTime - System.nanoTime()) / 1000000L;
     }
 
+    @Deprecated
     public static long getMilli2(long sensorNanoTime) {
         return System.currentTimeMillis() + (sensorNanoTime - System.nanoTime()) / 1000000L;
     }
@@ -39,6 +41,7 @@ public final class SensorEventTimeUtil {
      * @return utc timestamp with milli seconds
      */
     public static long getTimestampUtcBySensorEventTime(long sensorNanoTime) {
+        // Nano time ns = 10e-9 , micro us = 1000 * ns = 10e-6, milli = 10e-3, e for exponential
         return System.currentTimeMillis() + (sensorNanoTime - SystemClock.elapsedRealtimeNanos()) / 1000000L;
     }
 
