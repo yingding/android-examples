@@ -4,12 +4,10 @@ import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.icu.util.TimeZone;
 import android.os.SystemClock;
-import android.util.Log;
-
 import java.util.Date;
 
 /**
- * based on the Stack Overflow Referece:
+ * based on the Stack Overflow Reference:
  * https://stackoverflow.com/questions/5500765/accelerometer-sensorevent-timestamp
  *
  * This class {@link SensorEventTimeUtil} is implemented to convert the sensor event timestamp to a utc timestamp of sensor measurement.
@@ -19,6 +17,7 @@ public final class SensorEventTimeUtil {
     // https://stackoverflow.com/questions/1459656/how-to-get-the-current-time-in-yyyy-mm-dd-hhmisec-millisecond-format-in-java
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS zz");
     private static final String UTC_TZ_ID_STR = "UTC";
+    private static final long MILLION = 1000000L; // DO NOT change this number
 
     /**
      * Nano time ns = 10e-9 , micro us = 1000 * ns = 10e-6, milli = 10e-3, e for exponential
@@ -27,12 +26,12 @@ public final class SensorEventTimeUtil {
      */
     @Deprecated
     public static long getMilli1(long sensorNanoTime) {
-        return new Date().getTime() + (sensorNanoTime - System.nanoTime()) / 1000000L;
+        return new Date().getTime() + (sensorNanoTime - System.nanoTime()) / MILLION;
     }
 
     @Deprecated
     public static long getMilli2(long sensorNanoTime) {
-        return System.currentTimeMillis() + (sensorNanoTime - System.nanoTime()) / 1000000L;
+        return System.currentTimeMillis() + (sensorNanoTime - System.nanoTime()) / MILLION;
     }
 
     /**
@@ -42,7 +41,7 @@ public final class SensorEventTimeUtil {
      */
     public static long getTimestampUtcBySensorEventTime(long sensorNanoTime) {
         // Nano time ns = 10e-9 , micro us = 1000 * ns = 10e-6, milli = 10e-3, e for exponential
-        return System.currentTimeMillis() + (sensorNanoTime - SystemClock.elapsedRealtimeNanos()) / 1000000L;
+        return System.currentTimeMillis() + (sensorNanoTime - SystemClock.elapsedRealtimeNanos()) / MILLION;
     }
 
     private long getMilli0() {
@@ -59,10 +58,10 @@ public final class SensorEventTimeUtil {
         long sysCurTimeMillis = System.currentTimeMillis();
         long sysNanoTime = System.nanoTime();
         long sysElapsedRTNanos = SystemClock.elapsedRealtimeNanos();
-        long million = 1000000L;
+        // long million = 1000000L;
 
-        long sensorSysNanoDiff = (sensorNanoTime - sysNanoTime) / million;
-        long sensorSysElapseRTDiff = (sensorNanoTime - sysElapsedRTNanos) / million;
+        long sensorSysNanoDiff = (sensorNanoTime - sysNanoTime) / MILLION;
+        long sensorSysElapseRTDiff = (sensorNanoTime - sysElapsedRTNanos) / MILLION;
 
         Long[] utcs = new Long[4];
         utcs[0] = sysCurTimeMillis;
