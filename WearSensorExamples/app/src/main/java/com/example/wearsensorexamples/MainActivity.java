@@ -125,7 +125,7 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
 
     private void updateTextView(final float heartRate, long utcTimestampMilli) {
         if (mTextView != null) {
-            Log.v(TAG, String.format("UpdateTextView is called with heart rate: %f", heartRate));
+            // Log.v(TAG, String.format("UpdateTextView is called with heart rate: %f", heartRate));
 
             // Warning: the formatting string in android string must follow the java.String.format syntax
             mTextView.setText(MainActivity.this.getString(R.string.text_heart_rate_value, SensorEventTimeUtil.convertUtcTimestamp2LocalTimeStr(utcTimestampMilli)[0], heartRate));
@@ -207,8 +207,8 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
             if (event.sensor.getType() == Sensor.TYPE_HEART_RATE) {
                 if (event.accuracy != SensorManager.SENSOR_STATUS_UNRELIABLE && event.accuracy != SensorManager.SENSOR_STATUS_NO_CONTACT) {
                     if (event.values != null && event.values.length > 0) {
-                        Log.v("Wear", String.format("sensor value: %f", event.values[0]));
-                        Log.v("Wear", String.format("sensor nano timestamp : %d", event.timestamp));
+                        Log.d(TAG, String.format("onSensorChanged: value: %f", event.values[0]));
+                        Log.d(TAG, String.format("onSensorChanged: nano timestamp : %d", event.timestamp));
 
                         outputEventUTCTimestamps(event.timestamp);
 
@@ -220,6 +220,10 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
         }
     }
 
+    /**
+     * this method examines which method is the correct one to convert the sensor event timestamp to a utc timestamp in milliseconds unit.
+     * @param sensorEventNano
+     */
     private void outputEventUTCTimestamps(long sensorEventNano) {
         Long[] utcTimestamps = SensorEventTimeUtil.convert2UtcTimestamps(sensorEventNano);
         Log.v(TAG, String.format("Event UTC timestamp:\nEventSysCurrentMilli: %d\nDateTime+sensor,SysNanoDiff: %d\n" +
