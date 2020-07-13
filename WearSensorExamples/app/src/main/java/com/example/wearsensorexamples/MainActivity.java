@@ -1,7 +1,6 @@
 package com.example.wearsensorexamples;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
@@ -15,6 +14,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -27,7 +27,7 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
     private TextView sensorInfoTextView;
     private SensorManager mSensorManager;
     private Sensor mHeartRateSensor;
-    private static final boolean SENSOR_WAKE_UP_STATE = false;
+    private static final boolean SENSOR_WAKE_UP_STATE = false; // This must be false for the heart rate
     private HeartRateSensorEventListener mSensorListener;
     private static final String BODY_PERMISSION = Manifest.permission.BODY_SENSORS;
     private static final int ID_PERMISSION_REQUEST_READ_BODY_SENSORS = 1;
@@ -47,6 +47,7 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
 
         // Enables Always-on
         // Reference: https://developer.android.com/training/wearables/apps/always-on
+        // codeExamples: https://github.com/android/wear-os-samples/tree/master/AlwaysOn
         // setAmbientEnabled();
     }
 
