@@ -9,4 +9,11 @@
     <string name="text_no_sensor_info">Sensor not available</string>
     <string name="text_heart_rate_value">At %1$s,\nheart rate is %2$.3f (BPM)</string><!-- f for float, d for decimal-->
     <string name="text_toast_show_rational">Please allow Body Sensor access</string>
+
+    <!-- Sensor Permission Rational Texts -->
+    <string name="text_title_sensor_permission_needed">  Sensor permission necessary</string>
+    <string name="text_button_allow">ALLOW</string>
+    <string name="text_button_not_now">NOT NOW</string>
+    <string name="text_rational_sensor_permission_needed">Please grant body sensor permission to measure heart rate ...</string>
+
 </resources>

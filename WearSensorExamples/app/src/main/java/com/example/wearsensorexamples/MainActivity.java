@@ -54,15 +54,15 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
     private void setUpPermissionRationalDialog() {
         permissionRationalDialog = new AlertDialog.Builder(this)
                 .setCancelable(false)
-                .setTitle("Sensor permission necessary")
-                .setMessage("Please grant body sensor permission to measure heart rate ...")
-                .setPositiveButton("ALLOW", new DialogInterface.OnClickListener() {
+                .setTitle(R.string.text_title_sensor_permission_needed)
+                .setMessage(R.string.text_rational_sensor_permission_needed)
+                .setPositiveButton(R.string.text_button_allow, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         requestPermission();
                     }
                 })
-                .setNegativeButton("NOT NOW", null)
+                .setNegativeButton(R.string.text_button_not_now, null)
                 .create();
     }
 

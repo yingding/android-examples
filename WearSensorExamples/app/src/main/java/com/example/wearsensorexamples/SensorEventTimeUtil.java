@@ -92,12 +92,15 @@ public final class SensorEventTimeUtil {
     }
 
     /**
+     * this method converts the given utc timestamp in milliseconds unit to
+     * a utc time string of the desired timezone like "2020-07-13 22:43:14.793 CEST"
+     *
      * Reference: https://stackoverflow.com/questions/13473073/convert-a-date-and-time-string-according-to-utc-format
      *
-     * @param utcTSMilli
-     * @param localTZ
-     * @param cal
-     * @return
+     * @param utcTSMilli utc timestamp in the unit of milliseconds (ms)
+     * @param localTZ desired timezone to show the time in utc time string format
+     * @param cal an instance of calendar, which is used for internal calculation (Calender.getInstance() ), if this method is called in a loop this parameter can be reused
+     * @return time string with the local time of the given timezone object in utc time string format
      */
     public static String convertUtcTimestamp2LocalTimeStr(long utcTSMilli, TimeZone localTZ, Calendar cal) {
         // Calendar cal = Calendar.getInstance(); // calendar instance get the default system tz
