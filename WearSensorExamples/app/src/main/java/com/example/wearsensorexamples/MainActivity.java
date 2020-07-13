@@ -39,7 +39,7 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTextView = (TextView) findViewById(R.id.text);
+        mTextView = findViewById(R.id.text);
         sensorInfoTextView = findViewById(R.id.sensorInfoText);
 
         setUpSensorResources();
@@ -68,7 +68,10 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
 
     private void setUpSensorResources() {
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        List<Sensor> availableSensors = mSensorManager.getSensorList(Sensor.TYPE_HEART_RATE);
+        List<Sensor> availableSensors = null;
+        if (mSensorManager != null) { // SensorManager might be null, if called before onCreate()
+           availableSensors = mSensorManager.getSensorList(Sensor.TYPE_HEART_RATE);
+        }
         if (availableSensors != null && availableSensors.size() > 0) {
             // return a sensor which shall be waked up
             mHeartRateSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE, SENSOR_WAKE_UP_STATE); // Sensor Status UNRELIABLE, NO_CONTACT shall be deleted.
@@ -223,14 +226,14 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
 
     /**
      * this method examines which method is the correct one to convert the sensor event timestamp to a utc timestamp in milliseconds unit.
-     * @param sensorEventNano
+     * @param sensorEventNano {@link android.hardware.SensorEvent#timestamp}
      */
     private void outputEventUTCTimestamps(long sensorEventNano) {
         Long[] utcTimestamps = SensorEventTimeUtil.convert2UtcTimestamps(sensorEventNano);
         Log.v(TAG, String.format("Event UTC timestamp:\nEventSysCurrentMilli: %d\nDateTime+sensor,SysNanoDiff: %d\n" +
-                "SysCurMilli+sensor,SysNanoDiff: %d\nSysCurMilli+sensor,SysElapseRTDiff: %d", utcTimestamps));
+                "SysCurMilli+sensor,SysNanoDiff: %d\nSysCurMilli+sensor,SysElapseRTDiff: %d", utcTimestamps)); // vararg shall not be null
         String[] utcTimeStrs = SensorEventTimeUtil.convertUtcTimestamp2LocalTimeStr(utcTimestamps);
         Log.v(TAG, String.format("Event UTC time string:\nEventSysCurrentMilli: %s\nDateTime+sensor,SysNanoDiff: %s\n" +
-                "SysCurMilli+sensor,SysNanoDiff: %s\nSysCurMilli+sensor,SysElapseRTDiff: %s", utcTimeStrs));
+                "SysCurMilli+sensor,SysNanoDiff: %s\nSysCurMilli+sensor,SysElapseRTDiff: %s", utcTimeStrs)); // vararg shall not be null
     }
 }

@@ -4,6 +4,9 @@ import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.icu.util.TimeZone;
 import android.os.SystemClock;
+
+import androidx.annotation.NonNull;
+
 import java.util.Date;
 
 /**
@@ -64,6 +67,7 @@ public final class SensorEventTimeUtil {
      * @param sensorNanoTime timestamp in nano secs originated from {@link android.hardware.SensorEvent#timestamp}
      * @return Long[]; a Long array of timestamps, which can be used as input Varargs for {@link String#format(String, Object[])}
      */
+    @NonNull
     public static Long[] convert2UtcTimestamps(long sensorNanoTime) {
         long sysDateTime = new Date().getTime();
         long sysCurTimeMillis = System.currentTimeMillis();
@@ -88,6 +92,7 @@ public final class SensorEventTimeUtil {
      * @param utcTSMillis varargs Long[]
      * @return String[] local timezone time string in the format of {@link SensorEventTimeUtil#sdf}
      */
+    @NonNull
     public static String[] convertUtcTimestamp2LocalTimeStr(Long... utcTSMillis) {
         Calendar cal = Calendar.getInstance(); // calendar instance get the default system tz
         TimeZone localTZ = cal.getTimeZone(); // read default sys tz
