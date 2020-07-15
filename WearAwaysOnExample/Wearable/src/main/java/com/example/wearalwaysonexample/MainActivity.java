@@ -37,6 +37,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Demonstrates support for <i>Ambient Mode</i> by attaching ambient mode support to the activity,
@@ -120,7 +121,9 @@ public class MainActivity extends FragmentActivity
 
     private final SimpleDateFormat sDateFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()); // Locale.US
 
-    private volatile int mDrawCount = 0;
+    // private volatile int mDrawCount = 0;
+    /** Make non-automic operation automic https://stackoverflow.com/questions/14338533/atomicinteger-and-volatile */
+    private final AtomicInteger mDrawCount = new AtomicInteger(0);
 
     /**
      * Since the handler (used in active mode) can't wake up the processor when the device is in
@@ -147,7 +150,7 @@ public class MainActivity extends FragmentActivity
 
         setContentView(R.layout.activity_main);
 
-        /**
+        /*
          * Get an {@link AmbientModeSupport.AmbientController} object, which allows to check the ambient state outside of the AmbientModeSupport callbacks
          * Reference: https://developer.android.com/training/wearables/apps/always-on
          */
@@ -235,7 +238,7 @@ public class MainActivity extends FragmentActivity
             long delayMs = AMBIENT_INTERVAL_MS - (timeMs % AMBIENT_INTERVAL_MS);
             long triggerTimeMs = timeMs + delayMs;
 
-            /**
+            /*
              * In <a href="https://developer.android.com/training/monitoring-device-state/doze-standby#testing_doze_and_app_standby">Doze standby</a>,
              * {@link AlarmManager#setExact(int, long, PendingIntent)} are deferred to the next maintenance window.
              *
@@ -257,8 +260,9 @@ public class MainActivity extends FragmentActivity
 
     /** Updates display based on Ambient state. If you need to pull data, you should do it here. */
     private void loadDataAndUpdateScreen() {
-
-        mDrawCount += 1;
+        // https://dzone.com/articles/making-operations-volatile
+        // mDrawCount += 1;
+        mDrawCount.incrementAndGet();
         long currentTimeMs = System.currentTimeMillis();
         Log.d(
                 TAG,
@@ -277,7 +281,7 @@ public class MainActivity extends FragmentActivity
             mUpdateRateTextView.setText(
                     getString(R.string.update_rate_label, (AMBIENT_INTERVAL_MS / 1000)));
 
-            mDrawCountTextView.setText(getString(R.string.draw_count_label, mDrawCount));
+            mDrawCountTextView.setText(getString(R.string.draw_count_label, mDrawCount.get()));
 
         } else {
 
@@ -288,7 +292,7 @@ public class MainActivity extends FragmentActivity
             mUpdateRateTextView.setText(
                     getString(R.string.update_rate_label, (ACTIVE_INTERVAL_MS / 1000)));
 
-            mDrawCountTextView.setText(getString(R.string.draw_count_label, mDrawCount));
+            mDrawCountTextView.setText(getString(R.string.draw_count_label, mDrawCount.get()));
         }
     }
 
@@ -403,7 +407,7 @@ public class MainActivity extends FragmentActivity
 
         /**
          * package private constructor, by passing the MainActivity as weakReference to main a reference, so that the MainActivity method can be called also for static inner class.
-         * @param reference
+         * @param reference MainActivity
          */
         ActiveModeUpdateHandler(MainActivity reference) {
             mMainActivityWeakReference = new WeakReference<>(reference);
