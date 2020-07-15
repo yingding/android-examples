@@ -298,6 +298,10 @@ public class MainActivity extends FragmentActivity
         return new MyAmbientCallback();
     }
 
+    /**
+     * An inner class extends the {@link androidx.wear.ambient.AmbientModeSupport.AmbientCallback} class
+     * to act on ambient events. This class becomes the object returned from the interface method {@link MainActivity#getAmbientCallback()}
+     */
     private class MyAmbientCallback extends AmbientModeSupport.AmbientCallback {
         /** Prepares the UI for ambient mode. */
         @Override
