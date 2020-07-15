@@ -72,6 +72,9 @@ import java.util.concurrent.TimeUnit;
  * <p>Finally, in ambient mode, this activity follows the same best practices outlined in the Watch
  * Faces API documentation: keeping most pixels black, avoiding large blocks of white pixels, using
  * only black and white, disabling anti-aliasing, etc.
+ *
+ * <p>Note: Refer to section <a href="https://developer.android.com/training/wearables/apps/always-on#ambient-mode-class">Ambient mode using the AmbientModeSupport</a> class
+ * to work through the 4 building block steps to implement an AlwaysOn Wear OS by Google activity</p>
  */
 public class MainActivity extends FragmentActivity
         implements AmbientModeSupport.AmbientCallbackProvider {

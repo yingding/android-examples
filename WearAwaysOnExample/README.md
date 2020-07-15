@@ -1,12 +1,13 @@
 # Wear OS AlwaysOn Activity Example
 
-this folder is originated from the google wear os [code example repository](https://github.com/android/wear-os-samples/tree/master/AlwaysOn/) 
+This folder is originated from the google wear os [code example repository](https://github.com/android/wear-os-samples/tree/master/AlwaysOn/)
 
-Author of this repository has modified this project to suit his own need:
+The author of this repository has modified this project to suit his own need:
 
 * Downgrade to Android Studio 3.6.3
 * Updated root and module `build.gradle` files
-* rename the package name to a more self explanatory name
+* Renamed the package name to a more self explanatory name
+* Added additional comprehensive code docs, and further useful URLs (web resources) in code comments to make this example codes more understandable
 
 Android AlwaysOn Sample
 =======================
