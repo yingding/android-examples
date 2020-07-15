@@ -79,7 +79,7 @@ import java.util.concurrent.TimeUnit;
 public class MainActivity extends FragmentActivity
         implements AmbientModeSupport.AmbientCallbackProvider {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     /** Custom 'what' for Message sent to Handler. */
     private static final int MSG_UPDATE_SCREEN = 0;
