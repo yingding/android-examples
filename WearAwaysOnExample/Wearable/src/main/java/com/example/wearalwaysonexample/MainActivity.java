@@ -88,7 +88,7 @@ public class MainActivity extends FragmentActivity
 
     /** Action for updating the display in ambient mode, per our custom refresh cycle. */
     private static final String AMBIENT_UPDATE_ACTION =
-            "com.example.android.wearable.wear.alwayson.action.AMBIENT_UPDATE";
+            "com.example.wear.alwayson.example.action.AMBIENT_UPDATE";
 
     /** Number of pixels to offset the content rendered in the display to prevent screen burn-in. */
     private static final int BURN_IN_OFFSET_PX = 10;
@@ -115,7 +115,7 @@ public class MainActivity extends FragmentActivity
     private TextView mUpdateRateTextView;
     private TextView mDrawCountTextView;
 
-    private final SimpleDateFormat sDateFormat = new SimpleDateFormat("HH:mm:ss", Locale.US);
+    private final SimpleDateFormat sDateFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()); // Locale.US
 
     private volatile int mDrawCount = 0;
 
@@ -144,6 +144,10 @@ public class MainActivity extends FragmentActivity
 
         setContentView(R.layout.activity_main);
 
+        /**
+         * Get an {@link AmbientModeSupport.AmbientController} object, which allows to check the ambient state outside of the AmbientModeSupport callbacks
+         * Reference: https://developer.android.com/training/wearables/apps/always-on
+         */
         mAmbientController = AmbientModeSupport.attach(this);
 
         mAmbientUpdateAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
@@ -198,6 +202,7 @@ public class MainActivity extends FragmentActivity
         IntentFilter filter = new IntentFilter(AMBIENT_UPDATE_ACTION);
         registerReceiver(mAmbientUpdateBroadcastReceiver, filter);
 
+        // call refresh only once as the screen goes on as onResume is called.
         refreshDisplayAndSetNextUpdate();
     }
 
@@ -227,6 +232,15 @@ public class MainActivity extends FragmentActivity
             long delayMs = AMBIENT_INTERVAL_MS - (timeMs % AMBIENT_INTERVAL_MS);
             long triggerTimeMs = timeMs + delayMs;
 
+            /**
+             * In <a href="https://developer.android.com/training/monitoring-device-state/doze-standby#testing_doze_and_app_standby">Doze standby</a>,
+             * {@link AlarmManager#setExact(int, long, PendingIntent)} are deferred to the next maintenance window.
+             *
+             * If the alarms shall be fired also while in Doze, {@link AlarmManager#setExactAndAllowWhileIdle(int, long, PendingIntent)} shall be used instead of setExect() .
+             *
+             * By passing the {@link AlarmManager#RTC_WAKEUP} that is the alarm time in {@link System#currentTimeMillis()} - wall clock time in UTC,
+             * it will wake up the device when the alarm goes off.
+             */
             mAmbientUpdateAlarmManager.setExact(
                     AlarmManager.RTC_WAKEUP, triggerTimeMs, mAmbientUpdatePendingIntent);
         } else {
@@ -275,6 +289,10 @@ public class MainActivity extends FragmentActivity
         }
     }
 
+    /**
+     * implement the interface method {@link AmbientModeSupport.AmbientCallbackProvider#getAmbientCallback()} for {@link MainActivity}
+     * @return a custom {@link AmbientModeSupport.AmbientCallback} instance
+     */
     @Override
     public AmbientModeSupport.AmbientCallback getAmbientCallback() {
         return new MyAmbientCallback();
@@ -376,6 +394,10 @@ public class MainActivity extends FragmentActivity
     private static class ActiveModeUpdateHandler extends Handler {
         private final WeakReference<MainActivity> mMainActivityWeakReference;
 
+        /**
+         * package private constructor, by passing the MainActivity as weakReference to main a reference, so that the MainActivity method can be called also for static inner class.
+         * @param reference
+         */
         ActiveModeUpdateHandler(MainActivity reference) {
             mMainActivityWeakReference = new WeakReference<>(reference);
         }
