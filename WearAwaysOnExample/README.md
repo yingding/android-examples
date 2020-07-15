@@ -8,6 +8,7 @@ The author of this repository has modified this project to suit his own need:
 * Updated root and module `build.gradle` files
 * Renamed the package name to a more self explanatory name
 * Added additional comprehensive code docs, and further useful URLs (web resources) in code comments to make this example codes more understandable
+* Upgrade draw count to AutomicInteger to avoid non-automic operation
 
 Android AlwaysOn Sample
 =======================
