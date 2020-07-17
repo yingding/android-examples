@@ -332,6 +332,7 @@ public class MainActivity extends FragmentActivity
             mUpdateRateTextView.setTextColor(Color.WHITE);
             mDrawCountTextView.setTextColor(Color.WHITE);
 
+            // deactivate the antiAlias after enters ambient mode with setAntiAlias false
             if (mIsLowBitAmbient) {
                 mTimeTextView.getPaint().setAntiAlias(false);
                 mTimeStampTextView.getPaint().setAntiAlias(false);
@@ -339,12 +340,12 @@ public class MainActivity extends FragmentActivity
                 mUpdateRateTextView.getPaint().setAntiAlias(false);
                 mDrawCountTextView.getPaint().setAntiAlias(false);
             }
-
+            // refresh the ui element to show the new ambient text content.
             refreshDisplayAndSetNextUpdate();
         }
 
         /**
-         * Updates the display in ambient mode on the standard interval. Since we're using a custom
+         * Updates the display in ambient mode on the standard interval (every 60 secs). Since we're using a custom
          * refresh cycle, this method does NOT update the data in the display. Rather, this method
          * simply updates the positioning of the data in the screen to avoid burn-in, if the display
          * requires it.
@@ -384,6 +385,7 @@ public class MainActivity extends FragmentActivity
             mUpdateRateTextView.setTextColor(Color.GREEN);
             mDrawCountTextView.setTextColor(Color.GREEN);
 
+            // set back the antiAlias to true after exists ambient mode
             if (mIsLowBitAmbient) {
                 mTimeTextView.getPaint().setAntiAlias(true);
                 mTimeStampTextView.getPaint().setAntiAlias(true);
@@ -397,6 +399,7 @@ public class MainActivity extends FragmentActivity
                 mContentView.setPadding(0, 0, 0, 0);
             }
 
+            // refresh the ui element to show the new ambient text content.
             refreshDisplayAndSetNextUpdate();
         }
     }
