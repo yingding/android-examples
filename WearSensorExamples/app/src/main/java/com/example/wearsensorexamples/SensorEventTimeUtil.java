@@ -41,7 +41,17 @@ public final class SensorEventTimeUtil {
      * @return utc timestamp in ms (millisecond == 10e-3)
      */
     public static long getTimestampUtcBySensorEventTime(long sensorNanoTime) {
-        // Nano Seconds (ns, 10e-9), micro seconds (us, 10e-6), milli seconds (ms, 10e-3), where "e" is the abbreviation of exponential
+        /* Nano Seconds (ns, 10e-9), micro seconds (us, 10e-6), milli seconds (ms, 10e-3), where "e" is the abbreviation of exponential
+         *
+         * Delta = (sensorNanoTime - SystemClock.elapsedRealtimeNanos()) returns how many nano seconds elapsed from now since the past sensor event.
+         * delta is a negative value.
+         *
+         * System.currentTimeMillis() returns UTC time for now, since it is called at almost the same time as SystemClock.elapsedRealtimeNanos.
+         * Thus, System.currentTimeMillis() substitutes how many milliseconds elapsed from now the UTC time abs( delta / MILLION ) in ms
+         * returns the utc timestamp in ms of the sensor event.
+         *
+         * Reference: https://source.android.com/devices/sensors
+         */
         return System.currentTimeMillis() + (sensorNanoTime - SystemClock.elapsedRealtimeNanos()) / MILLION;
     }
 
