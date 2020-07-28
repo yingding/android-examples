@@ -20,11 +20,11 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.google.android.support:wearable:2.4.0'
-    implementation 'com.google.android.gms:play-services-wearable:16.0.1'
+    implementation "com.google.android.support:wearable:$rootProject.wearSupportVersion"
+    implementation "com.google.android.gms:play-services-wearable:$rootProject.playWearableVersion"
     implementation 'androidx.percentlayout:percentlayout:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.palette:palette:1.0.0'
-    compileOnly 'com.google.android.wearable:wearable:2.4.0'
+    compileOnly "com.google.android.wearable:wearable:$rootProject.wearSupportVersion" // platform api
 }

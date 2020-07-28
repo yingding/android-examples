@@ -40,6 +40,9 @@ import java.util.concurrent.TimeUnit;
  * are unsure how to do this, please review the "Run Starter project" section
  * in the Google Watch Face Code Lab:
  * https://codelabs.developers.google.com/codelabs/watchface/index.html#0
+ *
+ * For design of the android Wear watch face see:
+ * https://www.youtube.com/watch?v=AK38PJZmIW8
  */
 public class MyWatchFace extends CanvasWatchFaceService {
 
@@ -118,6 +121,11 @@ public class MyWatchFace extends CanvasWatchFaceService {
         private boolean mAmbient;
         private boolean mLowBitAmbient;
         private boolean mBurnInProtection;
+
+        Engine() {
+            // Ask for a hardware accelerated canvas
+            super(true);
+        }
 
         @Override
         public void onCreate(SurfaceHolder holder) {
