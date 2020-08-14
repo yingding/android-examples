@@ -1,0 +1,6 @@
+/build
+*.apk
+/release
+
+# some icloud files for the mp3 files
+*.icloud
