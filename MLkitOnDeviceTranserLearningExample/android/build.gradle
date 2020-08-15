@@ -2,6 +2,8 @@
 
 buildscript {
     ext {
+        ndkVersion = "21.3.6528147" // required for android studio 4+ and change to your local ndk version or the default ndkVersion
+
         compileSdkVersion = 29
         buildToolVersion = "30.0.2"
 
