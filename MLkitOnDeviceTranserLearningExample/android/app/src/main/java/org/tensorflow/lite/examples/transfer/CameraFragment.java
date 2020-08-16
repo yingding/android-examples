@@ -312,7 +312,7 @@ public class CameraFragment extends Fragment {
     super.onViewCreated(view, bundle);
 
     viewFinder = getActivity().findViewById(R.id.view_finder);
-    viewFinder.post(this::startCamera);
+    viewFinder.post(this::startCamera); // method reference operator call https://www.geeksforgeeks.org/double-colon-operator-in-java/
   }
 
   @Override
