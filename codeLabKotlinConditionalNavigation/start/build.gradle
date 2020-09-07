@@ -37,6 +37,11 @@ android {
     buildFeatures {
         dataBinding = true
     }
+
+    // Java 8 for Kotlin
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {

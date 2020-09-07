@@ -39,8 +39,5 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val navController = findNavController()
-        // TODO observe the authenticationState and redirect the user to LoginFragment if they are
-        //  not authenticated.
     }
 }

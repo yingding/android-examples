@@ -18,10 +18,10 @@
 
 buildscript {
     ext {
-        kotlinVersion = '1.3.72'
+        kotlinVersion = '1.4.0'
         navigationVersion = '2.3.0'
         googleServiceVersion = '4.3.3' // '4.3.2'
-        appCompatVersion = '1.1.0'
+        appCompatVersion = '1.2.0'
         ktxCoreActivityVersion = '1.1.0'
         ktxFragmentVersion = '1.2.5'
         constraintLayoutVersion =  '1.1.3'
