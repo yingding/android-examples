@@ -15,7 +15,7 @@ Author of the repository has made the following changes to the original codes:
 
 Step 1 with Firebase UI
 
-* https://codelabs.developers.google.com/codelabs/advanced-android-kotlin-training-login/#3
+* https://codelabs.developers.google.com/codelabs/advanced-android-kotlin-training-login/#6
 
 Step 2 with Conditional Navigation with Login
 

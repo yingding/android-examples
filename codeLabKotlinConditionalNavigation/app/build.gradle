@@ -55,7 +55,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
     implementation "androidx.activity:activity-ktx:$rootProject.ktxCoreActivityVersion"
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
-    implementation "androidx.core:core-ktx:1.3.1"
+    implementation "androidx.core:core-ktx:$rootProject.ktxCoreVersion"
     implementation "androidx.fragment:fragment-ktx:$rootProject.ktxFragmentVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifeCycleVersion"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.lifeCycleVersion"
