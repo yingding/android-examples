@@ -63,6 +63,8 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navigationVersion"
     implementation "androidx.preference:preference-ktx:$rootProject.preferenceVersion"
+    // data binding to get the binding imported in code
+    implementation "androidx.databinding:databinding-compiler:$rootProject.dataBindingCompilerVersion"
 
     // add firebase dependency: firebase-auth SDK allows management of authenticated users of android application
     implementation "com.firebaseui:firebase-ui-auth:$rootProject.firebaseAuthVersion"

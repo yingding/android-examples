@@ -59,6 +59,8 @@ dependencies {
     implementation "androidx.preference:preference-ktx:$rootProject.preferenceVersion"
     implementation "com.firebaseui:firebase-ui-auth:$rootProject.firebaseAuthVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.kotlinVersion"
+    // data binding to get the binding imported in code
+    implementation "androidx.databinding:databinding-compiler:$rootProject.dataBindingCompilerVersion"
 
     testImplementation "junit:junit:$rootProject.junitVersion"
 }

@@ -19,7 +19,7 @@
 buildscript {
     ext {
         kotlinVersion = '1.4.0'
-
+        dataBindingCompilerVersion = '4.0.1'
         navigationVersion = '2.3.0'
         googleServiceVersion = '4.3.3' // '4.3.2'
         appCompatVersion = '1.2.0'
