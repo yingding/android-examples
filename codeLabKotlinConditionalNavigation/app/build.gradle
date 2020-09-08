@@ -36,7 +36,7 @@ android {
     }
 
     buildFeatures {
-        dataBinding = true
+        dataBinding true
     }
 
     // activate Java 8 Language features
