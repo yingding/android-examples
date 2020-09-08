@@ -66,7 +66,7 @@ dependencies {
 
     // add firebase dependency: firebase-auth SDK allows management of authenticated users of android application
     implementation "com.firebaseui:firebase-ui-auth:$rootProject.firebaseAuthVersion"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.kotlinVersion"
 
     testImplementation "junit:junit:$rootProject.junitVersion"
 }
