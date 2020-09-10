@@ -50,8 +50,8 @@ class MainFragment : Fragment() {
         binding = DataBindingUtil.inflate<FragmentMainBinding>(inflater, R.layout.fragment_main, container, false)
 
         // TODO Remove the two lines below once observeAuthenticationState is implemented.
-        binding.welcomeText.text = viewModel.getFactToDisplay(requireContext())
-        binding.authButton.text = getString(R.string.login_btn)
+        // binding.welcomeText.text = viewModel.getFactToDisplay(requireContext())
+        // binding.authButton.text = getString(R.string.login_btn)
 
         return binding.root
     }
@@ -95,14 +95,29 @@ class MainFragment : Fragment() {
 
         // TODO Use the authenticationState variable from LoginViewModel to update the UI
         //  accordingly.
-        //
-        //  TODO If there is a logged-in user, authButton should display Logout. If the
-        //   user is logged in, you can customize the welcome message by utilizing
-        //   getFactWithPersonalition(). I
+        viewModel.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
+            when(authenticationState) {
+                LoginViewModel.AuthenticationState.AUTHENTICATED -> {
+                    binding.authButton.text = getString(R.string.logout_button_text)
+                    binding.authButton.setOnClickListener {
+                        // TODO implement logging out user in next step
+                    }
+                    //  TODO If there is a logged-in user, authButton should display Logout. If the
+                    //   user is logged in, you can customize the welcome message by utilizing
+                    //   getFactWithPersonalition().
+                    binding.welcomeText.text = getFactWithPersonalization(factToDisplay)
+                }
+                else -> {
+                    // TODO If there is no logged in user, authButton should display Login and launch the sign
+                    //  in screen when clicked. There should also be no personalization of the message
+                    //  displayed.
+                    binding.authButton.text = getString(R.string.login_button_text)
+                    binding.authButton.setOnClickListener { launchSignInFlow() }
+                    binding.welcomeText.text = factToDisplay;
 
-        // TODO If there is no logged in user, authButton should display Login and launch the sign
-        //  in screen when clicked. There should also be no personalization of the message
-        //  displayed.
+                }
+            }
+        })
     }
 
 
@@ -131,6 +146,7 @@ class MainFragment : Fragment() {
         startActivityForResult(
             AuthUI.getInstance()
                 .createSignInIntentBuilder()
+                // .setIsSmartLockEnabled(false) // https://stackoverflow.com/questions/52517730/firebase-ui-auth-sign-in-error-api-exception
                 .setAvailableProviders(providers)
                 .build(),
             SIGN_IN_RESULT_CODE
