@@ -95,6 +95,7 @@ class MainFragment : Fragment() {
 
         // TODO Use the authenticationState variable from LoginViewModel to update the UI
         //  accordingly.
+        // viewLifeCycleOwner is MainFragment.this.getViewLifecylceOwner()
         viewModel.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
             when(authenticationState) {
                 LoginViewModel.AuthenticationState.AUTHENTICATED -> {
