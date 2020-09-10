@@ -40,6 +40,7 @@ class FirebaseUserLiveData : LiveData<FirebaseUser?>() {
         //  entry point into the Firebase Authentication SDK the app is using.
         //  With an instance of the FirebaseAuth class, you can now query for the current user.
         value = firebaseAuth.currentUser
+        // value = is equivalent as setValue(firebaseAuth.getCurrentUser()) in java
     }
 
     // When this object has an active observer, start observing the FirebaseAuth state to see if
