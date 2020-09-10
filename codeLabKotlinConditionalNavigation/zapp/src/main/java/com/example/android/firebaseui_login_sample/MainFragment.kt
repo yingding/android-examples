@@ -102,6 +102,7 @@ class MainFragment : Fragment() {
                     binding.authButton.text = getString(R.string.logout_button_text)
                     binding.authButton.setOnClickListener {
                         // TODO implement logging out user in next step
+                        AuthUI.getInstance().signOut(requireContext())
                     }
                     //  TODO If there is a logged-in user, authButton should display Logout. If the
                     //   user is logged in, you can customize the welcome message by utilizing
