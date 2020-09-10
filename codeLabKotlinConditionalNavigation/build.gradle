@@ -42,6 +42,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:4.0.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinPluginVersion"
+        // 1. Process google-services.json 2. Add GMS basic lib dependency
         classpath "com.google.gms:google-services:$googleServiceVersion" // Google Services plugin for firebase
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
         // NOTE: Do not place your application dependencies here; they belong
