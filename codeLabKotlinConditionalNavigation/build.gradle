@@ -32,7 +32,7 @@ buildscript {
         lifeCycleVersion = '2.2.0' // '2.1.0'
         preferenceVersion = '1.1.1'
         junitVersion = '4.13'
-        firebaseAuthVersion = '5.0.0'
+        firebaseAuthVersion = '6.2.0'// '5.0.0' // https://firebase.google.com/docs/auth/android/firebaseui#kotlin+ktx
 
     }
     repositories {
