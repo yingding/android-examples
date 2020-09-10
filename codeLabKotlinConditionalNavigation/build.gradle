@@ -19,6 +19,7 @@
 buildscript {
     ext {
         kotlinVersion = '1.4.0'
+        kotlinPluginVersion = '1.4.10'
         // dataBindingCompilerVersion = '4.0.1' // dataBindingCompiler are added when the data binding are activated
         // https://stackoverflow.com/questions/61017986/do-i-need-to-add-kapt-com-android-databindingcompilercompiler-version-gradl
         navigationVersion = '2.3.0'
@@ -40,7 +41,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.0.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinPluginVersion"
         classpath "com.google.gms:google-services:$googleServiceVersion" // Google Services plugin for firebase
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
         // NOTE: Do not place your application dependencies here; they belong
