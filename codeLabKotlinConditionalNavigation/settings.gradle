@@ -1,1 +1,1 @@
-include ':final', ':start', ':app1', ':zapp'
+include ':final', ':start', ':app1', ':app2'
