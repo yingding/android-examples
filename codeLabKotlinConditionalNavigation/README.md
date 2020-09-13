@@ -7,7 +7,7 @@ this example is based on Google Kotlin Android Codelab "Android Login with Fireb
 Author of the repository has made the following changes to the original codes:
  
 * upgrade all libs into currently stable ones (time of creation July 2020)
-* added start, final and zapp module (start is the start module to play with the code, final is the solution module and zapp module is used by author for self study)
+* added start, final, app1 and zapp module (start is the start module to play with the code, final is the solution module, app1 -- Login -- and zapp -- conditional Login -- modules are used by the author for self study )
 * adding the central rootProject variables in root level build.gradle file to enable quick SDK upgrade for all modules
 * firebase project integration file `google-services.json` are NOT included, please use your own firebase config json file by following the [instruction](https://codelabs.developers.google.com/codelabs/advanced-android-kotlin-training-login/#3)
 
@@ -15,7 +15,7 @@ Author of the repository has made the following changes to the original codes:
 
 Step 1 with Firebase UI
 
-* https://codelabs.developers.google.com/codelabs/advanced-android-kotlin-training-login/#6
+* https://codelabs.developers.google.com/codelabs/advanced-android-kotlin-training-login/#8
 
 Step 2 with Conditional Navigation with Login
 
