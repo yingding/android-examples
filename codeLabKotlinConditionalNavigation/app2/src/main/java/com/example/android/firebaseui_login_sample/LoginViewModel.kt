@@ -17,6 +17,7 @@
 package com.example.android.firebaseui_login_sample
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.preference.PreferenceManager
@@ -25,6 +26,8 @@ import kotlin.random.Random
 class LoginViewModel : ViewModel() {
 
     companion object {
+        val TAG = "LoginViewModel"
+
         val androidFacts = arrayOf(
             "The first commercial Android device was launched in September 2008",
             "The Android operating system has over 2 billion monthly active users",
@@ -74,13 +77,19 @@ class LoginViewModel : ViewModel() {
 
         // using when is better to read as if else
         // https://stackoverflow.com/questions/55795166/kotlin-why-should-return-be-lifted-out-of-if-recommended-by-android-studi
-        return when (authenticationState.value == AuthenticationState.UNAUTHENTICATED || funFactType.equals(
+
+        // Note: at the time the authenticationState.value is call, the map function might not have assigned value to the authenticationState: LiveData<FirebaseUser?>
+        // thus the authenticationState.value might still be the initial value null, and null == AuthenticationState.UNAUTHENTICATED return false
+        // to solve the delay of map recheck the value if null asign the UNAUTHENTICATED value again.
+        // val authState = if (authenticationState.value == null) AuthenticationState.UNAUTHENTICATED else authenticationState.value
+        return when (authenticationState.value == null || authenticationState.value == AuthenticationState.UNAUTHENTICATED || funFactType.equals(
             context.getString(R.string.fact_type_android)
         )
             ) {
             true -> androidFacts[Random.nextInt(0, androidFacts.size)]
-            false -> californiaFacts[Random.nextInt(0, californiaFacts.size)] // or else ->
+            else -> californiaFacts[Random.nextInt(0, californiaFacts.size)] // or else ->
         }
+
     }
 }
 
