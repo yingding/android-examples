@@ -66,6 +66,21 @@ class LoginViewModel : ViewModel() {
         val defaultFactType = context.resources.getStringArray(R.array.fact_type)[0]
         val funFactType = sharedPreferences.getString(factTypePreferenceKey, defaultFactType)
 
-        return androidFacts[Random.nextInt(0, androidFacts.size)]
+        // put the return out of if
+//        return if (authenticationState.value == AuthenticationState.UNAUTHENTICATED || funFactType.equals(context.getString(R.string.fact_type_android))
+//        ) androidFacts[Random.nextInt(0, androidFacts.size)]
+//        else californiaFacts[Random.nextInt(0, californiaFacts.size)]
+//        }
+
+        // using when is better to read as if else
+        // https://stackoverflow.com/questions/55795166/kotlin-why-should-return-be-lifted-out-of-if-recommended-by-android-studi
+        return when (authenticationState.value == AuthenticationState.UNAUTHENTICATED || funFactType.equals(
+            context.getString(R.string.fact_type_android)
+        )
+            ) {
+            true -> androidFacts[Random.nextInt(0, androidFacts.size)]
+            false -> californiaFacts[Random.nextInt(0, californiaFacts.size)] // or else ->
+        }
     }
 }
+

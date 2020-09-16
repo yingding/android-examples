@@ -66,6 +66,28 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         navController = findNavController()
+
+        // If the user presses the back button, bring them back to the home screen
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            navController.popBackStack(R.id.mainFragment, false)
+        }
+
+        // Observe the authentication state so we can know if the user has logged in successfully.
+        // If the user has logged in successfully, bring them back to the settings screen.
+        // If the user ddi not log in successfully, display an error message.
+        viewModel.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
+            when (authenticationState) {
+                // Since our login flow is only one screen instead of multiple
+                // screens, we can utilize popBackStack(). If our login flow
+                // consisted of multiple screens, we would have to call
+                // popBackStack() multiple times.
+                LoginViewModel.AuthenticationState.AUTHENTICATED -> navController.popBackStack() // use popBackStack() to back to settingsFragment
+                else -> Log.e(
+                    TAG,
+                    "Authentication state that doesn't require any UI change $authenticationState"
+                )
+            }
+        })
     }
 
     private fun launchSignInFlow() {
