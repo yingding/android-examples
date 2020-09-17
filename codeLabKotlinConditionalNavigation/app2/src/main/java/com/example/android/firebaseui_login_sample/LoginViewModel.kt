@@ -50,6 +50,8 @@ class LoginViewModel : ViewModel() {
     // TODO Create an authenticationState variable based off the FirebaseUserLiveData object. By
     //  creating this variable, other classes will be able to query for whether the user is logged
     //  in or not
+    // map is not called until the authenticationState: LiveData<enum> is observed.
+    // https://stackoverflow.com/questions/52004118/how-to-get-non-null-result-from-getvalue-of-mapped-livedata-without-calling-ob/52004265#52004265
     val authenticationState = FirebaseUserLiveData().map { user ->
         if (user != null) {
             AuthenticationState.AUTHENTICATED
@@ -78,11 +80,11 @@ class LoginViewModel : ViewModel() {
         // using when is better to read as if else
         // https://stackoverflow.com/questions/55795166/kotlin-why-should-return-be-lifted-out-of-if-recommended-by-android-studi
 
-        // Note: at the time the authenticationState.value is call, the map function might not have assigned value to the authenticationState: LiveData<FirebaseUser?>
-        // thus the authenticationState.value might still be the initial value null, and null == AuthenticationState.UNAUTHENTICATED return false
-        // to solve the delay of map recheck the value if null asign the UNAUTHENTICATED value again.
-        // val authState = if (authenticationState.value == null) AuthenticationState.UNAUTHENTICATED else authenticationState.value
-        return when (authenticationState.value == null || authenticationState.value == AuthenticationState.UNAUTHENTICATED || funFactType.equals(
+        // Note: the map function is only called after the LiveData is observed
+        // thus the authenticationState.value might still be null should getFactToDisplay is called out side an observe call, and null == AuthenticationState.UNAUTHENTICATED return false
+        // https://stackoverflow.com/questions/52004118/how-to-get-non-null-result-from-getvalue-of-mapped-livedata-without-calling-ob
+        // to solve this issue call this getFactToDisplay only inside an observe call
+        return when (authenticationState.value == AuthenticationState.UNAUTHENTICATED || funFactType.equals(
             context.getString(R.string.fact_type_android)
         )
             ) {

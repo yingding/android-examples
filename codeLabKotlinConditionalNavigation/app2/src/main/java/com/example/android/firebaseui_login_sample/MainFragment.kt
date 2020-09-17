@@ -98,13 +98,16 @@ class MainFragment : Fragment() {
      * If there is no logged in user: show a login button
      */
     private fun observeAuthenticationState() {
-        val factToDisplay = viewModel.getFactToDisplay(requireContext())
+        // val factToDisplay = viewModel.getFactToDisplay(requireContext())
 
         // TODO Use the authenticationState variable from LoginViewModel to update the UI
         //  accordingly.
         // viewLifeCycleOwner is MainFragment.this.getViewLifecylceOwner()
         viewModel.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
-            when(authenticationState) {
+            // https://stackoverflow.com/questions/52004118/how-to-get-non-null-result-from-getvalue-of-mapped-livedata-without-calling-ob
+            // getFactToDisplay is called after the observe, so that the transform.map can be called
+            val factToDisplay = viewModel.getFactToDisplay(requireContext())
+            when (authenticationState) {
                 LoginViewModel.AuthenticationState.AUTHENTICATED -> {
                     binding.authButton.text = getString(R.string.logout_button_text)
                     binding.authButton.setOnClickListener {
