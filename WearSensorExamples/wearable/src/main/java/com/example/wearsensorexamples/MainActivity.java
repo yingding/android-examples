@@ -9,7 +9,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventCallback;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.support.wearable.activity.WearableActivity;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -17,10 +16,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
+import androidx.wear.ambient.AmbientModeSupport;
 
 import java.util.List;
 
-public class MainActivity extends WearableActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
+public class MainActivity extends FragmentActivity implements AmbientModeSupport.AmbientCallbackProvider, ActivityCompat.OnRequestPermissionsResultCallback {
     private static final String TAG = "WearHeartRateTest";
 
     private TextView mTextView;
@@ -49,6 +50,7 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
         // Reference: https://developer.android.com/training/wearables/apps/always-on
         // codeExamples: https://github.com/android/wear-os-samples/tree/master/AlwaysOn
         // setAmbientEnabled();
+        AmbientModeSupport.AmbientController controller = AmbientModeSupport.attach(this);
     }
 
     private void setUpPermissionRationalDialog() {
@@ -208,6 +210,7 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
         @Override
         public void onSensorChanged(SensorEvent event) {
             super.onSensorChanged(event);
+            Log.d(TAG, String.format("onSensorChanged of event type: %d , %s ", event.sensor.getType(), event.sensor.getName() ));
             if (event.sensor.getType() == Sensor.TYPE_HEART_RATE) {
                 if (event.accuracy != SensorManager.SENSOR_STATUS_UNRELIABLE && event.accuracy != SensorManager.SENSOR_STATUS_NO_CONTACT) {
                     if (event.values != null && event.values.length > 0) {
@@ -235,5 +238,34 @@ public class MainActivity extends WearableActivity implements ActivityCompat.OnR
         String[] utcTimeStrs = SensorEventTimeUtil.convertUtcTimestamp2LocalTimeStr(utcTimestamps);
         Log.v(TAG, String.format("Event UTC time string:\nEventSysCurrentMilli: %s\nDateTime+sensor,SysNanoDiff: %s\n" +
                 "SysCurMilli+sensor,SysNanoDiff: %s\nSysCurMilli+sensor,SysElapseRTDiff: %s", utcTimeStrs)); // vararg shall not be null
+    }
+
+    /*
+     * Call back on Ambient change
+     */
+    @Override
+    public AmbientModeSupport.AmbientCallback getAmbientCallback() {
+        return new MyAmbientCallback();
+    }
+
+    private class MyAmbientCallback extends AmbientModeSupport.AmbientCallback {
+
+        @Override
+        public void onEnterAmbient(Bundle ambientDetails) {
+            super.onEnterAmbient(ambientDetails);
+            Log.v(TAG, "entering Ambient mode...");
+        }
+
+        @Override
+        public void onUpdateAmbient() {
+            super.onUpdateAmbient();
+            Log.v(TAG, "onUpdateAmbient!");
+        }
+
+        @Override
+        public void onExitAmbient() {
+            super.onExitAmbient();
+            Log.v(TAG, "exiting Ambient mode...");
+        }
     }
 }
