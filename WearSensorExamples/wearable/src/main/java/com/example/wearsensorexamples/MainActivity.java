@@ -97,8 +97,10 @@ public class MainActivity extends FragmentActivity implements AmbientModeSupport
              * Delay (sampling rate) Delay normal = 200 millis,
              */
             // TODO use registerListener(Listener, Sensor, int SamplingPeriodUs, int maxReportLatencyUs) to avoid the Application Process interupts to same energy
-            // mSensorManager.registerListener(mSensorListener, mHeartRateSensor, SensorManager.SENSOR_DELAY_NORMAL);
-            mSensorManager.registerListener(mSensorListener, mHeartRateSensor, SAMPLING_RATE_1HZ_MICRO_SECS);
+            boolean isSuccessful = mSensorManager.registerListener(mSensorListener, mHeartRateSensor, SensorManager.SENSOR_DELAY_NORMAL);
+
+            // mSensorManager.registerListener(mSensorListener, mHeartRateSensor, SAMPLING_RATE_1HZ_MICRO_SECS);
+            Log.v(TAG, String.format("registerSensor is %ssuccessful", isSuccessful? "": "NOT "));
         }
     }
 
@@ -182,6 +184,7 @@ public class MainActivity extends FragmentActivity implements AmbientModeSupport
         updateSensorInfoText();
         // registerSensor();
         Log.v(TAG, "onResume called");
+        Log.v(TAG, String.format("Listener is %snull!", this.mSensorListener == null ? "": "NOT "));
     }
 
     @Override
