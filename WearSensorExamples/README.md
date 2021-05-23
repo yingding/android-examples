@@ -11,6 +11,6 @@ to figure out the AVD virtual device path.
 
 2. Add to the config.ini of your wear os AVD folder with the following additional config
 ```console
-hw.sensor.heart_rate=yes
+hw.sensors.heart_rate=yes
 ```
 and cold restart your Wear OS API 28 AVD to activate the heart rate virual sensor manually.
