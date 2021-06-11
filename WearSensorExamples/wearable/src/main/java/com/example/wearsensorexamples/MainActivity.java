@@ -4,12 +4,14 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventCallback;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,6 +37,12 @@ public class MainActivity extends FragmentActivity implements AmbientModeSupport
     private AlertDialog permissionRationalDialog;
     private static final int SAMPLING_RATE_1HZ_MICRO_SECS = 1000000; // 10e6 to micro seconds 10e-6
 
+    /* the viewport inside is sqrt(2) of the original, the factor of display high can be calculated as (1 - 1/sqrt(2)) / 2
+     * this gives the FACTOR is the padding needed for the left side ( /2 is because calculate with radius r, and DisplayMetric return 2r)
+     */
+    private static final float FACTOR = 0.146467f;
+    private ViewGroup layoutContent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +59,21 @@ public class MainActivity extends FragmentActivity implements AmbientModeSupport
         // codeExamples: https://github.com/android/wear-os-samples/tree/master/AlwaysOn
         // setAmbientEnabled();
         AmbientModeSupport.AmbientController controller = AmbientModeSupport.attach(this);
+
+        layoutContent = findViewById(R.id.layout_content);
+        adjustInset();
+    }
+
+    private void adjustInset() {
+        /* layoutContent is the Linear Layout conprise all the element, adding padding so that it can be seen properly
+         * for round watchface
+         * https://bitbucket.org/snippets/devdev-dev/keR67A
+         */
+        if (layoutContent != null && getApplicationContext().getResources().getConfiguration().isScreenRound()) {
+            // get the display width in pixel and set that for dp as inset
+            int inset = (int) (FACTOR * Resources.getSystem().getDisplayMetrics().widthPixels);
+            layoutContent.setPadding(inset, inset, inset, inset);
+        }
     }
 
     private void setUpPermissionRationalDialog() {
