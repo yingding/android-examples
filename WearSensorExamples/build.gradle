@@ -1,9 +1,12 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-
+// Reference:
+// Wear OS 3 Tile: https://github.com/android/wear-os-samples/blob/main/WearTilesKotlin/build.gradle
+// Health Service: https://github.com/android/health-samples
+// What is the purpose of Wearable SDK 17.1.0
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         
     }
     dependencies {
@@ -14,10 +17,11 @@ buildscript {
     }
 }
 
-allprojects {
+subprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
 }
 
