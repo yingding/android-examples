@@ -23,6 +23,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation 'com.google.android.support:wearable:2.8.1' // API WatchFace
+    // play-services-wearable sdK 17.1.0, for DataLayerListenerService, wear os and android communication APIs
     implementation 'com.google.android.gms:play-services-wearable:17.1.0'
     implementation 'androidx.percentlayout:percentlayout:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0' // For Fragment
