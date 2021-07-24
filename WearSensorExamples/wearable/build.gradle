@@ -27,8 +27,8 @@ dependencies {
     implementation 'androidx.percentlayout:percentlayout:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0' // For Fragment
     // implementation 'androidx.legacy:legacy-support-v13:1.0.0' // added
-    implementation 'androidx.recyclerview:recyclerview:1.2.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.wear:wear:1.1.0' // BoxInsetLayout // https://developer.android.com/training/wearables/ui/wear-ui-library
-    implementation 'com.google.android.material:material:1.3.0' // Alert Dialog
+    implementation 'com.google.android.material:material:1.4.0' // Alert Dialog
     compileOnly 'com.google.android.wearable:wearable:2.8.1' // api in wear os platform
 }
