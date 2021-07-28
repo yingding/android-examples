@@ -260,10 +260,10 @@ public class MainActivity extends FragmentActivity implements AmbientModeSupport
     private void outputEventUTCTimestamps(long sensorEventNano) {
         Long[] utcTimestamps = SensorEventTimeUtil.convert2UtcTimestamps(sensorEventNano);
         Log.v(TAG, String.format("Event UTC timestamp:\nEventSysCurrentMilli: %d\nDateTime+sensor,SysNanoDiff: %d\n" +
-                "SysCurMilli+sensor,SysNanoDiff: %d\nSysCurMilli+sensor,SysElapseRTDiff: %d", utcTimestamps)); // vararg shall not be null
+                "SysCurMilli+sensor,SysNanoDiff: %d\nSysCurMilli+sensor,SysElapseRTDiff: %d", (Object[]) utcTimestamps)); // vararg shall not be null
         String[] utcTimeStrs = SensorEventTimeUtil.convertUtcTimestamp2LocalTimeStr(utcTimestamps);
         Log.v(TAG, String.format("Event UTC time string:\nEventSysCurrentMilli: %s\nDateTime+sensor,SysNanoDiff: %s\n" +
-                "SysCurMilli+sensor,SysNanoDiff: %s\nSysCurMilli+sensor,SysElapseRTDiff: %s", utcTimeStrs)); // vararg shall not be null
+                "SysCurMilli+sensor,SysNanoDiff: %s\nSysCurMilli+sensor,SysElapseRTDiff: %s", (Object[]) utcTimeStrs)); // vararg shall not be null
     }
 
     /*
