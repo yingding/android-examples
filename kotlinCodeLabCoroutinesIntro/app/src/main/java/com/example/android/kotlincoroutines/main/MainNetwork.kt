@@ -13,6 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+// MainNetwork is an interface, do not use the @file:JvmName to modify this file name
+// @file:JvmName("MainNetwork")
+// use the annotation @file:JvmName to change the name of generated Java class name
 
 package com.example.android.kotlincoroutines.main
 
@@ -37,6 +40,9 @@ private val service: MainNetwork by lazy {
     retrofit.create(MainNetwork::class.java)
 }
 
+/**
+ * Package level functions are compiled into static method of a Java Class: MainNetwork.getNetworkService()
+ */
 fun getNetworkService() = service
 
 /**
