@@ -23,7 +23,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import com.example.android.kotlincoroutines.R
 import com.google.android.material.snackbar.Snackbar
 
@@ -63,6 +62,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // kotlin 1.4 has the observe extension method, no need to import additional extension lib for observe
         viewModel.taps.observe(this) { value ->
             taps.text = value
         }
