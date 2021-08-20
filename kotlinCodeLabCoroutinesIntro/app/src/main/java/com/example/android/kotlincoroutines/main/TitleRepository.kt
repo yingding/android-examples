@@ -52,7 +52,10 @@ class TitleRepository(val network: MainNetwork, val titleDao: TitleDao) {
      */
     fun refreshTitleWithCallbacks(titleRefreshCallback: TitleRefreshCallback) {
         // This request will be run on a background thread by retrofit
-        BACKGROUND.submit {
+        // ExecutorService.submit returns a Future object, in this case execute will also do
+        // call with last arg lambda function call
+        BACKGROUND.execute {
+        // BACKGROUND.submit {
             try {
                 // Make network request using a blocking call
                 val result = network.fetchNextTitle().execute()
