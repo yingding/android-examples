@@ -18,6 +18,7 @@ apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 
+// replaced with view binding: https://developer.android.com/topic/libraries/view-binding#activities
 // apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
