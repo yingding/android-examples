@@ -69,6 +69,9 @@ buildscript {
                 // TODO: LifeCycle 2.4.0, the extension will be deprecated, need to load artifacts separately
                 "androidx.lifecycle:lifecycle-extensions:$lifecycle_version",
                 "androidx.lifecycle:lifecycle-livedata-ktx:$livedata_version",
+                /* adds viewModelScope as a CoroutineScope to ViewModels, This scope is bound to Dispatchers.Main
+                 * And will automatically be cancelled when the ViewModel is cleared.
+                 */
                 "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_viewmodel_version",
 
                 "androidx.work:work-runtime-ktx:$work_version",
