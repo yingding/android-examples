@@ -24,13 +24,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.kotlincoroutines.R
+import com.example.android.kotlincoroutines.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 
 /**
  * Show layout.activity_main and setup data binding.
  */
 class MainActivity : AppCompatActivity() {
-
+    private lateinit var binding: ActivityMainBinding
     /**
      * Inflate layout.activity_main and setup data binding.
      */
@@ -39,10 +40,14 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
-        val rootLayout: ConstraintLayout = findViewById(R.id.rootLayout)
-        val title: TextView = findViewById(R.id.title)
-        val taps: TextView = findViewById(R.id.taps)
-        val spinner: ProgressBar = findViewById(R.id.spinner)
+        // call getLayoutInflater() in java, in Kotlin layoutInflater
+        binding = ActivityMainBinding.inflate(layoutInflater)
+
+        val rootLayout: ConstraintLayout = binding.root
+        setContentView(rootLayout)
+        val title: TextView = binding.title // title is the name of @+id/title
+        val taps: TextView = binding.taps
+        val spinner: ProgressBar = binding.spinner
 
         // Get MainViewModel by passing a database to the factory
         val database = getDatabase(this)

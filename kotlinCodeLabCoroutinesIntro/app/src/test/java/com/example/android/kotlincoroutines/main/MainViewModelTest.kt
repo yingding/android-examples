@@ -20,20 +20,29 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.android.kotlincoroutines.fakes.MainNetworkFake
 import com.example.android.kotlincoroutines.fakes.TitleDaoFake
 import com.example.android.kotlincoroutines.main.utils.MainCoroutineScopeRule
+import com.example.android.kotlincoroutines.main.utils.getValueForTest
+import com.google.common.truth.Truth
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
 class MainViewModelTest {
+    // a rule is a way to run code before and after the execution of a test in JUnit.
     @get:Rule
     val coroutineScope = MainCoroutineScopeRule()
+    // MainCoroutineScopeRule() lets you pause, resume, or control the execution
+    // of coroutines that are launched on the Dispatchers.Main
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
+    // late initialization:
+    // https://0xalihn.medium.com/kotlin-var-val-lateinit-lazy-get-when-to-use-what-bd50200b0a38
+    // Not allocate memory until initialized
     lateinit var subject: MainViewModel
 
     @Before
     fun setup() {
+        // initialization
         subject = MainViewModel(
                 TitleRepository(
                         MainNetworkFake("OK"),
@@ -44,5 +53,10 @@ class MainViewModelTest {
     @Test
     fun whenMainClicked_updatesTaps() {
         // TODO: Write this
+        subject.onMainViewClicked()
+        Truth.assertThat(subject.taps.getValueForTest()).isEqualTo("0 taps")
+        // virtual time
+        coroutineScope.advanceTimeBy(1_000)
+        Truth.assertThat(subject.taps.getValueForTest()).isEqualTo("1 taps")
     }
 }

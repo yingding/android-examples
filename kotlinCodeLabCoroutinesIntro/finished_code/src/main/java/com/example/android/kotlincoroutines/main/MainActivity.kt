@@ -22,15 +22,16 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.observe
-import com.example.android.kotlincoroutines.R
+import androidx.lifecycle.ViewModelProvider
+import com.example.android.kotlincoroutines.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 
 /**
  * Show layout.activity_main and setup data binding.
  */
 class MainActivity : AppCompatActivity() {
+    // ActivityMainBinding from activity_main.xml layout
+    private lateinit var binding: ActivityMainBinding
 
     /**
      * Inflate layout.activity_main and setup data binding.
@@ -38,18 +39,19 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_main)
+        // call getLayoutInflater() in java, in Kotlin layoutInflater
+        binding = ActivityMainBinding.inflate(layoutInflater)
 
-        val rootLayout: ConstraintLayout = findViewById(R.id.rootLayout)
-        val title: TextView = findViewById(R.id.title)
-        val taps: TextView = findViewById(R.id.taps)
-        val spinner: ProgressBar = findViewById(R.id.spinner)
+        val rootLayout: ConstraintLayout = binding.root
+        setContentView(rootLayout)
+        val title: TextView = binding.title // title is the name of @+id/title
+        val taps: TextView = binding.taps
+        val spinner: ProgressBar = binding.spinner
 
         // Get MainViewModel by passing a database to the factory
         val database = getDatabase(this)
         val repository = TitleRepository(getNetworkService(), database.titleDao)
-        val viewModel = ViewModelProviders
-                .of(this, MainViewModel.FACTORY(repository))
+        val viewModel = ViewModelProvider(this, MainViewModel.FACTORY(repository))
                 .get(MainViewModel::class.java)
 
         // When rootLayout is clicked call onMainViewClicked in ViewModel
