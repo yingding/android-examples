@@ -57,6 +57,7 @@ class MainViewModelTest {
         subject.onMainViewClicked()
         Truth.assertThat(subject.taps.getValueForTest()).isEqualTo("0 taps")
         // virtual time
+        // add in vm option in run config: -Xopt-in=kotlin.RequiresOptIn
         @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
         coroutineScope.advanceTimeBy(1_000)
         Truth.assertThat(subject.taps.getValueForTest()).isEqualTo("1 taps")
