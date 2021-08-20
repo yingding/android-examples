@@ -28,6 +28,7 @@ import org.junit.Test
 
 class MainViewModelTest {
     // a rule is a way to run code before and after the execution of a test in JUnit.
+    @kotlinx.coroutines.ExperimentalCoroutinesApi
     @get:Rule
     val coroutineScope = MainCoroutineScopeRule()
     // MainCoroutineScopeRule() lets you pause, resume, or control the execution
@@ -56,6 +57,7 @@ class MainViewModelTest {
         subject.onMainViewClicked()
         Truth.assertThat(subject.taps.getValueForTest()).isEqualTo("0 taps")
         // virtual time
+        @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
         coroutineScope.advanceTimeBy(1_000)
         Truth.assertThat(subject.taps.getValueForTest()).isEqualTo("1 taps")
     }
