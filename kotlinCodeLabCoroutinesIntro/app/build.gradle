@@ -44,8 +44,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
-        // supress OptIn warnings in Gradle build for @OptIn annotation
-        // freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+        /* supress OptIn warnings in Gradle build for @OptIn annotation
+         * https://discuss.kotlinlang.org/t/how-to-supress-optin-warnings-in-gradle-and-during-git-commit-code-analysis/17981
+         */
         freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
     }
     // use view binding instead of kotlin synthetics for view binding using kotlin Android Extensions.
