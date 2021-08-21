@@ -12,3 +12,8 @@ https://developer.android.com/codelabs/kotlin-coroutines#8
 
 ## Useful Resources:
 * (Interactive Kotlin Online Doc)[https://kotlinlang.org/docs/cancellation-and-timeouts.html#making-computation-code-cancellable] for Kotlin coroutines cancellation and timeouts.
+
+## Kotlin Syntax
+
+* double bangs: T!!, converts a unsafe nullable type to a non-null type T, if the object is null, it throws an Exception
+* platform type: T!, it indicates T or T?, kotlin can not known the type and let the developer decide what to do.
