@@ -148,5 +148,33 @@ class MainViewModel(private val repository: TitleRepository) : ViewModel() {
                 _spinner.postValue(false)
             }
         })
+
+        /* coroutine suspend function call
+         * using viewModelScope, when the user moves away from this
+         * activity screen the work started by this coroutine will automatically
+         * be cancelled.
+         *
+         * Note:
+         * When creating a coroutine from a non-coroutine, start with launch.
+         * That way, if they throw an uncaught exception it'll automatically
+         * be propagated to uncaught exception handlers (which by default crash the app).
+         * A coroutine started with async won't throw an exception to its caller
+         * until you call await. However, you can only call await from inside a coroutine,
+         * since it is a suspend function.
+         *
+         * Once inside a coroutine, you can use launch or async to start child coroutines.
+         * Use launch for when you don't have a result to return, and async when you do.
+         */
+        viewModelScope.launch {
+            try {
+                _spinner.value = true
+                repository.refreshTitle()
+            } catch (error: TitleRefreshError) {
+                // in Dispatcher.Main scope, call the liveData.setValue()
+                _snackBar.value = error.message
+            } finally {
+                _spinner.value = false
+            }
+        }
     }
 }
