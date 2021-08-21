@@ -137,6 +137,7 @@ class MainViewModel(private val repository: TitleRepository) : ViewModel() {
      */
     fun refreshTitle() {
         // TODO: Convert refreshTitle to use coroutines
+        /*
         _spinner.value = true
         repository.refreshTitleWithCallbacks(object : TitleRefreshCallback {
             override fun onCompleted() {
@@ -147,7 +148,7 @@ class MainViewModel(private val repository: TitleRepository) : ViewModel() {
                 _snackBar.postValue(cause.message)
                 _spinner.postValue(false)
             }
-        })
+        })*/
 
         /* coroutine suspend function call
          * using viewModelScope, when the user moves away from this

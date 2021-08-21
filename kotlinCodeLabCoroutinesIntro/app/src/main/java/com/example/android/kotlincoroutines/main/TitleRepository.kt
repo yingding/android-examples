@@ -19,7 +19,10 @@ package com.example.android.kotlincoroutines.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.example.android.kotlincoroutines.util.BACKGROUND
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.yield
 
 /**
  * TitleRepository provides an interface to fetch a title or request a new one be generated.
@@ -43,8 +46,43 @@ class TitleRepository(val network: MainNetwork, val titleDao: TitleDao) {
     val title: LiveData<String?> = titleDao.titleLiveData.map { it?.title }
 
     // TODO: Add coroutines-based `fun refreshTitle` here
+
+    /**
+     * To switch between any dispatcher, coroutines uses withContext. Calling withContext
+     * switches to the other dispatcher just for the lambda then comes back to the dispatcher
+     * that called it with the result of that lambda.
+     *
+     * By default, Kotlin coroutines provides three Dispatchers: Main, IO, and Default.
+     * The IO dispatcher is optimized for IO work like reading from the network or disk,
+     * while the Default dispatcher is optimized for CPU intensive tasks.
+     */
     suspend fun refreshTitle() {
-        delay(500)
+        // interact with *blocking* network and IO calls from a coroutine
+        withContext(Dispatchers.IO) {
+            // Response<String!>! single bang, platform types: T! T or T?
+            // https://stackoverflow.com/questions/43826699/single-exclamation-mark-in-kotlin
+            val result = try {
+                // Make network request using a blocking call
+                network.fetchNextTitle().execute()
+            } catch (cause: Throwable) {
+                // If the network throws an exception, inform the caller
+                throw TitleRefreshError("Unable to refresh title", cause)
+            }
+
+            /* use a suspend function yield() so that the following code can be cancelled
+             * or if (isActive) to check the coroutine state actively.
+             * https://kotlinlang.org/docs/cancellation-and-timeouts.html#making-computation-code-cancellable
+             */
+            yield()
+
+            if (result != null && result.isSuccessful) {
+                // Save it to database
+                titleDao.insertTitle(Title(result.body()!!))
+            } else {
+                // If it's not successful, inform the callback
+                throw TitleRefreshError("Unable to refresh title", null)
+            }
+        }
     }
 
     /**
