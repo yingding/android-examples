@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android.kotlincoroutines.util.BACKGROUND
 import com.example.android.kotlincoroutines.util.singleArgViewModelFactory
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -166,12 +167,30 @@ class MainViewModel(private val repository: TitleRepository) : ViewModel() {
          * Once inside a coroutine, you can use launch or async to start child coroutines.
          * Use launch for when you don't have a result to return, and async when you do.
          */
+        /*
         viewModelScope.launch {
             try {
                 _spinner.value = true
                 repository.refreshTitle()
             } catch (error: TitleRefreshError) {
                 // in Dispatcher.Main scope, call the liveData.setValue()
+                _snackBar.value = error.message
+            } finally {
+                _spinner.value = false
+            }
+        }*/
+        // use a higher-order function to launch spinner while loading data
+        launchDataLoad {
+            repository.refreshTitle()
+        }
+    }
+
+    private fun launchDataLoad(block: suspend () -> Unit): Job {
+        return viewModelScope.launch {
+            try {
+                _spinner.value = true
+                block()
+            } catch (error: TitleRefreshError) {
                 _snackBar.value = error.message
             } finally {
                 _spinner.value = false
