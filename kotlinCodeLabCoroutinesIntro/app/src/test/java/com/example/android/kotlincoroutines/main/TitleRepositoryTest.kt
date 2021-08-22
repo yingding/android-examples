@@ -17,9 +17,12 @@
 package com.example.android.kotlincoroutines.main
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.example.android.kotlincoroutines.KotlinCoroutinesApp
+import com.example.android.kotlincoroutines.fakes.MainNetworkCompletableFake
 import com.example.android.kotlincoroutines.fakes.MainNetworkFake
 import com.example.android.kotlincoroutines.fakes.TitleDaoFake
 import com.google.common.truth.Truth
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Rule
 import org.junit.Test
@@ -49,9 +52,22 @@ class TitleRepositoryTest {
         Truth.assertThat(titleDao.nextInsertedOrNull()).isEqualTo("OK")
     }
 
+    @kotlinx.coroutines.ExperimentalCoroutinesApi
     @Test(expected = TitleRefreshError::class)
-    fun whenRefreshTitleTimeout_throws() {
+    fun whenRefreshTitleTimeout_throws() = runBlockingTest {
         // TODO: Write this test
-        throw TitleRefreshError("Remove this – made test pass in starter code", null)
+        val network = MainNetworkCompletableFake()
+        val subject = TitleRepository(
+            network,
+            TitleDaoFake("title")
+        )
+        // launch coroutine in current scope
+        launch {
+            subject.refreshTitle()
+        }
+        @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
+        advanceTimeBy(5_000)
+
+        // throw TitleRefreshError("Remove this – made test pass in starter code", null)
     }
 }
