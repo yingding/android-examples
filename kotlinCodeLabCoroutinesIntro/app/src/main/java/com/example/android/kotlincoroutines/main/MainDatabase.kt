@@ -39,8 +39,11 @@ data class Title constructor(val title: String, @PrimaryKey val id: Int = 0)
  */
 @Dao
 interface TitleDao {
+    /* added suspend identifier to the room
+     * allows only call of this query from a coroutine
+     */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertTitle(title: Title)
+    suspend fun insertTitle(title: Title)
 
     @get:Query("select * from Title where id = 0")
     val titleLiveData: LiveData<Title?>

@@ -41,7 +41,7 @@ buildscript {
         // connections
         def gson_version = '2.8.7' // '2.8.6'
         def retrofit_gson_version = '2.9.0' // '2.6.2'
-        def retrofit_version = '2.9.0' // '2.6.2'
+        def retrofit_version = '2.9.0' // '2.6.2' suspend function is support with retrofit > 2.6.0
 
         // testings
         def junit_version = '4.13.2' // '4.12'

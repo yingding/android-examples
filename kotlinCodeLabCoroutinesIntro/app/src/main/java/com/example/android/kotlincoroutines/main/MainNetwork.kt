@@ -49,8 +49,13 @@ fun getNetworkService() = service
  * Main network interface which will fetch a new welcome title for us
  */
 interface MainNetwork {
+    /*
     @GET("next_title.json")
-    fun fetchNextTitle(): Call<String>
+    fun fetchNextTitle(): Call<String>*/
+
+    // or return Result<String>
+    @GET("next_title.json")
+    suspend fun fetchNextTitle(): String
 }
 
 

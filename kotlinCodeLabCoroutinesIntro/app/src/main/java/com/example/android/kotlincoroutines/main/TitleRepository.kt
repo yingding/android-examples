@@ -56,32 +56,50 @@ class TitleRepository(val network: MainNetwork, val titleDao: TitleDao) {
      * The IO dispatcher is optimized for IO work like reading from the network or disk,
      * while the Default dispatcher is optimized for CPU intensive tasks.
      */
+//    suspend fun refreshTitle() {
+//        // interact with *blocking* network and IO calls from a coroutine
+//        withContext(Dispatchers.IO) {
+//            // Response<String!>! single bang, platform types: T! T or T?
+//            // https://stackoverflow.com/questions/43826699/single-exclamation-mark-in-kotlin
+//            val result = try {
+//                // Make network request using a blocking call
+//                network.fetchNextTitle().execute()
+//            } catch (cause: Throwable) {
+//                // If the network throws an exception, inform the caller
+//                throw TitleRefreshError("Unable to refresh title", cause)
+//            }
+//
+//            /* use a suspend function yield() so that the following code can be cancelled
+//             * or if (isActive) to check the coroutine state actively.
+//             * https://kotlinlang.org/docs/cancellation-and-timeouts.html#making-computation-code-cancellable
+//             */
+//            yield()
+//
+//            if (result != null && result.isSuccessful) {
+//                // Save it to database
+//                titleDao.insertTitle(Title(result.body()!!))
+//            } else {
+//                // If it's not successful, inform the callback
+//                throw TitleRefreshError("Unable to refresh title", null)
+//            }
+//        }
+//    }
+
+    /**
+     * Both Room and Retrofit use a custom dispatcher and do not use Dispatchers.IO.
+     *
+     * Room will run coroutines using the default query and transaction Executor that's configured.
+     * Retrofit will create a new Call object under the hood, and call enqueue on it to send the request
+     * asynchronously.
+     */
     suspend fun refreshTitle() {
-        // interact with *blocking* network and IO calls from a coroutine
-        withContext(Dispatchers.IO) {
-            // Response<String!>! single bang, platform types: T! T or T?
-            // https://stackoverflow.com/questions/43826699/single-exclamation-mark-in-kotlin
-            val result = try {
-                // Make network request using a blocking call
-                network.fetchNextTitle().execute()
-            } catch (cause: Throwable) {
-                // If the network throws an exception, inform the caller
-                throw TitleRefreshError("Unable to refresh title", cause)
-            }
-
-            /* use a suspend function yield() so that the following code can be cancelled
-             * or if (isActive) to check the coroutine state actively.
-             * https://kotlinlang.org/docs/cancellation-and-timeouts.html#making-computation-code-cancellable
-             */
-            yield()
-
-            if (result != null && result.isSuccessful) {
-                // Save it to database
-                titleDao.insertTitle(Title(result.body()!!))
-            } else {
-                // If it's not successful, inform the callback
-                throw TitleRefreshError("Unable to refresh title", null)
-            }
+        try {
+            // Make network request using a blocking call with suspend function on the Dispatcher.Main
+            val result = network.fetchNextTitle()
+            titleDao.insertTitle(Title(result))
+        } catch (cause: Throwable) {
+            // If anything throws an exception, inform the caller
+            throw TitleRefreshError("Unable to refresh title", cause)
         }
     }
 
@@ -91,33 +109,34 @@ class TitleRepository(val network: MainNetwork, val titleDao: TitleDao) {
      * This method does not return the new title. Use [TitleRepository.title] to observe
      * the current tile.
      */
-    fun refreshTitleWithCallbacks(titleRefreshCallback: TitleRefreshCallback) {
-        // This request will be run on a background thread by retrofit
-        // ExecutorService.submit returns a Future object, in this case execute will also do
-        // call with last arg lambda function call
-        BACKGROUND.execute {
-        // BACKGROUND.submit {
-            try {
-                // Make network request using a blocking call
-                val result = network.fetchNextTitle().execute()
-                if (result.isSuccessful) {
-                    // Save it to database
-                    titleDao.insertTitle(Title(result.body()!!))
-                    // Inform the caller the refresh is completed
-                    titleRefreshCallback.onCompleted()
-                } else {
-                    // If it's not successful, inform the callback of the error
-                    titleRefreshCallback.onError(
-                            TitleRefreshError("Unable to refresh title", null))
-                }
-            } catch (cause: Throwable) {
-                // If anything throws an exception, inform the caller
-                titleRefreshCallback.onError(
-                        TitleRefreshError("Unable to refresh title", cause))
-            }
-        }
-    }
-}
+//    fun refreshTitleWithCallbacks(titleRefreshCallback: TitleRefreshCallback) {
+//        // This request will be run on a background thread by retrofit
+//        // ExecutorService.submit returns a Future object, in this case execute will also do
+//        // call with last arg lambda function call
+//        BACKGROUND.execute {
+//        // BACKGROUND.submit {
+//            try {
+//                // Make network request using a blocking call
+//                val result = network.fetchNextTitle().execute()
+//                if (result.isSuccessful) {
+//                    // Save it to database
+//                    titleDao.insertTitle(Title(result.body()!!))
+//                    // Inform the caller the refresh is completed
+//                    titleRefreshCallback.onCompleted()
+//                } else {
+//                    // If it's not successful, inform the callback of the error
+//                    titleRefreshCallback.onError(
+//                            TitleRefreshError("Unable to refresh title", null))
+//                }
+//            } catch (cause: Throwable) {
+//                // If anything throws an exception, inform the caller
+//                titleRefreshCallback.onError(
+//                        TitleRefreshError("Unable to refresh title", cause))
+//            }
+//        }
+//    }
+
+} // end of class
 
 /**
  * Thrown when there was a error fetching a new title
