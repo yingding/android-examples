@@ -44,7 +44,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
-        /* supress OptIn warnings in Gradle build for @OptIn annotation
+        /* suppress OptIn warnings in Gradle build for @OptIn annotation
          * https://discuss.kotlinlang.org/t/how-to-supress-optin-warnings-in-gradle-and-during-git-commit-code-analysis/17981
          */
         freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
@@ -53,6 +53,15 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    /* https://github.com/Kotlin/kotlinx.coroutines/issues/2023#issuecomment-627999486
+     * Deprecated packagingOptions and remove the JB coroutine test package from instrumented test
+     * which doesn't work with work manager test together.
+     */
+    /*
+    packagingOptions {
+        exclude 'META-INF/ASL2.0'
+    }*/
 }
 
 dependencies {
