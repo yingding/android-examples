@@ -2,6 +2,8 @@
 
 this code repository is based on the [Kotlin Coroutines codelab](https://developer.android.com/codelabs/kotlin-coroutines#0). The original code is update to:
 
+[last edit]: 23.Aug 2021
+
 * Kotlin Version: 1.5.21
 * Jetpack ViewBinding
 * All no alpha Libs update till 21.August
@@ -21,9 +23,9 @@ https://developer.android.com/codelabs/kotlin-coroutines#11
 
 ## Modules
 * start: the original start code template for your own exercises
-* app: contains all the improved code results with all non-alpha libs till [last edit]
+* app: contains all the improved code results with all non-alpha libs till [last edit][1]
 * finished_code: the original google codelab results module.
 
-you can compare `app` module with `finished_code` module to see how the code have been changed from 2019 as google published this codelab and how you shall use coroutines at the time of [last edit]
+you can compare `app` module with `finished_code` module to see how the code have been changed from 2019 as google published this codelab and how you shall use coroutines at the time of [last edit][1]
 
-[last edit]: 23.Aug 2021
+[1]: 23.Aug 2021
