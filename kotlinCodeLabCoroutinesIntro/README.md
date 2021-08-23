@@ -4,7 +4,7 @@ this code repository is based on the [Kotlin Coroutines codelab](https://develop
 
 * Kotlin Version: 1.5.21
 * Jetpack ViewBinding
-* All no alpha Libs update till 21.August
+* All no alpha Libs update till 23.Aug.2021
 * Added yield() suspend function to allow coroutines in Dispatcher.IO scope to be cancellable
 * Fixed Instrumented Test of WorkManager and Coroutines not run issue
 
