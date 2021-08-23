@@ -25,9 +25,9 @@ https://developer.android.com/codelabs/kotlin-coroutines#11
 * app: contains all the improved code results with all non-alpha libs till 23.Aug.2021
 * finished_code: the original google codelab results module.
 
-you can compare `app` module with `finished_code` module to see how the code have been changed from 2019 as google published this codelab and how you shall use coroutines at the time of [last edit][]
+you can compare `app` module with `finished_code` module to see how the code have been changed from 2019 as google published this codelab and how you shall use coroutines at the time of [23.Aug.2021]
 
-[last edit]: . "23.Aug.2021"
+[23.Aug.2021]: . "last edit"
 
 <!-- reference style link
 non-alpha libs till [last edit][1]
