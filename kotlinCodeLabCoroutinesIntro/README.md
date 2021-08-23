@@ -1,6 +1,6 @@
 # Introduction
 
-this code repository is based on the (Kotlin Coroutines codelab)[https://developer.android.com/codelabs/kotlin-coroutines#0]. The original code is update to:
+this code repository is based on the [Kotlin Coroutines codelab](https://developer.android.com/codelabs/kotlin-coroutines#0). The original code is update to:
 
 * Kotlin Version: 1.5.21
 * Jetpack ViewBinding
@@ -12,7 +12,7 @@ this code repository is based on the (Kotlin Coroutines codelab)[https://develop
 https://developer.android.com/codelabs/kotlin-coroutines#11
 
 ## Useful Resources:
-* (Interactive Kotlin Online Doc)[https://kotlinlang.org/docs/cancellation-and-timeouts.html#making-computation-code-cancellable] for Kotlin coroutines cancellation and timeouts.
+* [Interactive Kotlin Online Doc](https://kotlinlang.org/docs/cancellation-and-timeouts.html#making-computation-code-cancellable) for Kotlin coroutines cancellation and timeouts.
 
 ## Kotlin Syntax
 
