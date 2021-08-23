@@ -2,8 +2,6 @@
 
 this code repository is based on the [Kotlin Coroutines codelab](https://developer.android.com/codelabs/kotlin-coroutines#0). The original code is update to:
 
-[last edit]: 23.Aug 2021
-
 * Kotlin Version: 1.5.21
 * Jetpack ViewBinding
 * All no alpha Libs update till 21.August
