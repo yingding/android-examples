@@ -21,9 +21,17 @@ https://developer.android.com/codelabs/kotlin-coroutines#11
 
 ## Modules
 * start: the original start code template for your own exercises
-* app: contains all the improved code results with all non-alpha libs till [last edit][1]
+* app: contains all the improved code results with all non-alpha libs till [last edit]
 * finished_code: the original google codelab results module.
 
-you can compare `app` module with `finished_code` module to see how the code have been changed from 2019 as google published this codelab and how you shall use coroutines at the time of [last edit][1]
+you can compare `app` module with `finished_code` module to see how the code have been changed from 2019 as google published this codelab and how you shall use coroutines at the time of [last edit]
 
+[last edit]: 23-Aug-2021
+
+<!-- reference style link
+non-alpha libs till [last edit][1]
 [1]: 23/Aug/2021
+
+https://stackoverflow.com/questions/24580042/github-markdown-are-macros-and-variables-possible/26196818#26196818
+https://www.brianchildress.co/variables-in-markdown/
+-->
