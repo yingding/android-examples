@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ https://stackoverflow.com/questions/56857924/windowbackground-not-work-in-dark-and-light-theme
+ https://proandroiddev.com/implementing-dark-theme-in-your-android-application-ec2b4fefb6e3
+ https://github.com/KunalChaubal/DarkThemeExample
+ -->
+<resources>
+    <color name="colorPrimary">#BB86FC</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="colorBackground">#EB292929</color>
+</resources>

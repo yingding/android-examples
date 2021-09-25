@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- tools:deviceIds="wear"
+android:padding="@dimen/scroll_view_layout_padding"
+?android:attr reading from the dark or light theme
+android:background="?android:attr/windowBackground"
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_scroll_view"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="0dp"
+    android:paddingStart="@dimen/scroll_view_layout_padding"
+    android:paddingEnd="@dimen/scroll_view_layout_padding"
+    android:paddingBottom="0dp"
+    android:background="?android:attr/windowBackground"
+    tools:context=".MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/inner_frame_layout_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <!-- density determines the dot show app:density="12" FLOWER | CIRCLE -->
+        <TextView
+            android:id="@+id/textView_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_pickColor"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_sliderTitle_lightness"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_lightness"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/color_picker_view" />
+
+        <com.flask.colorpicker.slider.LightnessSlider
+            android:id="@+id/v_lightness_slider"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@+id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@+id/textView_sliderTitle_lightness" />
+
+        <TextView
+            android:id="@+id/textView_sliderTitle_alpha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_alpha"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/v_lightness_slider" />
+
+        <com.flask.colorpicker.slider.AlphaSlider
+            android:id="@+id/v_alpha_slider"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@+id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@+id/textView_sliderTitle_alpha" />
+
+        <com.flask.colorpicker.ColorPickerView
+            android:id="@+id/color_picker_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/contextText_colorPicker"
+            app:alphaSlider="true"
+            app:alphaSliderView="@+id/v_alpha_slider"
+            app:border="false"
+            app:density="4"
+            app:initialColor="@color/colorPickerInitial"
+            app:layout_constraintTop_toBottomOf="@+id/textView_title"
+            app:lightnessSlider="true"
+            app:lightnessSliderView="@+id/v_lightness_slider"
+            app:wheelType="CIRCLE"
+           />
+
+        <TextView
+            android:id="@+id/labelText_selectedColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/your_color"
+            app:layout_constraintEnd_toStartOf="@+id/textView_selectedColor"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/guidelineStart"
+            app:layout_constraintStart_toStartOf="@+id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@+id/v_alpha_slider" />
+
+        <TextView
+            android:id="@+id/textView_selectedColor"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/labelText_selectedColor"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/labelText_selectedColor"
+            app:layout_constraintTop_toTopOf="@+id/labelText_selectedColor"
+            tools:text="color" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/text_cancel"
+            app:fabSize="normal"
+            app:layout_constraintEnd_toStartOf="@+id/fab_submit"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/labelText_selectedColor"
+            app:srcCompat="@drawable/ic_baseline_close_24" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/text_submit"
+            app:fabSize="normal"
+            app:layout_constraintBottom_toBottomOf="@+id/fab_cancel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/fab_cancel"
+            app:layout_constraintTop_toTopOf="@+id/fab_cancel"
+            app:srcCompat="@drawable/ic_baseline_done_24" />
+
+        <View
+            android:id="@+id/view_bottom"
+            android:layout_width="32dp"
+            android:layout_height="@dimen/scroll_view_layout_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fab_cancel" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/guide_line_padding" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/guide_line_padding" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- https://medium.com/androiddevelopers/android-styling-themes-vs-styles-ebe05f917578 -->
+<!--
+Dark Model enable
+https://proandroiddev.com/implementing-dark-theme-in-your-android-application-ec2b4fefb6e3?gi=906204fcc4cd
+ https://material.io/develop/android/theming/dark
+ -->
+<resources>
+</resources>

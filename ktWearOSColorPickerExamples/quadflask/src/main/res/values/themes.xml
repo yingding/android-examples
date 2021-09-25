@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Separate themes
+    https://material.io/develop/android/theming/dark
+    -->
+    <style name="Theme.MyApp" parent="Theme.MyApp.Impl.Light"/>
+    <style name="Theme.MyApp.Impl.Light" parent="Theme.MaterialComponents.Light">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="android:windowBackground">@color/colorBackground</item>
+    </style>
+</resources>
