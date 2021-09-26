@@ -24,4 +24,14 @@
         <item name="android:windowBackground">@color/colorBackgroundNight</item>
     </style>
 
+    <style name="Theme.MyApp.Dialog" parent="Theme.MyApp.Impl">
+        <!--
+        <item name="android:background">@android:color/transparent</item>
+        -->
+        <item name="android:backgroundTint">@android:color/transparent</item>
+        <!-- Dialog Material uses the colorAccent -->
+        <item name="android:colorAccent">@android:color/white</item>
+    </style>
+
+
 </resources>

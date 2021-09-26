@@ -5,11 +5,13 @@
     <color name="black">#ff000000</color>
     <color name="white"></color>
 
+    <!-- Light Theme -->
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="colorBackground">#F0F0F0</color>
 
+    <!-- Dark Theme -->
     <color name="colorPrimaryNight">#BB86FC</color>
     <color name="colorPrimaryDarkNight">#3700B3</color>
     <color name="colorAccentNight">@android:color/holo_purple</color>

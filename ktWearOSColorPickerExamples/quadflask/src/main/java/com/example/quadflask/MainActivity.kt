@@ -2,17 +2,25 @@ package com.example.quadflask
 
 import android.content.res.ColorStateList
 import android.content.res.Resources
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.DialogCompat
 import androidx.fragment.app.FragmentActivity
 import com.example.quadflask.databinding.ActivityMainBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : FragmentActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private var selectedColor: Int = 0// white
+    private lateinit var dialog: AlertDialog
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,16 +43,37 @@ class MainActivity : FragmentActivity() {
         // set text view to show chosen color so far
         binding.textViewSelectedColor.setBackgroundColor(selectedColor)
 
+        dialog = MaterialAlertDialogBuilder(this, R.style.Theme_MyApp_Dialog)
+            // .setBackground(ColorDrawable(Color.TRANSPARENT))
+            // .setView(layoutInflater.inflate(R.layout.dialog_overlay, null))
+            .setCancelable(true)
+            .setPositiveButton(" ", null) // must have a space string to keep the first place, otherwise dialog shows only two button
+            .setNegativeButton(R.string.text_again_cap, null)
+            .setNeutralButton(R.string.text_go_on_cap) { _, _ ->
+                // scroll down to label of sliders
+                binding.rootScrollView.post {
+                    binding.rootScrollView.scrollTo(
+                        displayHeight / 2,
+                        binding.textViewSliderTitleLightness.top
+                    )
+                }
+            }
+            .create()
+
+        binding.rootScrollView.setOnScrollChangeListener(
+            // Kotlin SAM
+            View.OnScrollChangeListener{ view: View, i: Int, i1: Int, i2: Int, i3: Int ->
+                closeDialog()
+            }
+        )
+
         binding.colorPickerView.addOnColorSelectedListener {
             selectedColor = it
             Log.v(TAG, "palette color selected:  0x${Integer.toHexString(selectedColor)}")
             // change the text view background
             binding.textViewSelectedColor.setBackgroundColor(selectedColor)
-            // setFABColor(selectedColor)
-            // scroll down to label of sliders
-            binding.rootScrollView.post{
-                binding.rootScrollView.scrollTo(displayHeight/2, binding.textViewSliderTitleLightness.top)
-            }
+
+            openDialog()
         }
 
         // this is called if the sliders are changed
@@ -67,6 +96,14 @@ class MainActivity : FragmentActivity() {
         }
         // called every time by on resume
         // resetSlidersColor(selectedColor)
+    }
+
+    private fun openDialog() {
+        if (! dialog.isShowing) dialog.show()
+    }
+
+    private fun closeDialog() {
+        if (dialog.isShowing) dialog.dismiss()
     }
 
     /**
@@ -99,6 +136,11 @@ class MainActivity : FragmentActivity() {
     override fun onResume() {
         super.onResume()
         resetSlidersColor(selectedColor)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        closeDialog()
     }
 
     companion object {

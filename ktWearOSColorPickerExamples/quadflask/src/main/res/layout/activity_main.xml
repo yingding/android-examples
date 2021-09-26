@@ -15,12 +15,15 @@ android:background="?android:attr/windowBackground"
     android:paddingEnd="@dimen/scroll_view_layout_padding"
     android:paddingBottom="0dp"
     android:background="?android:attr/windowBackground"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    tools:theme="@style/Theme.MyApp.Impl">
 
     <!-- android:padding="@dimen/inner_frame_layout_padding" -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/inner_frame_layout_padding"
+        android:paddingBottom="@dimen/inner_frame_layout_padding"
         android:background="?android:attr/windowBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">

@@ -13,4 +13,6 @@
     <string name="text_submit">submit</string>
     <string name="text_cancel">cancel</string>
     <string name="text_color_is_reset">Default color is reset!</string>
+    <string name="text_again_cap">Again</string>
+    <string name="text_go_on_cap">Go on</string>
 </resources>
