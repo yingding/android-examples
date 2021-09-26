@@ -30,7 +30,7 @@ class MainActivity : FragmentActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // get initial color of color picker
+        // setInitialColor sets the color palette and selected color preview
         binding.colorPickerView.setInitialColor(selectedColor, false)
         // set text view to show chosen color so far
         binding.textViewSelectedColor.setBackgroundColor(selectedColor)
