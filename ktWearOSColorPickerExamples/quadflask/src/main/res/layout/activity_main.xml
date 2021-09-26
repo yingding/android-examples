@@ -95,6 +95,7 @@ android:background="?android:attr/windowBackground"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/your_color"
+            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/textView_selectedColor"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
@@ -126,12 +127,13 @@ android:background="?android:attr/windowBackground"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/labelText_selectedColor"
-            app:srcCompat="@drawable/ic_baseline_close_24" />
+            app:srcCompat="@drawable/ic_baseline_format_color_reset_24" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:contentDescription="@string/text_submit"
             app:fabSize="normal"
             app:layout_constraintBottom_toBottomOf="@+id/fab_cancel"

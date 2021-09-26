@@ -4,6 +4,7 @@ import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.FragmentActivity
 import com.example.quadflask.databinding.ActivityMainBinding
@@ -21,16 +22,17 @@ class MainActivity : FragmentActivity() {
 
         super.onCreate(savedInstanceState)
         // init the default selected color
-        selectedColor = getColor(R.color.colorPickerInitial)
+        val defaultColor = getColor(R.color.colorPickerInitial)
+        selectedColor = defaultColor
+
         val displayHeight = Resources.getSystem().displayMetrics.heightPixels
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        // init with default selected color
-        binding.textViewSelectedColor.setBackgroundColor(selectedColor)
-        // setFABColor(selectedColor)
 
-        binding.colorPickerView.setInitialColor(selectedColor, true)
+
+        resetColorPickerAndView(selectedColor)
+
         binding.colorPickerView.addOnColorSelectedListener {
             selectedColor = it
             Log.v(TAG, "palette color selected:  0x${Integer.toHexString(selectedColor)}")
@@ -51,14 +53,18 @@ class MainActivity : FragmentActivity() {
             // setFABColor(selectedColor)
             Log.v(TAG, "palette color changed: 0x${Integer.toHexString(selectedColor)}")
         }
-        resetSlidersColor(selectedColor)
 
-        // need to set as a post runnable
-        // https://github.com/QuadFlask/colorpicker/issues/71
-//        binding.vLightnessSlider.setOnValueChangedListener {
-//            Log.v(TAG, "light color selected: ${it}%")
-//        }
-
+        // use the cancel or reset fab to reset and scroll back the color
+        binding.fabCancel.setOnClickListener {
+            // scroll back to the first view element
+            binding.rootScrollView.scrollTo(0, binding.textViewTitle.top)
+            selectedColor = defaultColor
+            resetColorPickerAndView(selectedColor)
+            resetSlidersColor(selectedColor)
+            Toast.makeText(this, "Color is reset!", Toast.LENGTH_SHORT).show()
+        }
+        // called every time by on resume
+        // resetSlidersColor(selectedColor)
     }
 
     /**
@@ -69,6 +75,14 @@ class MainActivity : FragmentActivity() {
     private fun setFABColor(color: Int) {
         binding.fabSubmit.backgroundTintList = ColorStateList.valueOf(color)
     }
+
+    private fun resetColorPickerAndView(color: Int) {
+        // get initial color of color picker
+        binding.colorPickerView.setInitialColor(selectedColor, true)
+        // set text view to show chosen color so far
+        binding.textViewSelectedColor.setBackgroundColor(selectedColor)
+    }
+
     private fun resetSlidersColor(color: Int) {
         /* https://github.com/QuadFlask/colorpicker/issues/69 */
         binding.vLightnessSlider.post {
