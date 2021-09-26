@@ -2,21 +2,17 @@ package com.example.quadflask
 
 import android.content.res.ColorStateList
 import android.content.res.Resources
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.app.DialogCompat
 import androidx.fragment.app.FragmentActivity
+import androidx.wear.ambient.AmbientModeSupport
 import com.example.quadflask.databinding.ActivityMainBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 
-class MainActivity : FragmentActivity() {
+class MainActivity : FragmentActivity(), AmbientModeSupport.AmbientCallbackProvider {
 
     private lateinit var binding: ActivityMainBinding
     private var selectedColor: Int = 0// white
@@ -29,6 +25,7 @@ class MainActivity : FragmentActivity() {
         // setTheme(R.style.Theme_MyApp_Impl)
 
         super.onCreate(savedInstanceState)
+
         // init the default selected color
         val defaultColor = getColor(R.color.colorPickerInitial)
         selectedColor = defaultColor
@@ -37,6 +34,9 @@ class MainActivity : FragmentActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // enable ambient mode
+        val controller = AmbientModeSupport.attach(this)
 
         // setInitialColor sets the color palette and selected color preview
         binding.colorPickerView.setInitialColor(selectedColor, false)
@@ -145,5 +145,26 @@ class MainActivity : FragmentActivity() {
 
     companion object {
         private val TAG = MainActivity::class.simpleName
+    }
+
+    override fun getAmbientCallback(): AmbientModeSupport.AmbientCallback {
+        return MyAmbientCallback()
+    }
+
+    private inner class MyAmbientCallback: AmbientModeSupport.AmbientCallback() {
+        override fun onEnterAmbient(ambientDetails: Bundle?) {
+            super.onEnterAmbient(ambientDetails)
+            Log.v(TAG, "entering Ambient mode...")
+        }
+
+        override fun onUpdateAmbient() {
+            super.onUpdateAmbient()
+            Log.v(TAG, "onUpdateAmbient!")
+        }
+
+        override fun onExitAmbient() {
+            super.onExitAmbient()
+            Log.v(TAG, "exiting Ambient mode...")
+        }
     }
 }
