@@ -12,4 +12,5 @@
     <string name="your_color">Selected color:</string>
     <string name="text_submit">submit</string>
     <string name="text_cancel">cancel</string>
+    <string name="text_color_is_reset">Default color is reset!</string>
 </resources>

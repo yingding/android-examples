@@ -63,7 +63,7 @@ class MainActivity : FragmentActivity() {
             selectedColor = defaultColor
             resetColorPickerAndView(selectedColor)
             resetSlidersColor(selectedColor)
-            Toast.makeText(this, "Color is reset!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.text_color_is_reset, Toast.LENGTH_SHORT).show()
         }
         // called every time by on resume
         // resetSlidersColor(selectedColor)
