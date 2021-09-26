@@ -4,6 +4,7 @@
     https://material.io/develop/android/theming/dark
     -->
     <style name="Theme.MyApp" parent="Theme.MyApp.Impl.Light"/>
+
     <style name="Theme.MyApp.Impl.Light" parent="Theme.MaterialComponents.Light">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -12,4 +13,15 @@
         <item name="android:textColorSecondary">@android:color/white</item>
         <item name="android:windowBackground">@color/colorBackground</item>
     </style>
+
+    <!-- for pre API 11 doesn't support Dark mode, you will also need to add the dark theme to the values/themes.xml so that I can also be used by the AndroidManifest.xml -->
+    <style name="Theme.MyApp.Impl" parent="Theme.MaterialComponents">
+        <item name="colorPrimary">@color/colorPrimaryNight</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkNight</item>
+        <item name="android:colorAccent">@color/colorAccentNight</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="android:windowBackground">@color/colorBackgroundNight</item>
+    </style>
+
 </resources>

@@ -5,12 +5,12 @@
     -->
     <style name="Theme.MyApp" parent="Theme.MyApp.Impl"/>
     <style name="Theme.MyApp.Impl" parent="Theme.MaterialComponents">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:colorAccent">@android:color/holo_purple</item>
+        <item name="colorPrimary">@color/colorPrimaryNight</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkNight</item>
+        <item name="android:colorAccent">@color/colorAccentNight</item>
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="android:textColorSecondary">@android:color/white</item>
-        <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="android:windowBackground">@color/colorBackgroundNight</item>
 
     </style>
 </resources>

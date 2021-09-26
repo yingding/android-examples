@@ -18,7 +18,7 @@ class MainActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         // Set dark theme actively
         // https://stackoverflow.com/questions/30174042/how-to-switch-themes-night-mode-without-restarting-the-activity
-        setTheme(R.style.Theme_MyApp_Impl)
+        // setTheme(R.style.Theme_MyApp_Impl)
 
         super.onCreate(savedInstanceState)
         // init the default selected color

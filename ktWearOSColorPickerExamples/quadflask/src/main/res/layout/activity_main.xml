@@ -17,10 +17,11 @@ android:background="?android:attr/windowBackground"
     android:background="?android:attr/windowBackground"
     tools:context=".MainActivity">
 
+    <!-- android:padding="@dimen/inner_frame_layout_padding" -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/inner_frame_layout_padding"
+        android:background="?android:attr/windowBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -127,14 +128,16 @@ android:background="?android:attr/windowBackground"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/labelText_selectedColor"
+            app:backgroundTint="?android:attr/colorAccent"
             app:srcCompat="@drawable/ic_baseline_format_color_reset_24" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:contentDescription="@string/text_submit"
+            app:backgroundTint="?android:attr/colorAccent"
             app:fabSize="normal"
             app:layout_constraintBottom_toBottomOf="@+id/fab_cancel"
             app:layout_constraintEnd_toEndOf="parent"
