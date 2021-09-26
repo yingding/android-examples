@@ -30,8 +30,10 @@ class MainActivity : FragmentActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        resetColorPickerAndView(selectedColor)
+        // get initial color of color picker
+        binding.colorPickerView.setInitialColor(selectedColor, false)
+        // set text view to show chosen color so far
+        binding.textViewSelectedColor.setBackgroundColor(selectedColor)
 
         binding.colorPickerView.addOnColorSelectedListener {
             selectedColor = it
@@ -78,7 +80,8 @@ class MainActivity : FragmentActivity() {
 
     private fun resetColorPickerAndView(color: Int) {
         // get initial color of color picker
-        binding.colorPickerView.setInitialColor(selectedColor, true)
+        binding.colorPickerView.setColor(selectedColor, false)
+
         // set text view to show chosen color so far
         binding.textViewSelectedColor.setBackgroundColor(selectedColor)
     }
