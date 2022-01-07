@@ -6,7 +6,7 @@ This project is the following the Google Codelabs
 
 ## Progress sofar
 
-https://developer.android.com/codelabs/jetpack-compose-basics?hl=en#6
+https://developer.android.com/codelabs/jetpack-compose-basics?hl=en#7
 
 ## Compose Modifiers List
 * https://developer.android.com/jetpack/compose/modifiers-list
