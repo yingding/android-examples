@@ -3,6 +3,9 @@ package com.example.ktcomposebasicexample
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -90,7 +93,14 @@ fun Greeting(name: String) {
     var expanded by remember { mutableStateOf(false) }
 
     // No need to remember, it is a simple calculation
-    val extraPadding = if (expanded) 48.dp else 0.dp
+    // val extraPadding = if (expanded) 48.dp else 0.dp
+    val extraPadding by animateDpAsState(
+        if (expanded) 48.dp else 0.dp,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        )
+    )
 
     // Modifier of a composable is regarding to the parent
     Surface(
@@ -106,8 +116,8 @@ fun Greeting(name: String) {
             // Modifier tells the padding in Row
             Column(modifier = Modifier
                 .weight(1f)
-                // adding extra padding to the parent row
-                .padding(bottom = extraPadding)
+                // adding extra padding to the parent row and padding can not be negative.
+                .padding(bottom = extraPadding.coerceAtLeast(0.dp))
             ) {
                 Text(text = "Hello,")
                 Text(text = name)
