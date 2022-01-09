@@ -3,15 +3,21 @@ buildscript {
     ext {
         // compose_version = "1.0.5"
         compose_version = "1.1.0-rc01"
+        compose_compile_version = "1.1.0-rc02" // works with kotlin 1.6.10
+        // https://developer.android.com/jetpack/androidx/releases/compose-compiler#1.1.0-rc02
+        // compose_compile_version = "1.2.0-SNAPSHOT"
+
         junit_version = '4.13.2'
     }
     repositories {
         google()
         mavenCentral()
+        // working with snapshot
+        // maven { url 'https://androidx.dev/snapshots/builds/8003490/artifacts/repository' }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:7.0.4"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.0"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
         // classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31"
 
         // NOTE: Do not place your application dependencies here; they belong
