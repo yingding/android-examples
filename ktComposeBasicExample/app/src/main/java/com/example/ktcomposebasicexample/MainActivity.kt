@@ -1,8 +1,10 @@
 package com.example.ktcomposebasicexample
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
@@ -14,10 +16,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
+import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons.Filled
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,6 +34,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.ktcomposebasicexample.ui.theme.KtComposeBasicExampleTheme
@@ -85,7 +95,7 @@ fun Greetings(names: List<String> = List(1000) {"$it"}) {
 }
 
 @Composable
-fun Greeting(name: String) {
+fun Greeting1(name: String) {
     // var expanded = remember { mutableStateOf(false) }
     // By delegation need
     // import androidx.compose.runtime.getValue
@@ -120,17 +130,78 @@ fun Greeting(name: String) {
                 .padding(bottom = extraPadding.coerceAtLeast(0.dp))
             ) {
                 Text(text = "Hello,")
-                Text(text = name)
+                //Text(text = name, style = MaterialTheme.typography.h4)
+                Text(text = name, style = MaterialTheme.typography.h4.copy(
+                    fontWeight = FontWeight.ExtraBold
+                ))
             }
             OutlinedButton(
                 onClick = { expanded = !expanded}
             ) {
                 Text(
-                    if (expanded) "Show less" else "Show more")
+                    if (expanded) stringResource(R.string.show_less) else stringResource(R.string.show_more)
+                                    )
             }
         }
     }
 }
+
+@Composable
+fun Greeting(name: String) {
+    Card(
+        backgroundColor = MaterialTheme.colors.primary,
+        modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
+    ) {
+        CardContent(name)
+    }
+}
+
+@Composable
+fun CardContent(name: String) {
+    var expanded by remember { mutableStateOf(false) }
+
+    // Modifier tells the padding for surface
+    Row( modifier = Modifier
+        .padding(12.dp)
+        .animateContentSize(
+            animationSpec = spring(
+                dampingRatio = Spring.DampingRatioMediumBouncy,
+                stiffness = Spring.StiffnessLow
+            )
+        )
+    ) {
+        // Modifier tells the padding in Row
+        Column(modifier = Modifier
+            .weight(1f)
+            // adding extra padding to the parent row and padding can not be negative.
+            .padding(12.dp)
+        ) {
+            Text(text = "Hello,")
+            //Text(text = name, style = MaterialTheme.typography.h4)
+            Text(text = name, style = MaterialTheme.typography.h4.copy(
+                fontWeight = FontWeight.ExtraBold
+            ))
+            if (expanded) {
+                Text(
+                    text = ("Composem ipsum color sit lazy, " +
+                            "padding theme elit, sed do bouncy. ").repeat(4)
+                )
+            }
+        }
+        IconButton(onClick = {expanded = !expanded}) {
+            Icon(
+                imageVector = if (expanded) Filled.ExpandLess else Filled.ExpandMore,
+                contentDescription = if (expanded) {
+                    stringResource(R.string.show_less)
+                } else {
+                    stringResource(R.string.show_more)
+                }
+            )
+        }
+    }
+
+}
+
 
 @Composable
 fun OnboardingScreen(onContinueClicked: () -> Unit) {
@@ -159,10 +230,15 @@ fun OnboardingScreen(onContinueClicked: () -> Unit) {
 
 @Preview(
     showBackground = true,
-    name = "Text preview",
+    name = "DefaultPreviewDark",
+    uiMode = UI_MODE_NIGHT_YES,
     widthDp = 320
 )
-
+@Preview(
+    showBackground = true,
+    name = "DefaultPreviewLight",
+    widthDp = 320
+)
 @Composable
 fun DefaultPreview() {
     KtComposeBasicExampleTheme {
