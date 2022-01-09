@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
@@ -17,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,7 +44,10 @@ private fun MyApp() {
 //    Surface(color = MaterialTheme.colors.background) {
 //        Greeting("Android")
 //    }
-    var shouldShowOnboarding by remember { mutableStateOf(true) }
+
+    // var shouldShowOnboarding by remember { mutableStateOf(true) }
+    // remember the state for configuration change
+    var shouldShowOnboarding by rememberSaveable { mutableStateOf(true) }
 
     if (shouldShowOnboarding) {
         // pass a callback function down to modified the hoisted state
@@ -51,11 +57,25 @@ private fun MyApp() {
     }
 }
 
+//@Composable
+//fun Greetings(names: List<String> = listOf("World", "Compose")) {
+//    val modifier = Modifier.padding(vertical = 4.dp)
+//    Column (modifier = modifier){
+//        for (name in names) {
+//            Greeting(name = name)
+//        }
+//    }
+//}
+
+/**
+ * Using LazyColumn, which is equivalent to RecyclerView List
+ */
 @Composable
-fun Greetings(names: List<String> = listOf("World", "Compose")) {
+fun Greetings(names: List<String> = List(1000) {"$it"}) {
     val modifier = Modifier.padding(vertical = 4.dp)
-    Column (modifier = modifier){
-        for (name in names) {
+    LazyColumn (modifier = modifier){
+        // androidx.compose.foundation.lazy.items
+        items(items = names) { name ->
             Greeting(name = name)
         }
     }
