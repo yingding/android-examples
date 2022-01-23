@@ -64,29 +64,29 @@ private fun MyApp() {
 
     if (shouldShowOnboarding) {
         // pass a callback function down to modified the hoisted state
-        OnboardingScreen(onContinueClicked = { shouldShowOnboarding = false})
+        OnboardingScreen(onContinueClicked = { shouldShowOnboarding = false })
     } else {
         Greetings()
     }
 }
 
-//@Composable
-//fun Greetings(names: List<String> = listOf("World", "Compose")) {
+// @Composable
+// fun Greetings(names: List<String> = listOf("World", "Compose")) {
 //    val modifier = Modifier.padding(vertical = 4.dp)
 //    Column (modifier = modifier){
 //        for (name in names) {
 //            Greeting(name = name)
 //        }
 //    }
-//}
+// }
 
 /**
  * Using LazyColumn, which is equivalent to RecyclerView List
  */
 @Composable
-fun Greetings(names: List<String> = List(1000) {"$it"}) {
+fun Greetings(names: List<String> = List(1000) { "$it" }) {
     val modifier = Modifier.padding(vertical = 4.dp)
-    LazyColumn (modifier = modifier){
+    LazyColumn(modifier = modifier) {
         // androidx.compose.foundation.lazy.items
         items(items = names) { name ->
             Greeting(name = name)
@@ -124,23 +124,27 @@ fun Greeting1(name: String) {
         // Modifier tells the padding for surface
         Row(Modifier.padding(24.dp)) {
             // Modifier tells the padding in Row
-            Column(modifier = Modifier
-                .weight(1f)
-                // adding extra padding to the parent row and padding can not be negative.
-                .padding(bottom = extraPadding.coerceAtLeast(0.dp))
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    // adding extra padding to the parent row and padding can not be negative.
+                    .padding(bottom = extraPadding.coerceAtLeast(0.dp))
             ) {
                 Text(text = "Hello,")
-                //Text(text = name, style = MaterialTheme.typography.h4)
-                Text(text = name, style = MaterialTheme.typography.h4.copy(
-                    fontWeight = FontWeight.ExtraBold
-                ))
+                // Text(text = name, style = MaterialTheme.typography.h4)
+                Text(
+                    text = name,
+                    style = MaterialTheme.typography.h4.copy(
+                        fontWeight = FontWeight.ExtraBold
+                    )
+                )
             }
             OutlinedButton(
-                onClick = { expanded = !expanded}
+                onClick = { expanded = !expanded }
             ) {
                 Text(
                     if (expanded) stringResource(R.string.show_less) else stringResource(R.string.show_more)
-                                    )
+                )
             }
         }
     }
@@ -161,34 +165,41 @@ fun CardContent(name: String) {
     var expanded by remember { mutableStateOf(false) }
 
     // Modifier tells the padding for surface
-    Row( modifier = Modifier
-        .padding(12.dp)
-        .animateContentSize(
-            animationSpec = spring(
-                dampingRatio = Spring.DampingRatioMediumBouncy,
-                stiffness = Spring.StiffnessLow
+    Row(
+        modifier = Modifier
+            .padding(12.dp)
+            .animateContentSize(
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioMediumBouncy,
+                    stiffness = Spring.StiffnessLow
+                )
             )
-        )
     ) {
         // Modifier tells the padding in Row
-        Column(modifier = Modifier
-            .weight(1f)
-            // adding extra padding to the parent row and padding can not be negative.
-            .padding(12.dp)
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                // adding extra padding to the parent row and padding can not be negative.
+                .padding(12.dp)
         ) {
             Text(text = "Hello,")
-            //Text(text = name, style = MaterialTheme.typography.h4)
-            Text(text = name, style = MaterialTheme.typography.h4.copy(
-                fontWeight = FontWeight.ExtraBold
-            ))
+            // Text(text = name, style = MaterialTheme.typography.h4)
+            Text(
+                text = name,
+                style = MaterialTheme.typography.h4.copy(
+                    fontWeight = FontWeight.ExtraBold
+                )
+            )
             if (expanded) {
                 Text(
-                    text = ("Composem ipsum color sit lazy, " +
-                            "padding theme elit, sed do bouncy. ").repeat(4)
+                    text = (
+                        "Composem ipsum color sit lazy, " +
+                            "padding theme elit, sed do bouncy. "
+                        ).repeat(4)
                 )
             }
         }
-        IconButton(onClick = {expanded = !expanded}) {
+        IconButton(onClick = { expanded = !expanded }) {
             Icon(
                 imageVector = if (expanded) Filled.ExpandLess else Filled.ExpandMore,
                 contentDescription = if (expanded) {
@@ -199,9 +210,7 @@ fun CardContent(name: String) {
             )
         }
     }
-
 }
-
 
 @Composable
 fun OnboardingScreen(onContinueClicked: () -> Unit) {
@@ -226,7 +235,6 @@ fun OnboardingScreen(onContinueClicked: () -> Unit) {
         }
     }
 }
-
 
 @Preview(
     showBackground = true,

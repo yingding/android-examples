@@ -44,11 +44,11 @@ subprojects {
             targetExclude('bin/**/*.kt')
 
             ktlint("0.41.0")
-            licenseHeaderFile rootProject.file('spotless/copyright.kt')
+            // licenseHeaderFile rootProject.file('spotless/copyright.kt')
         }
     }
 }
 
-//task clean(type: Delete) {
-//    delete rootProject.buildDir
-//}
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
