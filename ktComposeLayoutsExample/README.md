@@ -8,6 +8,16 @@ This project is following the Google Codelabs example of compose
 
 https://developer.android.com/codelabs/jetpack-compose-layouts#1
 
+## Use spotless
+
+```
+./gradlew build
+./gradlew spotlessApply
+./gradlew build
+```
+Reference:
+* https://github.com/diffplug/spotless/tree/main/plugin-gradle
+
 ## Compose Modifiers List
 * https://developer.android.com/jetpack/compose/modifiers-list
 
