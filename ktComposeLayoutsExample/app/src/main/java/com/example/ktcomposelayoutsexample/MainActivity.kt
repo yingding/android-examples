@@ -11,11 +11,23 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.BottomDrawer
 import androidx.compose.material.ContentAlpha
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FamilyRestroom
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Feedback
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -23,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.ktcomposelayoutsexample.ui.theme.KtComposeLayoutsExampleTheme
@@ -33,9 +46,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             KtComposeLayoutsExampleTheme {
                 // A surface container using the 'background' color from the theme
+                /*
                 Surface(color = MaterialTheme.colors.background) {
                     Greeting("Android")
                 }
+                */
+                LayoutsCodelab()
             }
         }
     }
@@ -81,6 +97,44 @@ fun PhotographerCard(modifier: Modifier = Modifier) {
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun LayoutsCodelab() {
+    Scaffold (
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(text = "LayoutsCodelab")
+                },
+                navigationIcon = {
+                    IconButton(onClick = {}) {
+                        Icon(imageVector = Icons.Filled.Menu, contentDescription = null)
+                    }
+                },
+                actions = {
+                    IconButton(onClick = {}) {
+                        Icon(imageVector = Icons.Filled.Feedback, contentDescription = null)
+                    }
+                }
+            )
+        },
+        /*
+        Take a look at this bottomBar with BottomDrawer example
+        https://stackoverflow.com/questions/67854169/how-to-implement-bottomappbar-and-bottomdrawer-pattern-using-android-jetpack-com/69818609#69818609
+         */
+    ) { innerPadding ->
+        BodyContent(Modifier.padding(innerPadding).padding(8.dp))
+    }
+}
+
+@Composable
+fun BodyContent(modifier: Modifier = Modifier) {
+    Column(modifier) {
+        Text(text = "Hi there!")
+        Text(text = "Thanks for going through the Layouts codelab")
+    }
+}
+
 
 @Preview(showBackground = true)
 @Composable
@@ -95,5 +149,16 @@ fun DefaultPreview() {
 fun PhotographerCardPreview() {
     KtComposeLayoutsExampleTheme {
         PhotographerCard()
+    }
+}
+
+@Preview(
+    showBackground = true,
+    device = Devices.NEXUS_5,
+)
+@Composable
+fun LayoutsCodelabPreview() {
+    KtComposeLayoutsExampleTheme {
+        LayoutsCodelab()
     }
 }
