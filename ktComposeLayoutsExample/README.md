@@ -6,7 +6,7 @@ This project is following the Google Codelabs example of compose
 
 ## Progress so far
 
-https://developer.android.com/codelabs/jetpack-compose-layouts#1
+https://developer.android.com/codelabs/jetpack-compose-layouts#3
 
 ## Use spotless
 
@@ -17,6 +17,12 @@ https://developer.android.com/codelabs/jetpack-compose-layouts#1
 ```
 Reference:
 * https://github.com/diffplug/spotless/tree/main/plugin-gradle
+
+## Enable Compose Interactive Preview
+Android Studio -> Preferences -> Experimental (Macosx)
+
+Reference:
+* https://stackoverflow.com/questions/67864256/i-cannot-see-interactive-mode-for-the-preview-when-using-jetpack-compose-in-andr
 
 ## Compose Modifiers List
 * https://developer.android.com/jetpack/compose/modifiers-list
