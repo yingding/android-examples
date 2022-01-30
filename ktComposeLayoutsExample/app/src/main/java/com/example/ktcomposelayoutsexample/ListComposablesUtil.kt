@@ -10,16 +10,20 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.modifier.modifierLocalOf
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.ktcomposelayoutsexample.ui.theme.KtComposeLayoutsExampleTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun SimpleList() {
@@ -75,6 +79,61 @@ fun ImageList() {
     }
 }
 
+@Composable
+fun ScrollingList() {
+    val listSize = 100
+    // We save the scrolling position with this state
+    val scrollState = rememberLazyListState()
+    // We save the coroutine scope where our animated scroll will be executed
+    val coroutineScope = rememberCoroutineScope()
+
+    Column {
+
+
+        // Button control the scroll
+        // use the same weight to get the button evenly distributed
+        Row {
+            Button(modifier = Modifier.weight(1F),
+                onClick = {
+                coroutineScope.launch {
+                    // 0 is the first item idex
+                    scrollState.animateScrollToItem(0)
+                }
+            }) {
+                Text("Scroll to the top")
+            }
+            Spacer(modifier = Modifier.size(8.dp))
+            Button(modifier = Modifier.weight(1F),
+                onClick = {
+                coroutineScope.launch {
+                    // listSize -1 is the last index of the list
+                    scrollState.animateScrollToItem(listSize - 1)
+                }
+            }) {
+                Text("Scroll to the end")
+            }
+        }
+
+        // List
+        LazyColumn(state = scrollState) {
+            items(100) {
+                ImageListItem(it)
+            }
+        }
+    }
+}
+
+@Preview(
+    showBackground = true,
+    heightDp = 320,
+    widthDp = 240,
+)
+@Composable
+fun ScrollingListPreview() {
+    KtComposeLayoutsExampleTheme {
+        ScrollingList()
+    }
+}
 
 @Preview(
     showBackground = true,
@@ -87,7 +146,6 @@ fun ImageListPreview() {
         ImageList()
     }
 }
-
 
 @Preview(
     showBackground = true,
