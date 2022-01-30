@@ -152,6 +152,9 @@ fun PhotographerCardPreview() {
     }
 }
 
+
+
+
 @Preview(
     showBackground = true,
     device = Devices.NEXUS_5,
