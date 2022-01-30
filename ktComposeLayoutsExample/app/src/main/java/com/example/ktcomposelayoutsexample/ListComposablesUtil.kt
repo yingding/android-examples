@@ -18,7 +18,7 @@ fun SimpleList() {
     // be used to programmatically scroll the list
     val scrollState = rememberScrollState()
 
-    Column(Modifier.verticalScroll(scrollState)){
+    Column(Modifier.verticalScroll(scrollState)) {
         repeat(100) {
             Text("Item #$it")
         }

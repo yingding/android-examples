@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.BottomDrawer
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
@@ -23,17 +22,13 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FamilyRestroom
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Feedback
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
@@ -67,40 +62,39 @@ fun PhotographerCard(modifier: Modifier = Modifier) {
     // use a default empty modifier
     // chaining multiple modifiers by using factory-extension functions
     // the order of the modifier matters
-    Row(modifier
-        .padding(8.dp)
-        .clip(RoundedCornerShape(4.dp))
-        .background(MaterialTheme.colors.surface)
-        .clickable{ /**/}
-        .padding(16.dp) // order matters
+    Row(
+        modifier
+            .padding(8.dp)
+            .clip(RoundedCornerShape(4.dp))
+            .background(MaterialTheme.colors.surface)
+            .clickable { /**/ }
+            .padding(16.dp) // order matters
 
     ) {
-        Surface (
+        Surface(
             modifier = Modifier.size(50.dp),
             shape = CircleShape,
             color = MaterialTheme.colors.onSurface.copy(alpha = 0.2f)
         ) {
-
         }
-        Column (
+        Column(
             modifier = Modifier
-                .padding(start=8.dp)
+                .padding(start = 8.dp)
                 .align(Alignment.CenterVertically)
-                ){
+        ) {
             Text("Alfred Sisley", fontWeight = FontWeight.Bold)
             // LocalContentAlpha is defining opacity level of its children
             CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                 Text("3 minutes ago", style = MaterialTheme.typography.body2)
             }
         }
-
     }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun LayoutsCodelab() {
-    Scaffold (
+    Scaffold(
         topBar = {
             TopAppBar(
                 title = {
@@ -135,7 +129,6 @@ fun BodyContent(modifier: Modifier = Modifier) {
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
@@ -151,9 +144,6 @@ fun PhotographerCardPreview() {
         PhotographerCard()
     }
 }
-
-
-
 
 @Preview(
     showBackground = true,
