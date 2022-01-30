@@ -24,6 +24,13 @@ Android Studio -> Preferences -> Experimental (Macosx)
 Reference:
 * https://stackoverflow.com/questions/67864256/i-cannot-see-interactive-mode-for-the-preview-when-using-jetpack-compose-in-andr
 
+## Compose DSL
+* https://developer.android.com/jetpack/compose/kotlin#dsl
+
+## Compose Coil Lib
+Image loading for Android backed by Kotlin Coroutines
+* https://github.com/coil-kt/coil
+
 ## Compose Modifiers List
 * https://developer.android.com/jetpack/compose/modifiers-list
 
