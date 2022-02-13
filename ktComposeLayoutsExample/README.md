@@ -39,3 +39,6 @@ Image loading for Android backed by Kotlin Coroutines
 
 Android Studio > Preferences > Editor > Code Style > Kotlin > imports > use single name imports
 Android Studio > Preferences > Editor > Auto Import > Java & Kotlin > Optimize imports on the fly
+
+## Compose Layout Stages (Measure and Placement)
+A very well introduction video of Jetpack Compose layouts: https://www.youtube.com/watch?v=zMKMwh9gZuI

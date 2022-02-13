@@ -46,7 +46,8 @@ class MainActivity : ComponentActivity() {
                     Greeting("Android")
                 }
                 */
-                LayoutsCodelab()
+                // LayoutsCodelab()
+                BodyContentCustom()
             }
         }
     }

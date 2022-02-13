@@ -7,8 +7,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.AlignmentLine
 import androidx.compose.ui.layout.FirstBaseline
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.Measurable
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.ktcomposelayoutsexample.ui.theme.KtComposeLayoutsExampleTheme
@@ -19,6 +22,7 @@ import com.example.ktcomposelayoutsexample.ui.theme.KtComposeLayoutsExampleTheme
 // functional extension for the Modifier
 @Composable
 fun Modifier.firstBaselineTopTop(firstBaselineToTop: Dp) = this.then(
+    // Modifier.layout function
     layout { measurable, constraints ->
         val placeable = measurable.measure(constraints)
 
@@ -37,6 +41,51 @@ fun Modifier.firstBaselineTopTop(firstBaselineToTop: Dp) = this.then(
         }
     }
 )
+
+@Composable
+fun MyOwnColumn(
+    modifier: Modifier = Modifier,
+    // custom layout attributes
+    content: @Composable () -> Unit
+) {
+    // https://www.youtube.com/watch?v=zMKMwh9gZuI
+    // Layout composable
+    Layout(
+        content = content,
+        modifier = modifier,
+    ) { measurables: List<Measurable>,
+        constraints: Constraints ->
+        // Measure children
+        val placeables = measurables.map { measurable ->
+            // Measure each child
+            measurable.measure(constraints)
+        }
+
+        // Track the y co-ord we have placed children up to
+        var yPosition = 0
+
+        // Set the size of the layout as big as it can
+        layout(constraints.maxWidth, constraints.maxHeight) {
+            // Place children
+            placeables.forEach { placeable ->
+                // Position item on the sreen
+                placeable.placeRelative(x = 0, y = yPosition)
+                // Record the y co-ord placed up
+                yPosition += placeable.height
+            }
+        }
+    }
+}
+
+@Composable
+fun BodyContentCustom(modifier: Modifier = Modifier) {
+    MyOwnColumn(modifier.padding(8.dp)) {
+        Text("MyOwnColumn")
+        Text("places items")
+        Text("vertically.")
+        Text("We've done it by hand!")
+    }
+}
 
 @Preview(
     showBackground = true
@@ -58,4 +107,11 @@ fun TextWithNormalPaddingPreview() {
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+fun BodyContentCustomPreview() {
+    KtComposeLayoutsExampleTheme {
+        BodyContentCustom()
+    }
+}
 
