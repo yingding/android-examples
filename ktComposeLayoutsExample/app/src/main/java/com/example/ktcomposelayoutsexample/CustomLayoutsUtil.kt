@@ -61,12 +61,12 @@ fun MyOwnColumn(
             measurable.measure(constraints)
         }
 
-        // Track the y co-ord we have placed children up to
-        var yPosition = 0
-
         // Set the size of the layout as big as it can
         layout(constraints.maxWidth, constraints.maxHeight) {
             // Place children
+            // Track the y co-ord we have placed children up to
+            var yPosition = 0
+
             placeables.forEach { placeable ->
                 // Position item on the sreen
                 placeable.placeRelative(x = 0, y = yPosition)
