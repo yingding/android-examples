@@ -6,7 +6,7 @@ This project is following the Google Codelabs example of compose
 
 ## Progress so far
 
-https://developer.android.com/codelabs/jetpack-compose-layouts#6
+https://developer.android.com/codelabs/jetpack-compose-layouts#7
 
 ## Use spotless
 
