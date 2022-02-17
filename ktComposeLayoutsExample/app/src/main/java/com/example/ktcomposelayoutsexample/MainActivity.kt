@@ -5,10 +5,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ContentAlpha
@@ -122,11 +124,22 @@ fun LayoutsCodelab() {
     }
 }
 
+//@Composable
+//fun BodyContent(modifier: Modifier = Modifier) {
+//    Column(modifier) {
+//        Text(text = "Hi there!")
+//        Text(text = "Thanks for going through the Layouts codelab")
+//    }
+//}
+
+
 @Composable
 fun BodyContent(modifier: Modifier = Modifier) {
-    Column(modifier) {
-        Text(text = "Hi there!")
-        Text(text = "Thanks for going through the Layouts codelab")
+    // Wrap the content in a scrollable row
+    Row(
+      modifier = modifier.horizontalScroll(rememberScrollState())
+    ) {
+        BodyContentChips(topics = topics)
     }
 }
 
