@@ -31,7 +31,7 @@ fun Modifier.firstBaselineTopTop(firstBaselineToTop: Dp) = this.then(
         check(placeable[FirstBaseline] != AlignmentLine.Unspecified)
         val firstBaseline = placeable[FirstBaseline]
 
-        // Hieght of the composable with padding - first baseline
+        // Height of the composable with padding - first baseline
         val placeableY = firstBaselineToTop.roundToPx() - firstBaseline
         val height =placeable.height + placeableY
 
@@ -62,11 +62,14 @@ fun MyOwnColumn(
             measurable.measure(constraints)
         }
 
+        // Track the y co-ord we have placed children up to
+        var yPosition = 0
+
         // Set the size of the layout as big as it can
         layout(constraints.maxWidth, constraints.maxHeight) {
             // Place children
             // Track the y co-ord we have placed children up to
-            var yPosition = 0
+            // var yPosition = 0
 
             placeables.forEach { placeable ->
                 // Position item on the sreen
@@ -108,7 +111,11 @@ fun TextWithNormalPaddingPreview() {
     }
 }
 
-@Preview(showBackground = true)
+// can not use heightDp = 480, and why?
+@Preview(
+    showBackground = true,
+    widthDp = 320
+)
 @Composable
 fun BodyContentCustomPreview() {
     KtComposeLayoutsExampleTheme {
