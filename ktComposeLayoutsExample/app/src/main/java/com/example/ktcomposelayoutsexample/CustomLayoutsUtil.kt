@@ -9,6 +9,7 @@ import androidx.compose.ui.layout.AlignmentLine
 import androidx.compose.ui.layout.FirstBaseline
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Measurable
+import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Constraints
@@ -56,7 +57,7 @@ fun MyOwnColumn(
     ) { measurables: List<Measurable>,
         constraints: Constraints ->
         // Measure children
-        val placeables = measurables.map { measurable ->
+        val placeables: List<Placeable> = measurables.map { measurable ->
             // Measure each child
             measurable.measure(constraints)
         }
