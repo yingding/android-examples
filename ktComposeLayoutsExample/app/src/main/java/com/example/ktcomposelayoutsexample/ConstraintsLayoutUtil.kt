@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.example.ktcomposelayoutsexample.ui.theme.KtComposeLayoutsExampleTheme
 
 @Composable
@@ -38,18 +39,115 @@ fun ConstraintLayoutContent() {
         })
 
         /*
-         ConstraintLayout's size will be as small as possible to wrap its content.
-         That's why it seems Text is centered around the Button instead of the parent.
-         If other sizing behavior is desired, sizing modifiers (e.g. fillMaxSize, size)
-         should be applied to the ConstraintLayout composable as with any other layout in Compose
+         * ConstraintLayout's size will be as small as possible to wrap its content.
+         * That's why it seems Text is centered around the Button instead of the parent.
+         * If other sizing behavior is desired, sizing modifiers (e.g. fillMaxSize, size)
+         * should be applied to the ConstraintLayout composable as with any other layout in Compose
          */
     }
 }
+
+// Example of Compose DSL for constraint layout helpers such as guidelines, barriers and chains
+@Composable
+fun ConstraintLayoutHelperContent() {
+    ConstraintLayout {
+        // Creates references for the three composables
+        // in the ConstraintLayout's body
+        val (button1, button2, text) = createRefs()
+
+        Button(
+            onClick = { /* Do nothing */ },
+            modifier = Modifier.constrainAs(button1) {
+                top.linkTo(parent.top, margin = 16.dp)
+            }
+        ) {
+            Text("Button 1")
+        }
+
+        Text("Text", modifier = Modifier.constrainAs(text) {
+            top.linkTo(button1.bottom, margin = 16.dp)
+            centerAround(button1.end)
+        })
+
+        // create a end barrier for button1 and text, since text is center around the end of button1
+        // this barrier will be the end of text
+        val barrier = createEndBarrier(button1, text)
+
+        Button(
+            onClick = { /* Do nothing */ },
+            modifier = Modifier.constrainAs(button2) {
+                top.linkTo(parent.top, margin = 16.dp)
+                start.linkTo(barrier)
+            }
+        ) {
+            Text("Button 2")
+        }
+
+        /* barriers (and all the other helpers) can be created in the body of ConstraintLayout,
+         * but not inside constrainAs.
+         *
+         * linkTo can be used to constrain with guidelines and barriers the same way it works
+         * for edges of layouts.
+         */
+    }
+}
+
+/**
+ * Customizing dimensions
+ * By default, the children of ConstraintLayout will be allowed to choose the size they need to wrap
+ * their content, this means that a Text is able to go outside the screen bounds when the text is
+ * too long:
+ */
+@Composable
+fun LargeConstraintLayout() {
+    ConstraintLayout {
+        val text = createRef()
+
+        // Define the guideline in the middle of the screen width
+        val guideline = createGuidelineFromStart(fraction = 0.5f)
+        Text(
+            "This is a very very very very very very very long text",
+            modifier = Modifier.constrainAs(text) {
+                linkTo(start = guideline, end = parent.end)
+                // use Dimension to wrap content, to show all text on the screen
+                width = Dimension.preferredWrapContent
+                /* Dimension behavior are
+                 *
+                 * preferredWrapContent: the layout is wrap content, subject to the constraints in that dimension.
+                 * wrapContent: the layout is wrap content even if the constraints would not allow it
+                 * fillToConstraints: the layout will expand to fill the space defined by its constraints in that dimension
+                 * preferredValue: the layout is a fixed dp value, subject to the constraints in that dimension
+                 * value: the layout is a fixed dp value, regardless of the constraints in that dimension
+                 */
+
+                // Dimension can be coerced:
+                // width = Dimension.preferredWrapContent.atLeast(100.dp)
+            }
+        )
+    }
+}
+
 
 @Preview(showBackground = true)
 @Composable
 fun ConstraintLayoutContentPreview() {
     KtComposeLayoutsExampleTheme {
         ConstraintLayoutContent()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ConstraintLayoutHelperContentPreview() {
+    KtComposeLayoutsExampleTheme {
+        ConstraintLayoutHelperContent()
+    }
+}
+
+@Preview(showBackground = true, widthDp = 320)
+@Composable
+fun LargeConstraintLayoutPreview() {
+    KtComposeLayoutsExampleTheme {
+        LargeConstraintLayout()
     }
 }
