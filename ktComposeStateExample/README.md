@@ -12,6 +12,18 @@ This project codes are updated and modified by the author of this project.
 
 * https://developer.android.com/codelabs/jetpack-compose-state#1
 
+## Unidirectional data flow in the android view system
+Unidirectional data flow is a design where state flows down and events flow up.
+
+The advantages of using unidirectional data flow:
+
+1. Testability – by decoupling state from the UI that displays it, it's easier to test both the ViewModel and the Activity
+2. State encapsulation – because state can only be updated in one place (the ViewModel), it's less likely that you'll introduce a partial state update bug as your UI grows
+3. UI consistency – all state updates are immediately reflected in the UI by the use of observable state holders
+
+Reference: 
+* https://developer.android.com/codelabs/jetpack-compose-state#2
+
 # Using State in Jetpack Compose Codelab
 
 This folder contains the source code for the [Using State in Jetpack Compose codelab](https://developer.android.com/codelabs/jetpack-compose-state).
