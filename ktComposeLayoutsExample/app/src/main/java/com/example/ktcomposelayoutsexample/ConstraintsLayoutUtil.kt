@@ -1,13 +1,17 @@
 package com.example.ktcomposelayoutsexample
 
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
+import androidx.constraintlayout.compose.layoutId
 import com.example.ktcomposelayoutsexample.ui.theme.KtComposeLayoutsExampleTheme
 
 @Composable
@@ -127,6 +131,46 @@ fun LargeConstraintLayout() {
     }
 }
 
+/**
+ * Decouple Constrains from ConstraintLayout
+ */
+@Composable
+fun DecoupleConstraintLayout() {
+    BoxWithConstraints {
+        val constraints = if (maxWidth < maxHeight) {
+            decoupledConstraints(margin = 16.dp) // Portrait constraints
+        } else {
+            decoupledConstraints(margin = 32.dp) // Landscape constraints
+        }
+
+        ConstraintLayout(constraints) {
+            Button(
+                onClick = {/* Do nothing */},
+                // what is tag string used for
+                modifier = Modifier.layoutId("button", "decouple_button")
+            ) {
+                Text("Button")
+            }
+            Text("Text", modifier = Modifier.layoutId("text", "decouple_text"))
+        }
+
+    }
+}
+
+private fun decoupledConstraints(margin: Dp): ConstraintSet {
+    return ConstraintSet {
+        val button = createRefFor("button")
+        val text = createRefFor("text")
+
+        constrain(button) {
+            top.linkTo(parent.top, margin = margin)
+        }
+        constrain(text) {
+            top.linkTo(button.bottom, margin = margin)
+        }
+    }
+}
+
 
 @Preview(showBackground = true)
 @Composable
@@ -149,5 +193,16 @@ fun ConstraintLayoutHelperContentPreview() {
 fun LargeConstraintLayoutPreview() {
     KtComposeLayoutsExampleTheme {
         LargeConstraintLayout()
+    }
+}
+
+@Preview(showBackground = true, widthDp = 240, heightDp = 320,
+    name = "Portrait_DecoupleConstraintLayoutPreview")
+@Preview(showBackground = true, widthDp = 320, heightDp = 240,
+    name = "Landscape_DecoupleConstraintLayoutPreview")
+@Composable
+fun DecoupleConstraintLayoutPreview() {
+    KtComposeLayoutsExampleTheme {
+        DecoupleConstraintLayout()
     }
 }
