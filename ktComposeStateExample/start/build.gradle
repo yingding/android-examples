@@ -50,7 +50,13 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    /* You no longer need to declare a dependency on the stdlib library in any Kotlin Gradle project,
+     * including a multiplatform one. The dependency is added by default
+     * https://stackoverflow.com/questions/49956051/warning-kotlin-plugin-version-is-not-the-same-as-library-version-but-it-is/64988522#64988522
+     *
+     * Kotlin Gradle plugin is doing this automatically
+     * implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+     */
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "com.google.android.material:material:$material_version"
