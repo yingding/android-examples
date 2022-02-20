@@ -21,6 +21,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import com.codelabs.state.ui.StateCodelabTheme
 
 class TodoActivity : AppCompatActivity() {
@@ -31,10 +34,31 @@ class TodoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             StateCodelabTheme {
+                // Surface adds a background to the app, and configures the color of text
                 Surface {
                     // TODO: build the screen in compose
+                    TodoActivityScreen(todoViewModel)
                 }
             }
         }
     }
+}
+
+// state hoisting allows to display a stateful UI by defining a stateless composable
+@Composable
+private fun TodoActivityScreen(todoViewModel: TodoViewModel) {
+    /* 1. observeAsSate observes a LiveData<T> and converts it into a State<T> object
+     *    so Compose can react to value changes
+     * 2. listOf() is an initial value to avoid possible null results before the LiveData
+     *    is initialized, if it is not passed items would be List<TodoItem>? which is nullable
+     * 3. by is the property delegate syntax in Kotlin, it lets us automatically unwrap the
+     *    State<List<TodoItem>> from observeAsSate into a regular List<TodoItem>
+     */
+    val items: List<TodoItem> by todoViewModel.todoItems.observeAsState(listOf())
+    // val items = listOf<TodoItem>()
+    TodoScreen(
+        items = items,
+        onAddItem = { todoViewModel.addItem(it) },
+        onRemoveItem = todoViewModel::removeItem // same as { todoViewModel.removeItem(it) }
+    )
 }
