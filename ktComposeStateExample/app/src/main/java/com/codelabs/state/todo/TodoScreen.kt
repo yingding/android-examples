@@ -27,6 +27,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
+import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -92,13 +93,28 @@ fun TodoRow(todo: TodoItem, onItemClicked: (TodoItem) -> Unit, modifier: Modifie
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(todo.task)
+        /* adding random icon alpha
+         * remember gives a composable function memory
+         * A value computed by remember will be stored in the composition tree, and only be recomputed
+         * if the keys to remember change.
+         * You can think of remember as giving storage for a single object to a function the same way a
+         * private val property does in an object
+         */
+        val iconAlpha = remember(todo.id) {randomTint()}
         Icon(
             imageVector = todo.icon.imageVector,
+            tint = LocalContentColor.current.copy(alpha = iconAlpha),
             contentDescription = stringResource(id = todo.icon.contentDescription)
         )
     }
 }
 
+/**
+ * A side-effect is any change that's visible outside of a composable function.
+ * Recomposing a composable should be side-effect free.
+ *
+ * For example, updating state in a ViewModel, calling Random.nextInt(), or writing to database are all side-effects
+ */
 private fun randomTint(): Float {
     return Random.nextFloat().coerceIn(0.3f, 0.9f)
 }
