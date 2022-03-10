@@ -21,7 +21,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -137,28 +139,46 @@ fun TodoInputTextField(
 @Composable
 fun TodoItemInput(onItemComplete: (TodoItem) -> Unit) {
     // onItemComplete is an event will fire when an item is completed by the user
+
+    // setText and setIcon are the event function passed to InputTextField and AnimatedIconRow
+    // text, icon are the internal state.
     val (text, setText) = remember { mutableStateOf("") }
+    val (icon, setIcon) = remember { mutableStateOf(TodoIcon.Default) }
+    val iconsVisible = text.isNotBlank()
+
+    val submit = {
+        onItemComplete(TodoItem(text, icon)) // send onItemComplete event up and use the icon state
+        // call the setIcon event for the AnimatedIconRow to reset icon
+        setIcon(TodoIcon.Default) // reset the icon
+        // call the setText event to trigger the onTextChange event in TodoInputTextField
+        setText("") // clear the internal text
+    }
+
     Column {
         Row(Modifier
             .padding(horizontal = 16.dp)
             .padding(top = 16.dp)
         ) {
-            TodoInputTextField(
+            // TodoInputTextField() is the same as TodoInputText without local state
+            TodoInputText(
                 text = text,
                 onTextChange = setText,
                 modifier = Modifier
                 .weight(1f)
-                .padding(end = 8.dp)
+                .padding(end = 8.dp),
+                onImeAction = submit // pass the submit callback to TodoInputText
             )
             TodoEditButton(
-                onClick = {
-                    onItemComplete(TodoItem(text)) // send onItemComplete event up
-                    setText("") // clear the internal text
-                },
+                onClick = submit, // pass the submit callback to TdoEditButton
                 text = "Add",
                 modifier = Modifier.align(Alignment.CenterVertically),
                 enabled = text.isNotBlank() // enable if text is not blank
             )
+        }
+        if (iconsVisible) {
+            AnimatedIconRow(icon, setIcon, Modifier.padding(top = 8.dp))
+        } else {
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }

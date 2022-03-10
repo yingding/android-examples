@@ -209,12 +209,19 @@ fun TodoInputText(
     modifier: Modifier = Modifier,
     onImeAction: () -> Unit = {}
 ) {
+    // Experimental API to control the software keyboard
     val keyboardController = LocalSoftwareKeyboardController.current
     TextField(
         value = text,
         onValueChange = onTextChange,
         colors = TextFieldDefaults.textFieldColors(backgroundColor = Color.Transparent),
         maxLines = 1,
+        /* Reference: https://developer.android.com/codelabs/jetpack-compose-state#6
+         * keyboardOptions - used to enable showing the Done IME action
+         * keyboardActions - used to specify the action to be triggered in response
+         *  to specific IME actions triggered - in our case once Done is pressed, call submit.
+         *
+         */
         keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
         keyboardActions = KeyboardActions(onDone = {
             onImeAction()
