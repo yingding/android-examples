@@ -58,7 +58,7 @@ fun TodoScreen(
     Column {
         // add TodoItemInputBackground and TodoItem at the top of TodoScreen
         TodoItemInputBackground(elevate = true, modifier = Modifier.fillMaxWidth()) {
-            TodoItemInput(onItemComplete = onAddItem)
+            TodoItemEntryInput(onItemComplete = onAddItem)
         }
 
         LazyColumn(
@@ -136,8 +136,11 @@ fun TodoInputTextField(
     TodoInputText(text, onTextChange, modifier)
 }
 
+/**
+ * stateful compose
+ */
 @Composable
-fun TodoItemInput(onItemComplete: (TodoItem) -> Unit) {
+fun TodoItemEntryInput(onItemComplete: (TodoItem) -> Unit) {
     // onItemComplete is an event will fire when an item is completed by the user
 
     // setText and setIcon are the event function passed to InputTextField and AnimatedIconRow
@@ -154,18 +157,45 @@ fun TodoItemInput(onItemComplete: (TodoItem) -> Unit) {
         setText("") // clear the internal text
     }
 
+    // 1. Alt + Enter on the function call and select "Add names to call arguments"
+    // this way you can added arg names automatically
+    TodoItemInput(
+        text = text,
+        onTextChange = setText,
+        icon = icon,
+        setIcon = setIcon,
+        submit = submit,
+        iconsVisible = iconsVisible
+    )
+}
+
+/**
+ * stateless compose
+ * Extracting a stateless composable from a stateful composable makes it easier
+ * to reuse the UI in different locations.
+ */
+@Composable
+fun TodoItemInput(
+    text: String,
+    onTextChange: (String) -> Unit,
+    icon: TodoIcon,
+    setIcon: (TodoIcon) -> Unit,
+    submit: () -> Unit,
+    iconsVisible: Boolean
+) {
     Column {
-        Row(Modifier
-            .padding(horizontal = 16.dp)
-            .padding(top = 16.dp)
+        Row(
+            Modifier
+                .padding(horizontal = 16.dp)
+                .padding(top = 16.dp)
         ) {
             // TodoInputTextField() is the same as TodoInputText without local state
             TodoInputText(
                 text = text,
-                onTextChange = setText,
+                onTextChange = onTextChange,
                 modifier = Modifier
-                .weight(1f)
-                .padding(end = 8.dp),
+                    .weight(1f)
+                    .padding(end = 8.dp),
                 onImeAction = submit // pass the submit callback to TodoInputText
             )
             TodoEditButton(
@@ -215,4 +245,4 @@ fun PreviewTodoRow() {
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewTodoItemInput() = TodoItemInput(onItemComplete = {})
+fun PreviewTodoItemInput() = TodoItemEntryInput(onItemComplete = {})
