@@ -31,11 +31,12 @@ This folder contains the source code for the [Using State in Jetpack Compose cod
 In this codelab, you will explore patterns for working with state in a declarative world by building a Todo application. We'll see what unidirectional
 data flow is, and how to apply it in a Jetpack Compose application to build stateless and stateful composables.
 
-
 # Note to extract composable UI part
 1. In `TodoScreeen.kt` file select the `UI part ( Column statement, not the val statements)` , then `right mouse click -> refactor -> function`
 2. Follow the instruction on https://developer.android.com/codelabs/jetpack-compose-state#7
 
+Reference:
+* https://www.jetbrains.com/help/idea/extract-method.html
 
 
 ## Screenshots
