@@ -54,11 +54,17 @@ private fun TodoActivityScreen(todoViewModel: TodoViewModel) {
      * 3. by is the property delegate syntax in Kotlin, it lets us automatically unwrap the
      *    State<List<TodoItem>> from observeAsSate into a regular List<TodoItem>
      */
-    val items: List<TodoItem> by todoViewModel.todoItems.observeAsState(listOf())
+    // val items: List<TodoItem> by todoViewModel.todoItems.observeAsState(listOf())
+
     // val items = listOf<TodoItem>()
     TodoScreen(
-        items = items,
+        // items = items,
+        items = todoViewModel.todoItems,
+        currentlyEditing = todoViewModel.currentEditItem,
         onAddItem = { todoViewModel.addItem(it) },
-        onRemoveItem = todoViewModel::removeItem // same as { todoViewModel.removeItem(it) }
+        onRemoveItem = todoViewModel::removeItem, // same as { todoViewModel.removeItem(it) }
+        onStartEdit = todoViewModel::onEditItemSelected,
+        onEditItemChange = todoViewModel::onEditItemChange,
+        onEditDone = todoViewModel::onEditDone
     )
 }
