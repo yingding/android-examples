@@ -10,7 +10,7 @@ This project codes are updated and modified by the author of this project.
 
 ## Learning progress
 
-* https://developer.android.com/codelabs/jetpack-compose-state#11
+* https://developer.android.com/codelabs/jetpack-compose-state#12
 
 ## Unidirectional data flow in the android view system
 Unidirectional data flow is a design where state flows down and events flow up.
