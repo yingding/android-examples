@@ -10,7 +10,7 @@ This project codes are updated and modified by the author of this project.
 
 ## Learning progress
 
-* https://developer.android.com/codelabs/jetpack-compose-theming
+* https://developer.android.com/codelabs/jetpack-compose-theming#2
 
 
 
