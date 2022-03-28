@@ -53,6 +53,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.codelab.theming.R
@@ -124,6 +125,7 @@ fun Header(
     ) {
         Text(
             text = text,
+            style = MaterialTheme.typography.subtitle1,
             modifier = modifier
                 .fillMaxWidth()
                 // .background(Color.LightGray) // use Surface to set the contentColor, which is the Text Color based on theme
@@ -176,7 +178,14 @@ private fun PostMetadata(
 ) {
     val divider = "  •  "
     val tagDivider = "  "
+    // span text is colored text
+    val tagStyle = MaterialTheme.typography.overline.toSpanStyle().copy(
+        background = MaterialTheme.colors.primary.copy(alpha = 0.1f)
+    )
+    // https://developer.android.com/codelabs/jetpack-compose-theming#5
+    // AnnotatedString with append
     val text = buildAnnotatedString {
+        // in AnnotatedString use append to added text
         append(post.metadata.date)
         append(divider)
         append(stringResource(R.string.read_time, post.metadata.readTimeMinutes))
@@ -185,7 +194,9 @@ private fun PostMetadata(
             if (index != 0) {
                 append(tagDivider)
             }
-            append(" ${tag.uppercase(Locale.getDefault())} ")
+            withStyle(tagStyle) {
+                append(" ${tag.uppercase(Locale.getDefault())} ")
+            }
         }
     }
     // change the alpha to make the text less important
