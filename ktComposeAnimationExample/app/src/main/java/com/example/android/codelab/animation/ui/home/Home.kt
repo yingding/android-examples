@@ -180,7 +180,13 @@ fun Home() {
 
     // The background color. The value is changed by the current tab.
     // TODO 1: Animate this color change.
-    val backgroundColor = if (tabPage == TabPage.Home) Purple100 else Green300
+    // val backgroundColor = if (tabPage == TabPage.Home) Purple100 else Green300
+
+    /* To animate a single value change:
+     * use local delegated property with "by" to get State<T> as a value T
+     */
+    val backgroundColor by animateColorAsState(if (tabPage == TabPage.Home) Purple100 else Green300)
+
 
     // The coroutine scope for event handlers calling suspend functions.
     val coroutineScope = rememberCoroutineScope()
