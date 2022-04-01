@@ -1,0 +1,2 @@
+rootProject.name = "ktComposeAnimationExample"
+include ':finished', ':start', ':app'
