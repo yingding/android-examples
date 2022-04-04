@@ -16,8 +16,9 @@
 
 buildscript {
     ext {
-        compose_version = '1.1.1'
-        kotlin_version = '1.6.20' // '1.6.10'
+        compose_version = '1.1.1' // compose need kotlin 1.6.10 and got error with 1.6.20
+        // https://developer.android.com/jetpack/androidx/releases/compose-kotlin
+        kotlin_version = '1.6.10' // '1.6.10'
 
         // default application config
         compileSdkVersion = 32
