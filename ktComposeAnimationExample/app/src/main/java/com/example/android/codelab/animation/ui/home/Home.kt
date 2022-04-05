@@ -406,10 +406,12 @@ private fun TopicRow(topic: String, expanded: Boolean, onClick: () -> Unit) {
         onClick = onClick
     ) {
         // TODO 3: Animate the size change of the content.
+        // The Column composable changes its size as its content changes
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
+                .animateContentSize() // added animateContentSize() for the column composable
         ) {
             Row {
                 Icon(
@@ -490,9 +492,53 @@ private fun HomeTabIndicator(
     tabPage: TabPage
 ) {
     // TODO 4: Animate these value changes.
-    val indicatorLeft = tabPositions[tabPage.ordinal].left
-    val indicatorRight = tabPositions[tabPage.ordinal].right
-    val color = if (tabPage == TabPage.Home) Purple700 else Green800
+    // sets up a transition and update it
+    val transition = updateTransition(
+        tabPage,
+        label = "Tab indicator"
+    )
+    // val indicatorLeft = tabPositions[tabPage.ordinal].left
+    // val indicatorRight = tabPositions[tabPage.ordinal].right
+    // val color = if (tabPage == TabPage.Home) Purple700 else Green800
+
+    // this is the pixel dp of the left bound of the indicator
+    val indicatorLeft by transition.animateDp(
+        // https://developer.android.com/codelabs/jetpack-compose-animation#5
+        transitionSpec = {
+            if (TabPage.Home isTransitioningTo TabPage.Work) {
+                // Indicator moves to the right.
+                // The left edge moves slower than the right edge.
+                spring(stiffness = Spring.StiffnessVeryLow)
+            } else {
+                // Indicator moves to the left
+                // The left edge moves faster than the right edge.
+                spring(stiffness = Spring.StiffnessMedium)
+            }
+        },
+        label = "Indicator Left") { page ->
+        tabPositions[page.ordinal].left
+    }
+    // this is the pixel dp of the right bound of the indicator
+    val indicatorRight by transition.animateDp(
+        transitionSpec = {
+            if (TabPage.Home isTransitioningTo TabPage.Work) {
+                // Indicator moves to the right.
+                // The right edge moves faster than the left edge.
+                spring(stiffness = Spring.StiffnessMedium)
+            } else {
+                // Indicator moves to the left
+                // The right edge moves slower than the left edge.
+                spring(stiffness = Spring.StiffnessVeryLow)
+            }
+        },
+        label = "Indicator Right") { page ->
+        tabPositions[page.ordinal].right
+    }
+    val color by transition.animateColor(
+        label = "Boarder Color"
+    ) { page ->
+        if (page == TabPage.Home) Purple700 else Green800
+    }
     Box(
         Modifier
             .fillMaxSize()

@@ -8,9 +8,12 @@ This project codes are updated and modified by the author of this project.
 * `start` folder is the original scaffold module to start coding this codelab
 * `finished` folder contains original google codelab solution suggestion
 
+## Enable Animation Preview
+Android Studio -> Preferences -> Experimental -> Jetpack Compose -> Enable Animation Preview
+
 ## Learning progress
 
-* https://developer.android.com/codelabs/jetpack-compose-animation#4
+* https://developer.android.com/codelabs/jetpack-compose-animation#6
 
 
 
