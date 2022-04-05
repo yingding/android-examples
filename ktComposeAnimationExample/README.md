@@ -13,7 +13,7 @@ Android Studio -> Preferences -> Experimental -> Jetpack Compose -> Enable Anima
 
 ## Learning progress
 
-* https://developer.android.com/codelabs/jetpack-compose-animation#6
+* https://developer.android.com/codelabs/jetpack-compose-animation#7
 
 
 
