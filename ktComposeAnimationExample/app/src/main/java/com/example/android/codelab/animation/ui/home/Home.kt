@@ -271,6 +271,8 @@ fun Home() {
                 }
             }
         }
+        // not adding a column composable here, the EditMessage will just appear
+        // on top over the LazyColumn in the Scaffold content
         EditMessage(editMessageShown)
     }
 }
@@ -322,7 +324,19 @@ private fun EditMessage(shown: Boolean) {
     // TODO 2-2: The message should slide down from the top on appearance and slide up on
     //           disappearance.
     AnimatedVisibility(
-        visible = shown
+        visible = shown,
+        // EnterTransition with slideInVertically
+        // Reference: https://developer.android.com/codelabs/jetpack-compose-animation#3
+        enter = slideInVertically(
+            // Enters by sliding down from offset "-fullHeight" to 0.
+            initialOffsetY = { fullHeight -> -fullHeight },
+            animationSpec =  tween(durationMillis = 250, easing = LinearOutSlowInEasing)
+        ),
+        exit = slideOutVertically(
+            // Exists by sliding up from offset 0 to "-fullHeight"
+            targetOffsetY = { fullHeight -> -fullHeight },
+            animationSpec = tween(durationMillis = 250, easing = FastOutLinearInEasing)
+        )
     ) {
         Surface(
             modifier = Modifier.fillMaxWidth(),
