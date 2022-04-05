@@ -1,7 +1,7 @@
 # About this project
 this project is a copy of google code lab from: https://developer.android.com/codelabs/android-compose-animation
 
-This prooject codes are updated and modified by the author of this project.
+This project codes are updated and modified by the author of this project.
 
 ## Folders
 * `app` folder is the playground folder of the author learning from this codelab
