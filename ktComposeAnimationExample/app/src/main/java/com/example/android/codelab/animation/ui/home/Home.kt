@@ -702,6 +702,7 @@ private fun Modifier.swipeToDismiss(
     onDismissed: () -> Unit
 ): Modifier = composed {
     // TODO 6-1: Create an Animatable instance for the offset of the swiped element.
+    // Reference: https://developer.android.com/codelabs/jetpack-compose-animation#8
     val offsetX = remember {Animatable(0f)} // add an animatable
 
     pointerInput(Unit) {
