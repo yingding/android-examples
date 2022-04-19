@@ -19,6 +19,10 @@ adb shell am start -d "rally://accounts/Checking" -a android.intent.action.VIEW
 ```
 this start an intent with deep link data `rally://accounts/Checking` and action `android.intent.action.VIEW`
 
+## Testing Navigation in Compose
+* Compose Testing docs: https://developer.android.com/jetpack/compose/testing
+* Compose Testing codelab: https://developer.android.com/codelabs/jetpack-compose-testing  
+* Advanced testing of navigation code using the `TestNavHostController`: https://developer.android.com/guide/navigation/navigation-testing
 
 # (original README content of codelab) Navigation in Jetpack Compose Codelab
 
