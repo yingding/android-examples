@@ -8,7 +8,7 @@ This project codes are updated and modified by the author of this project.
 * `start` folder is the original scaffold module to start coding this codelab
 
 ## Learning progress
-* https://developer.android.com/codelabs/jetpack-compose-navigation#2
+* https://developer.android.com/codelabs/jetpack-compose-navigation#3
 
 ## Enable Animation Preview
 Android Studio -> Preferences -> Experimental -> Jetpack Compose -> Enable Animation Preview

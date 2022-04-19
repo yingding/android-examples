@@ -91,7 +91,10 @@ fun RallyApp() {
                 // Define a NavGraphBuilder, a lambda for defining navigation graph
                 composable(RallyScreen.Overview.name) {
                     // Text(text = RallyScreen.Overview.name)
-                    OverviewBody()
+                    OverviewBody(
+                        onClickSeeAllAccounts = {navController.navigate(RallyScreen.Accounts.name)},
+                        onClickSeeAllBills = {navController.navigate(RallyScreen.Bills.name)}
+                    )
                 }
                 composable(RallyScreen.Accounts.name) {
                     // Text(text = RallyScreen.Accounts.name)
