@@ -84,78 +84,85 @@ fun RallyApp() {
                 )
             }
         ) { innerPadding ->
-            // Box(Modifier.padding(innerPadding)) {
-            /* Added NavHost with navController and startDestination
-             * https://developer.android.com/codelabs/jetpack-compose-navigation#2
-             */
-            NavHost(
+            RallyNavHost(
                 navController = navController,
-                startDestination = RallyScreen.Overview.name,
                 modifier = Modifier.padding(innerPadding)
-            ) {
-                // Define a NavGraphBuilder, a lambda for defining navigation graph
-                composable(RallyScreen.Overview.name) {
-                    // Text(text = RallyScreen.Overview.name)
-                    OverviewBody(
-                        onClickSeeAllAccounts = {navController.navigate(RallyScreen.Accounts.name)},
-                        onClickSeeAllBills = {navController.navigate(RallyScreen.Bills.name)},
-                        onAccountClick = { name ->
-                            // trigger single account navigation
-                            navigateToSingleAccount(navController, name)
-                        }
-                    )
-                }
-                composable(RallyScreen.Accounts.name) {
-                    // Text(text = RallyScreen.Accounts.name)
-                    AccountsBody(accounts = UserData.accounts) { name -> // onAccountClick
-                        // trigger single account navigation
-                        navigateToSingleAccount(
-                            navController = navController,
-                            accountName = name
-                        )
-                    }
-                }
-                composable(RallyScreen.Bills.name) {
-                    // Text(text = RallyScreen.Bills.name)
-                    BillsBody(bills = UserData.bills)
-                }
-                /* set up the single account navi graph, navi with arguments */
-                val accountsName = RallyScreen.Accounts.name
-                composable(
-                    route = "$accountsName/{name}",
-                    arguments = listOf(
-                        navArgument("name") {
-                            // Make argument type safe
-                            type = NavType.StringType
-                        }
-                    ),
-                    // adding deep link pattern
-                    // testing deep link with: adb shell am start -d "rally://accounts/Checking" -a android.intent.action.VIEW
-                    deepLinks = listOf(
-                        navDeepLink {
-                            uriPattern = "rally://$accountsName/{name}"
-                        }
-                    )
-                ) { entry -> // Lock up "name" in NavBackStackEntry's arguments
-                    val accountName = entry.arguments?.getString("name")
-                    // Find first name match in UserData
-                    val account = UserData.getAccount(accountName)
-                    // Pass account to SingleAccountBody
-                    SingleAccountBody(account = account)
-                }
+            )
 
-                /* set up the navi graph for deep link */
-
-
-
-
-
-/*                currentScreen.content(
+            /* Old Rally Screen transition codes:
+            Box(Modifier.padding(innerPadding)) {
+                currentScreen.content(
                     onScreenChange = { screen ->
                         currentScreen = RallyScreen.valueOf(screen)
-                    }
-                )*/
+                    })
             }
+             */
+        }
+    }
+}
+
+@Composable
+fun RallyNavHost(
+    navController: NavHostController,
+    modifier: Modifier = Modifier
+) {
+    /* Added NavHost with navController and startDestination
+     * https://developer.android.com/codelabs/jetpack-compose-navigation#2
+     */
+    NavHost(
+        navController = navController,
+        startDestination = RallyScreen.Overview.name,
+        modifier = modifier
+    ) {
+        // Define a NavGraphBuilder, a lambda for defining navigation graph
+        composable(RallyScreen.Overview.name) {
+            // Text(text = RallyScreen.Overview.name)
+            OverviewBody(
+                onClickSeeAllAccounts = { navController.navigate(RallyScreen.Accounts.name) },
+                onClickSeeAllBills = { navController.navigate(RallyScreen.Bills.name) },
+                onAccountClick = { name ->
+                    // trigger single account navigation
+                    navigateToSingleAccount(navController, name)
+                }
+            )
+        }
+        composable(RallyScreen.Accounts.name) {
+            // Text(text = RallyScreen.Accounts.name)
+            AccountsBody(accounts = UserData.accounts) { name -> // onAccountClick
+                // trigger single account navigation
+                navigateToSingleAccount(
+                    navController = navController,
+                    accountName = name
+                )
+            }
+        }
+        composable(RallyScreen.Bills.name) {
+            // Text(text = RallyScreen.Bills.name)
+            BillsBody(bills = UserData.bills)
+        }
+        /* set up the single account navi graph, navi with arguments */
+        val accountsName = RallyScreen.Accounts.name
+        composable(
+            route = "$accountsName/{name}",
+            arguments = listOf(
+                navArgument("name") {
+                    // Make argument type safe
+                    type = NavType.StringType
+                }
+            ),
+            // adding deep link pattern
+            // testing deep link with: adb shell am start -d "rally://accounts/Checking" -a android.intent.action.VIEW
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "rally://$accountsName/{name}"
+                }
+            )
+        ) { entry -> // Lock up "name" in NavBackStackEntry's arguments
+            val accountName = entry.arguments?.getString("name")
+            // Find first name match in UserData
+            val account = UserData.getAccount(accountName)
+            // Pass account to SingleAccountBody
+            SingleAccountBody(account = account)
         }
     }
 }
