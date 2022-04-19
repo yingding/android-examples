@@ -36,6 +36,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import com.example.compose.rally.data.UserData
 import com.example.compose.rally.ui.accounts.AccountsBody
 import com.example.compose.rally.ui.accounts.SingleAccountBody
@@ -118,14 +119,21 @@ fun RallyApp() {
                     // Text(text = RallyScreen.Bills.name)
                     BillsBody(bills = UserData.bills)
                 }
-                // set up the single account navi graph
-                var accountsName = RallyScreen.Accounts.name
+                /* set up the single account navi graph, navi with arguments */
+                val accountsName = RallyScreen.Accounts.name
                 composable(
                     route = "$accountsName/{name}",
                     arguments = listOf(
                         navArgument("name") {
                             // Make argument type safe
                             type = NavType.StringType
+                        }
+                    ),
+                    // adding deep link pattern
+                    // testing deep link with: adb shell am start -d "rally://accounts/Checking" -a android.intent.action.VIEW
+                    deepLinks = listOf(
+                        navDeepLink {
+                            uriPattern = "rally://$accountsName/{name}"
                         }
                     )
                 ) { entry -> // Lock up "name" in NavBackStackEntry's arguments
@@ -136,7 +144,11 @@ fun RallyApp() {
                     SingleAccountBody(account = account)
                 }
 
-                // TODO: Add the other two screen
+                /* set up the navi graph for deep link */
+
+
+
+
 
 /*                currentScreen.content(
                     onScreenChange = { screen ->

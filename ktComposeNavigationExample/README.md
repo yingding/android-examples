@@ -13,6 +13,12 @@ This project codes are updated and modified by the author of this project.
 ## Enable Animation Preview
 Android Studio -> Preferences -> Experimental -> Jetpack Compose -> Enable Animation Preview
 
+## Testing Deep Link with ADB
+```console
+adb shell am start -d "rally://accounts/Checking" -a android.intent.action.VIEW
+```
+this start an intent with deep link data `rally://accounts/Checking` and action `android.intent.action.VIEW`
+
 
 # (original README content of codelab) Navigation in Jetpack Compose Codelab
 

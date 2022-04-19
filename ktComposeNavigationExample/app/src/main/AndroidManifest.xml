@@ -31,8 +31,17 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- deep link: rally://accounts/{name}
+            No need to declare the "name" argument in the AndroidManifest.
+            It will be parsed as an argument by Navigation
+            -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="rally" android:host="accounts" />
             </intent-filter>
         </activity>
     </application>
