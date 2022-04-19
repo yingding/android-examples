@@ -95,7 +95,7 @@ dependencies {
     implementation "androidx.core:core-ktx:$rootProject.ktxVersion"
     implementation "com.google.android.material:material:$rootProject.materialVersion"
     implementation "androidx.fragment:fragment-ktx:$rootProject.fragmentVersion"
-    // implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlinVersion"
+
 
     // Compose
     implementation "androidx.compose.runtime:runtime:$rootProject.composeVersion"
@@ -107,6 +107,7 @@ dependencies {
     implementation "androidx.compose.ui:ui-tooling-preview:$rootProject.composeVersion"
     implementation "androidx.compose.material:material-icons-extended:$rootProject.composeVersion"
     implementation "androidx.activity:activity-compose:$rootProject.activityComposeVersion"
+    // navigation compose
     implementation "androidx.navigation:navigation-compose:$rootProject.nagivationComposeVersion"
     debugImplementation "androidx.compose.ui:ui-tooling:$rootProject.composeVersion"
 
