@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion 32
+    buildToolsVersion "32.0.0"
 
     defaultConfig {
         applicationId "com.example.wearsensorexamples"
         minSdkVersion 24
-        targetSdkVersion 30
+        targetSdkVersion 32
         versionCode 1
         versionName "1.0"
     }
@@ -22,14 +22,14 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.google.android.support:wearable:2.8.1' // API WatchFace
+    implementation 'com.google.android.support:wearable:2.9.0' // API WatchFace
     // play-services-wearable sdK 17.1.0, for DataLayerListenerService, wear os and android communication APIs
     implementation 'com.google.android.gms:play-services-wearable:17.1.0'
     implementation 'androidx.percentlayout:percentlayout:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0' // For Fragment
     // implementation 'androidx.legacy:legacy-support-v13:1.0.0' // added
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation 'androidx.wear:wear:1.1.0' // BoxInsetLayout // https://developer.android.com/training/wearables/ui/wear-ui-library
-    implementation 'com.google.android.material:material:1.4.0' // Alert Dialog
-    compileOnly 'com.google.android.wearable:wearable:2.8.1' // api in wear os platform
+    implementation 'androidx.wear:wear:1.2.0' // BoxInsetLayout // https://developer.android.com/training/wearables/ui/wear-ui-library
+    implementation 'com.google.android.material:material:1.6.0' // Alert Dialog
+    compileOnly 'com.google.android.wearable:wearable:2.9.0' // api in wear os platform
 }
