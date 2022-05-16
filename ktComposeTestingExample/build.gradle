@@ -54,7 +54,7 @@ buildscript {
 
         // Android Studio
         kotlinVersion = '1.6.10'
-        gradleVersion = '7.1.3'
+        gradleVersion = '7.2.0'
     }
 
     repositories {
