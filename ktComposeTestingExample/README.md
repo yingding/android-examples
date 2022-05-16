@@ -8,7 +8,7 @@ This project codes are updated and modified by the author of this project.
 * `start` folder is the original scaffold module to start coding this codelab
 
 ## Learning progress
-* https://developer.android.com/codelabs/jetpack-compose-testing#3
+* https://developer.android.com/codelabs/jetpack-compose-testing#5
 
 ## Compose Testing Cheatsheet
 * https://developer.android.com/jetpack/compose/testing-cheatsheet
