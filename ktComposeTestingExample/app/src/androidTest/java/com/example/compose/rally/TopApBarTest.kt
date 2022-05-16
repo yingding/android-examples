@@ -1,6 +1,5 @@
 package com.example.compose.rally
 
-import androidx.compose.runtime.structuralEqualityPolicy
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasParent
