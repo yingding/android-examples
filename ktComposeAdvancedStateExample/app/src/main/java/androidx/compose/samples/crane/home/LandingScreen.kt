@@ -20,10 +20,14 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.samples.crane.R
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import kotlinx.coroutines.delay
 
 private const val SplashWaitTime: Long = 2000
 
@@ -31,7 +35,18 @@ private const val SplashWaitTime: Long = 2000
 fun LandingScreen(modifier: Modifier = Modifier, onTimeout: () -> Unit) {
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         // TODO Codelab: LaunchedEffect and rememberUpdatedState step
+        // This will always refer to the latest on Timeout function that
+        // LandingScreen was recomposed with
+        val currentOnTimeout by rememberUpdatedState(onTimeout)
+
         // TODO: Make LandingScreen disappear after loading data
+        // Create an effect that matches the lifecycle of LandingScreen.
+        // If LandingScreen recomposes or onTimeout changes
+        // Reference: https://developer.android.com/codelabs/jetpack-compose-advanced-state-side-effects#3
+        LaunchedEffect(true) {
+            delay(SplashWaitTime)
+            currentOnTimeout()
+        }
         Image(painterResource(id = R.drawable.ic_crane_drawer), contentDescription = null)
     }
 }
