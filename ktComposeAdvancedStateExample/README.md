@@ -10,7 +10,7 @@ This project codes are updated and modified by the author of this project.
 * `start` folder is the original scaffold module to start coding this codelab
 
 ### Learning progress
-* https://developer.android.com/codelabs/jetpack-compose-advanced-state-side-effects#4
+* https://developer.android.com/codelabs/jetpack-compose-advanced-state-side-effects#6
 
 ### Thinking in Compose
 * https://developer.android.com/jetpack/compose/mental-model#any-order
