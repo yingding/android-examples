@@ -27,6 +27,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.samples.crane.base.CraneDrawer
 import androidx.compose.samples.crane.base.CraneTabBar
@@ -37,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.statusBarsPadding
+import kotlinx.coroutines.launch
 
 typealias OnExploreItemClicked = (ExploreModel) -> Unit
 
@@ -57,12 +59,44 @@ fun CraneHome(
             CraneDrawer()
         }
     ) {
+        // use the CraneHome composable call scope to launch coroutine, should the composable lifecycle end
+        // the couroutine shall also end.
+        val scope = rememberCoroutineScope()
         CraneHomeContent(
             modifier = modifier,
             onExploreItemClicked = onExploreItemClicked,
-            openDrawer = {
+            openDrawer = { // openDrawer is a normal function, not a composable
                 // TODO Codelab: rememberCoroutineScope step - open the navigation drawer
                 // scaffoldState.drawerState.open()
+                scope.launch {
+                    scaffoldState.drawerState.open()
+                }
+                /*
+                 * LaunchedEffect vs rememberCoroutineScope
+                 * Reference: https://developer.android.com/codelabs/jetpack-compose-advanced-state-side-effects#4
+                 *
+                 * Using LaunchedEffect in this case wasn't possible
+                 * because we needed to trigger the call to create a coroutine in a regular callback
+                 * that was outside of the Composition.
+
+                 * Looking back at the landing screen step that used LaunchedEffect,
+                 * could you use rememberCoroutineScope and call scope.launch { delay(); onTimeout(); }
+                 * instead of using LaunchedEffect?
+                 *
+                 * You could've done that, and it would've seemed to work, but it wouldn't be correct.
+                 * As explained in the Thinking in Compose documentation,
+                 * (https://developer.android.com/jetpack/compose/mental-model#any-order)
+                 * composables can be called by Compose at any moment.
+                 *
+                 * LaunchedEffect guarantees that the side-effect will be executed
+                 * when the call to that composable makes it into the Composition.
+                 * If you use rememberCoroutineScope and scope.launch in the body of the LandingScreen,
+                 * the coroutine will be executed every time LandingScreen is called by Compose
+                 * regardless of whether that call makes it into the Composition or not.
+                 *
+                 * Therefore, you'll waste resources and you won't be executing this side-effect
+                 * in a controlled environment.
+                 */
             }
         )
     }
