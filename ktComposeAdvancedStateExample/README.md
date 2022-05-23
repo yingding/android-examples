@@ -15,6 +15,9 @@ This project codes are updated and modified by the author of this project.
 ### Thinking in Compose
 * https://developer.android.com/jetpack/compose/mental-model#any-order
 
+### Jetpack Compose Pathway
+* https://developer.android.com/courses/pathways/compose
+
 ### Use spotless
 ```
 ./gradlew build
@@ -24,7 +27,6 @@ This project codes are updated and modified by the author of this project.
 Reference:
 * https://github.com/diffplug/spotless/tree/main/plugin-gradle
 * https://github.com/diffplug/spotless
-
 
 
 # (original README content of codelabe) Advanced State in Jetpack Compose Codelab
