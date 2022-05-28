@@ -36,7 +36,7 @@ buildscript {
         gradleVersion = '7.2.1'
         gsonVersion = '2.9.0' //'2.8.6'
         junitVersion = '4.13.2'
-        kotlinVersion = '1.6.20' // '1.6.10'
+        kotlinVersion = '1.6.21' // '1.6.10'
         ktlintVersion = '0.37.2'
         ktxVersion = '1.7.0'
         lifecycleVersion = '2.4.1' // ''2.4.0'
