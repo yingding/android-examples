@@ -97,9 +97,25 @@ dependencies {
 
     // Testing dependencies
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-contrib:$rootProject.espressoVersion"
+    /* work arround for expresso 3.4.0 break the instrument test, to exclude the checker,
+     * https://github.com/android/android-test/issues/861#issuecomment-872582819
+     * you don't need the following line, if you use expression 3.3.0
+     * androidTestImplementation "androidx.test.espresso:espresso-contrib:$rootProject.espressoVersion"
+     *
+     * exclude syntax in Groovy DSL exclude(group: "org.checkerframework", module: "checker")
+     * exclude syntax in Kotlin DSL exclude(group = "org.checkerframework", module = "checker")
+     * Reference: https://stackoverflow.com/questions/69619892/not-able-to-exclude-dependency-gradle/69620829#69620829
+     */
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:$rootProject.espressoVersion")
+    { // in Groovy DSL
+         exclude(group: "org.checkerframework", module: "checker")
+    }
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
     androidTestImplementation "androidx.test.espresso:espresso-intents:$rootProject.espressoVersion"
+    // work arround for expresso 3.4.0 break the instrument test, you don't need the following line, if you use expression 3.3.0
+    // https://github.com/android/android-test/issues/861#issuecomment-872582819
+    // androidTestImplementation('androidx.test.espresso:espresso-accessibility:3.1.2')
+
     androidTestImplementation "androidx.test.ext:junit:$rootProject.testExtJunit"
     androidTestImplementation "androidx.test.uiautomator:uiautomator:$rootProject.uiAutomatorVersion"
     androidTestImplementation "androidx.work:work-testing:$rootProject.workVersion"
