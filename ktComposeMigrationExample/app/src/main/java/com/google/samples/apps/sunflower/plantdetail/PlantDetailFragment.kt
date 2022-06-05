@@ -22,6 +22,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.material.MaterialTheme
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.ShareCompat
 import androidx.core.widget.NestedScrollView
@@ -108,16 +109,46 @@ class PlantDetailFragment : Fragment() {
                 }
             }
 
-            composeView.setContent {
-                // You're in Compose world!
-                MaterialTheme {
-                    PlantDetailDescription(plantDetailViewModel)
+            // execute multiple methods of the composeView
+            /* By default, Compose disposes of the Composition whenever the ComposeView
+             * becomes detached from a window. This is undesirable when ComposeView is used
+             * in fragments for multiple reasons:
+             *
+             * 1. The Composition must follow the fragment's view lifecycle
+             *    for Compose UI View types to save state, and
+             * 2. to keep the Compose UI elements on the screen when transitions,
+             *    or window transitions happen. During transitions, the ComposeView itself
+             *    is still visible even after it is detached from the window.
+             *
+             * You can manually call the AbstractComposeView.disposeComposition method to dispose
+             * of the Composition manually. Alternatively, for disposing Compositions automatically
+             * when they're no longer needed, set a different strategy or
+             * create your own by calling the setViewCompositionStrategy method.
+             *
+             * Use the DisposeOnViewTreeLifecycleDestroyed strategy to dispose of the Composition
+             * when the LifecycleOwner of the fragment is destroyed.
+             *
+             * As PlantDetailFragment has enter and exit transitions (check nav_garden.xml for more info),
+             * and we'll use View types inside Compose later, we need to make sure the ComposeView
+             * uses the DisposeOnViewTreeLifecycleDestroyed strategy. Nonetheless, it's a good practice
+             * to always set this strategy when using ComposeView in fragments.
+             */
+            composeView.apply {
+                // Dispose the Composition when the view's LifecycleOwner is destroyed
+                setViewCompositionStrategy(
+                    ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
+                )
+                setContent {
+                    // You're in Compose world!
+                    MaterialTheme {
+                        PlantDetailDescription(plantDetailViewModel)
+                    }
                 }
             }
+
         }
+
         setHasOptionsMenu(true)
-
-
 
         return binding.root
     }
