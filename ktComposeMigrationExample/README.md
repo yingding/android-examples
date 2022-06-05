@@ -8,7 +8,7 @@ This project codes are updated and modified by the author of this project.
 * `start` folder is the original scaffold module to start coding this codelab
 
 ## Learning progress
-* https://developer.android.com/codelabs/jetpack-compose-migration#5
+* https://developer.android.com/codelabs/jetpack-compose-migration#7
 
 
 # (original README content of codelab) Migrating to Jetpack Compose
