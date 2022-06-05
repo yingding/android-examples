@@ -10,8 +10,18 @@ This project codes are updated and modified by the author of this project.
 ## Learning progress
 * https://developer.android.com/codelabs/jetpack-compose-migration#12
 
-## What is next
-* Compose Pathways: https://developer.android.com/courses/pathways/compose
+### Jetpack Compose Pathway
+* https://developer.android.com/courses/pathways/compose
+
+### Use spotless
+```
+./gradlew build
+./gradlew spotlessApply
+./gradlew build
+```
+Reference:
+* https://github.com/diffplug/spotless/tree/main/plugin-gradle
+* https://github.com/diffplug/spotless
 
 
 # (original README content of codelab) Migrating to Jetpack Compose
