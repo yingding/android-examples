@@ -16,9 +16,9 @@
 
 buildscript {
     ext {
-        compose_version = '1.1.1' // compose need kotlin 1.6.10 and got error with 1.6.20
+        compose_version = '1.2.0-rc01' // compose need kotlin 1.6.10 and got error with 1.6.20
         // https://developer.android.com/jetpack/androidx/releases/compose-kotlin
-        kotlin_version = '1.6.10' // '1.6.10'
+        kotlin_version = '1.6.21' // '1.6.10'
 
         // default application config
         compileSdkVersion = 32
@@ -34,7 +34,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.2'
+        classpath 'com.android.tools.build:gradle:7.2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
