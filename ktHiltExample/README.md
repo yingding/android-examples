@@ -12,7 +12,7 @@ all dependency libs are updated to the latest version by the author of this repo
 
 ## Progress so far
 
-* https://developer.android.com/codelabs/android-hilt?hl=en#0
+* https://developer.android.com/codelabs/android-hilt?hl=en#2
 
 ## Reference:
 * Fundamentals of dependency injection in Android: https://developer.android.com/training/dependency-injection
