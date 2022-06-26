@@ -51,7 +51,7 @@ Reference:
 
 ## Progress so far
 
-* https://developer.android.com/codelabs/android-hilt?hl=en#8
+* https://developer.android.com/codelabs/android-hilt?hl=en#11
 
 ## Reference:
 * Fundamentals of dependency injection in Android: https://developer.android.com/training/dependency-injection
