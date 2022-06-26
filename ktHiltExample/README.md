@@ -37,6 +37,11 @@ The @Inject annotation only works with constructor, if a class has transitive de
 
 * Hilt module example: https://developer.android.com/codelabs/android-hilt?hl=en#6
 
+## Scoping in Hilt
+Reference:
+* Scopin gto Components doc: https://developer.android.com/training/dependency-injection/hilt-android#component-scopes
+* Medium article of scoping in android hilt: https://medium.com/androiddevelopers/scoping-in-android-and-hilt-c2e5222317c0
+
 ## Folders
 * `app` folder is the playground folder of the author learning from this codelab
 * `start` folder is the original scaffold module to start coding this codelab

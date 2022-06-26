@@ -40,6 +40,8 @@ object DatabaseModule {
      *  Each Hilt container comes with a set of default bindings, that can be injected
      *  as dependencies into your custom bindings. Annotate @ApplicationContext to access
      *  the `applicationContext`
+     *
+     *  @Provides creates a static binding of interface
      */
     @Provides
     @Singleton

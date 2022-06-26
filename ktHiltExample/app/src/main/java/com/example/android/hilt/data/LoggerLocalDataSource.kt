@@ -37,9 +37,14 @@ import javax.inject.Singleton
  *
  * The application singleton has a transitive dependency of Interface LogDao,
  * since @Inject annotation only works with constructor. A hilt module will be needed to bind Interface in hilt
+ *
+ * : InterfaceName to implement the interface
+ * and add override to all interface method
+ *
+ * Binding is scope in the module, the scope in the implementation class can be removed
  */
 @Singleton
-class LoggerLocalDataSource @Inject constructor(private val logDao: LogDao) {
+class LoggerLocalDataSource @Inject constructor(private val logDao: LogDao): LoggerDataSource {
 
 
     private val executorService: ExecutorService = Executors.newFixedThreadPool(4)
@@ -47,7 +52,7 @@ class LoggerLocalDataSource @Inject constructor(private val logDao: LogDao) {
         Handler(Looper.getMainLooper())
     }
 
-    fun addLog(msg: String) {
+    override fun addLog(msg: String) {
         executorService.execute {
             logDao.insertAll(
                 Log(
@@ -58,14 +63,14 @@ class LoggerLocalDataSource @Inject constructor(private val logDao: LogDao) {
         }
     }
 
-    fun getAllLogs(callback: (List<Log>) -> Unit) {
+    override fun getAllLogs(callback: (List<Log>) -> Unit) {
         executorService.execute {
             val logs = logDao.getAll()
             mainThreadHandler.post { callback(logs) }
         }
     }
 
-    fun removeLogs() {
+    override fun removeLogs() {
         executorService.execute {
             logDao.nukeTable()
         }
