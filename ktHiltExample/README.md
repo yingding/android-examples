@@ -14,13 +14,36 @@ all dependency libs are updated to the latest version by the author of this repo
 Reference:
 * https://developer.android.com/codelabs/android-hilt?hl=en#2
 
+## Use Hilt in your android project
+1. Annotate Application to create a DI container
+2. Annotate Components such as Activity to create a DI container associated with component lifecycle
+3. Annotate field of the components with @Inject
+4. Bind the Class constructor with @Inject
+5. Scope the Class constructor so that the DI container can scope the injection properly.
+
+Reference:
+* Component scope in Android: https://developer.android.com/training/dependency-injection/hilt-android#component-scopes
+
+## Binding availability in component hierarchy
+If a binding is available in a container, then it is also available in all containers below that one
+in the component hierarchy. Therefore, if an instance of `LoggerLocalDataSource` is available in the application container scoped as @Singleton,
+it will also be available in activity and fragment containers.
+
+Reference:
+* Component Hierarchy: https://developer.android.com/training/dependency-injection/hilt-android#component-hierarchy
+
+## Bind Interface
+The @Inject annotation only works with constructor, if a class has transitive dependencies of interface, a hilt module is needed.
+
+* Hilt module example: https://developer.android.com/codelabs/android-hilt?hl=en#6
+
 ## Folders
 * `app` folder is the playground folder of the author learning from this codelab
 * `start` folder is the original scaffold module to start coding this codelab
 
 ## Progress so far
 
-* https://developer.android.com/codelabs/android-hilt?hl=en#3
+* https://developer.android.com/codelabs/android-hilt?hl=en#6
 
 ## Reference:
 * Fundamentals of dependency injection in Android: https://developer.android.com/training/dependency-injection

@@ -20,11 +20,27 @@ import android.os.Handler
 import android.os.Looper
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Data manager class that handles data manipulation between the database and the UI.
+ *
+ * Annotate the constructor in kotlin with constructor key words, so that hilt will create a
+ * new instance of this class, every time when the hilt container need an instance of this class.
+ *
+ * The information that tells Hilt how to provide instances of different types are also called bindings.
+ *
+ * In additionally, annotate this class to be singleton for the hilt application.
+ * Annotate the scope of this component with @Singleton,
+ * https://developer.android.com/training/dependency-injection/hilt-android#component-scopes
+ *
+ * The application singleton has a transitive dependency of Interface LogDao,
+ * since @Inject annotation only works with constructor. A hilt module will be needed to bind Interface in hilt
  */
-class LoggerLocalDataSource(private val logDao: LogDao) {
+@Singleton
+class LoggerLocalDataSource @Inject constructor(private val logDao: LogDao) {
+
 
     private val executorService: ExecutorService = Executors.newFixedThreadPool(4)
     private val mainThreadHandler by lazy {

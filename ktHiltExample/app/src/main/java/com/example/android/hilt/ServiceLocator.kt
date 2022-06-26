@@ -33,8 +33,10 @@ class ServiceLocator(applicationContext: Context) {
         "logging.db"
     ).build()
 
+    // public field, always return the same instance, with the instance scoped to the ServiceLocator container
     val loggerLocalDataSource = LoggerLocalDataSource(logsDatabase.logDao())
 
+    // function always return a new instance of DateFormatter class
     fun provideDateFormatter() = DateFormatter()
 
     fun provideNavigator(activity: FragmentActivity): AppNavigator {
