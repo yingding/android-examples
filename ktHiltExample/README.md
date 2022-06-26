@@ -43,7 +43,7 @@ The @Inject annotation only works with constructor, if a class has transitive de
 
 ## Progress so far
 
-* https://developer.android.com/codelabs/android-hilt?hl=en#6
+* https://developer.android.com/codelabs/android-hilt?hl=en#7
 
 ## Reference:
 * Fundamentals of dependency injection in Android: https://developer.android.com/training/dependency-injection
