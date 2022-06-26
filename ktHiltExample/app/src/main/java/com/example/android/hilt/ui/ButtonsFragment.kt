@@ -39,7 +39,7 @@ import javax.inject.Inject
  */
 @AndroidEntryPoint
 class ButtonsFragment : Fragment() {
-    @DatabaseLogger
+    @InMemoryLogger
     @Inject lateinit var logger: LoggerDataSource
     @Inject lateinit var navigator: AppNavigator
 

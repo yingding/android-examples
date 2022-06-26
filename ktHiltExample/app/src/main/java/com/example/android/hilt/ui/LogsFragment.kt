@@ -47,7 +47,7 @@ class LogsFragment : Fragment() {
 
     // Fields injected by Hilt cannot be private
     // Under the hood, Hilt will populate the fields in the onAttached() lifecycle method
-    @DatabaseLogger
+    @InMemoryLogger
     @Inject lateinit var logger: LoggerDataSource
     @Inject lateinit var dateFormatter: DateFormatter
 
