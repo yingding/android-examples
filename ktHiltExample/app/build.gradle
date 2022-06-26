@@ -18,8 +18,8 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-parcelize'
-    id 'kotlin-kapt'
-    id 'dagger.hilt.android.plugin'
+    id 'kotlin-kapt'  // hilt also need kotlin kapt plugin
+    id 'dagger.hilt.android.plugin' // use hilt plugin in module build file
 }
 
 android {

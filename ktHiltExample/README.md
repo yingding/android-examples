@@ -6,13 +6,21 @@ This project is following the Google Codelabs example of Android Hilt
 
 all dependency libs are updated to the latest version by the author of this repo at the time of writing.
 
+## Adding Hilt to android project
+* add `hilt plugin` in your app build file
+* use `kotlin kapt` and `hilt` plugin in your module build file
+* add `hilt-android` and `hilt-android-compiler` dependencies in your module build file.
+
+Reference:
+* https://developer.android.com/codelabs/android-hilt?hl=en#2
+
 ## Folders
 * `app` folder is the playground folder of the author learning from this codelab
 * `start` folder is the original scaffold module to start coding this codelab
 
 ## Progress so far
 
-* https://developer.android.com/codelabs/android-hilt?hl=en#2
+* https://developer.android.com/codelabs/android-hilt?hl=en#3
 
 ## Reference:
 * Fundamentals of dependency injection in Android: https://developer.android.com/training/dependency-injection
