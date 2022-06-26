@@ -43,7 +43,7 @@ import javax.inject.Singleton
  *
  * Binding is scope in the module, the scope in the implementation class can be removed
  */
-@Singleton
+// @Singleton
 class LoggerLocalDataSource @Inject constructor(private val logDao: LogDao): LoggerDataSource {
 
 

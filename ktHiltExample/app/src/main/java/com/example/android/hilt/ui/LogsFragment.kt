@@ -30,6 +30,7 @@ import com.example.android.hilt.R
 import com.example.android.hilt.data.Log
 import com.example.android.hilt.data.LoggerDataSource
 import com.example.android.hilt.data.LoggerLocalDataSource
+import com.example.android.hilt.di.DatabaseLogger
 import com.example.android.hilt.di.InMemoryLogger
 import com.example.android.hilt.util.DateFormatter
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,7 +47,7 @@ class LogsFragment : Fragment() {
 
     // Fields injected by Hilt cannot be private
     // Under the hood, Hilt will populate the fields in the onAttached() lifecycle method
-    @InMemoryLogger
+    @DatabaseLogger
     @Inject lateinit var logger: LoggerDataSource
     @Inject lateinit var dateFormatter: DateFormatter
 

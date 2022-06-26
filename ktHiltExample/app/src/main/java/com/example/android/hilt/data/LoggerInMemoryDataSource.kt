@@ -9,7 +9,7 @@ import javax.inject.Inject
  *
  * Binding is scope in the module, the scope in the implementation class can be removed
  */
-@ActivityScoped
+// @ActivityScoped
 class LoggerInMemoryDataSource @Inject constructor() : LoggerDataSource {
     private val logs = LinkedList<Log>()
 

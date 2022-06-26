@@ -16,14 +16,14 @@
 
 buildscript {
     ext {
-        kotlin_version = '1.7.0' // '1.6.21'
+        kotlin_version = '1.6.21' // '1.7.0' '1.6.21'
         hilt_version = '2.42' // '2.40.1'
 
-        compileSdk = 33
-        buildToolsVersion = "33.0.0"
+        compileSdk = 32
+        buildToolsVersion = "32.0.0"
         applicationId = "com.example.android.hilt"
         minSdk = 16
-        targetSdk = 33
+        targetSdk = 32
         versionCode = 1
         versionName = "1.0"
 
