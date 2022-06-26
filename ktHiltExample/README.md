@@ -45,6 +45,9 @@ Reference:
 ## Hilt Instrumented Testing
 * Hilt testing guild: https://developer.android.com/training/dependency-injection/hilt-testing
 
+## Example of using hilt with ContentProvider with EntryPoint
+* https://developer.android.com/codelabs/android-hilt?hl=en#10
+
 ## Folders
 * `app` folder is the playground folder of the author learning from this codelab
 * `start` folder is the original scaffold module to start coding this codelab
