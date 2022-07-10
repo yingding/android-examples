@@ -16,7 +16,7 @@
 
 buildscript {
     ext {
-        kotlin_version = '1.6.21' // '1.7.0' '1.6.21'
+        kotlin_version = '1.7.0' // '1.7.0' '1.6.21'
         hilt_version = '2.42' // '2.40.1'
 
         compileSdk = 32
