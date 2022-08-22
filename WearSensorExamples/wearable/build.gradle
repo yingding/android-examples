@@ -30,6 +30,6 @@ dependencies {
     // implementation 'androidx.legacy:legacy-support-v13:1.0.0' // added
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.wear:wear:1.2.0' // BoxInsetLayout // https://developer.android.com/training/wearables/ui/wear-ui-library
-    implementation 'com.google.android.material:material:1.6.0' // Alert Dialog
+    implementation 'com.google.android.material:material:1.6.1' // Alert Dialog
     compileOnly 'com.google.android.wearable:wearable:2.9.0' // api in wear os platform
 }
