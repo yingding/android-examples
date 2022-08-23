@@ -10,7 +10,7 @@ This project codes are updated and modified by the author of this project.
 * Added app folder for the author of this project to practice
 
 ## Learning progress
-* https://developer.android.com/codelabs/advanced-kotlin-coroutines#2
+* https://developer.android.com/codelabs/advanced-kotlin-coroutines#3
 
 # Reference:
 * Original codelab `Learn advanced coroutines with Kotlin Flow and LiveData` https://developer.android.com/codelabs/advanced-kotlin-coroutines#0
