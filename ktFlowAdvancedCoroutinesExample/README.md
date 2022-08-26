@@ -15,6 +15,21 @@ This project codes are updated and modified by the author of this project.
 ## LiveData
 * Difference between emit() and emitSource(): https://stackoverflow.com/questions/58546944/what-is-the-difference-between-emit-and-emitsource-with-livedata-as-in-real/58950866#58950866
 
+## Retrofit
+
+Refer to the `NetworkService.kt`:
+```
+class NetworkService {
+
+    private val retrofit = Retrofit.Builder()
+        .baseUrl("https://raw.githubusercontent.com/")
+        .client(OkHttpClient())
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
+    ...
+```
+
 Note: \
 LiveData Source means the object from where livedata gets it's value
 
