@@ -43,11 +43,16 @@ class PlantRepository private constructor(
      * Fetch a list of [Plant]s from the database.
      * Returns a LiveData-wrapped List of Plants.
      */
-    // val plants = plantDao.getPlants()
+/*     val plants = plantDao.getPlants()*/
+
     val plants: LiveData<List<Plant>> = liveData {
        val plantsLiveData = plantDao.getPlants()
        val customSortOrder = plantsListSortOrderCache.getOrAwait()
 
+       /* You can emit multiple values from a LiveData by calling the emitSource() function
+        * whenever you want to emit a new value. Each call to emitSource() removes the previously-added source
+        * https://stackoverflow.com/questions/58546944/what-is-the-difference-between-emit-and-emitsource-with-livedata-as-in-real/58950866#58950866
+        */
        emitSource(plantsLiveData.map {
            plantList -> plantList.applySort(customSortOrder)
        })
@@ -57,8 +62,9 @@ class PlantRepository private constructor(
      * Fetch a list of [Plant]s from the database that matches a given [GrowZone].
      * Returns a LiveData-wrapped List of Plants.
      */
-//    fun getPlantsWithGrowZone(growZone: GrowZone) =
-//        plantDao.getPlantsWithGrowZoneNumber(growZone.number)
+/*    fun getPlantsWithGrowZone(growZone: GrowZone) =
+        plantDao.getPlantsWithGrowZoneNumber(growZone.number)*/
+
     fun getPlantsWithGrowZone(growZone: GrowZone) = liveData {
         val plantsGrowZoneLiveData = plantDao.getPlantsWithGrowZoneNumber(growZone.number)
         val customSortOrder = plantsListSortOrderCache.getOrAwait()

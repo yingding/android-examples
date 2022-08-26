@@ -12,5 +12,11 @@ This project codes are updated and modified by the author of this project.
 ## Learning progress
 * https://developer.android.com/codelabs/advanced-kotlin-coroutines#3
 
+## LiveData
+* Difference between emit() and emitSource(): https://stackoverflow.com/questions/58546944/what-is-the-difference-between-emit-and-emitsource-with-livedata-as-in-real/58950866#58950866
+
+Note: \
+LiveData Source means the object from where livedata gets it's value
+
 # Reference:
 * Original codelab `Learn advanced coroutines with Kotlin Flow and LiveData` https://developer.android.com/codelabs/advanced-kotlin-coroutines#0
