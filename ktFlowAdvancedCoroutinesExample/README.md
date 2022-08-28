@@ -10,7 +10,7 @@ This project codes are updated and modified by the author of this project.
 * Added app folder for the author of this project to practice
 
 ## Learning progress
-* https://developer.android.com/codelabs/advanced-kotlin-coroutines#7
+* https://developer.android.com/codelabs/advanced-kotlin-coroutines#8
 
 ## LiveData
 * Difference between emit() and emitSource(): https://stackoverflow.com/questions/58546944/what-is-the-difference-between-emit-and-emitsource-with-livedata-as-in-real/58950866#58950866
@@ -32,6 +32,15 @@ class NetworkService {
 
 Note: \
 LiveData Source means the object from where livedata gets it's value
+
+## Introducing Flow
+
+```
+By default, a Flow will restart from the top every time a terminal operator is applied.
+This is important if the Flow performs expensive work, such as making a network request.
+```
+
+* https://developer.android.com/codelabs/advanced-kotlin-coroutines#7
 
 # Reference:
 * Original codelab `Learn advanced coroutines with Kotlin Flow and LiveData` https://developer.android.com/codelabs/advanced-kotlin-coroutines#0
