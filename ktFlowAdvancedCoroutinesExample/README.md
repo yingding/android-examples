@@ -10,7 +10,7 @@ This project codes are updated and modified by the author of this project.
 * Added app folder for the author of this project to practice
 
 ## Learning progress
-* https://developer.android.com/codelabs/advanced-kotlin-coroutines#6
+* https://developer.android.com/codelabs/advanced-kotlin-coroutines#7
 
 ## LiveData
 * Difference between emit() and emitSource(): https://stackoverflow.com/questions/58546944/what-is-the-difference-between-emit-and-emitsource-with-livedata-as-in-real/58950866#58950866

@@ -16,13 +16,16 @@
 
 package com.example.android.advancedcoroutines
 
+import androidx.annotation.AnyThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.map
+import androidx.lifecycle.switchMap
 import com.example.android.advancedcoroutines.util.CacheOnSuccess
 import com.example.android.advancedcoroutines.utils.ComparablePair
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /**
  * Repository module for handling data operations.
@@ -65,13 +68,27 @@ class PlantRepository private constructor(
 /*    fun getPlantsWithGrowZone(growZone: GrowZone) =
         plantDao.getPlantsWithGrowZoneNumber(growZone.number)*/
 
-    fun getPlantsWithGrowZone(growZone: GrowZone) = liveData {
+/*    fun getPlantsWithGrowZone(growZone: GrowZone) = liveData {
         val plantsGrowZoneLiveData = plantDao.getPlantsWithGrowZoneNumber(growZone.number)
         val customSortOrder = plantsListSortOrderCache.getOrAwait()
         emitSource(plantsGrowZoneLiveData.map { plantList ->
             plantList.applySort(customSortOrder)
         })
-    }
+    }*/
+
+    /**
+     * https://developer.android.com/codelabs/advanced-kotlin-coroutines#6
+     */
+    fun getPlantsWithGrowZone(growZone: GrowZone) =
+        plantDao.getPlantsWithGrowZoneNumber(growZone.number)
+            .switchMap { plantList ->
+                liveData {
+                    val customSortOrder = plantsListSortOrderCache.getOrAwait()
+                    emit(plantList.applyMainSafeSort(customSortOrder))
+                }
+            }
+
+
 
 
     /**
@@ -133,6 +150,19 @@ class PlantRepository private constructor(
             ComparablePair(positionForItem, plant.name)
         }
     }
+
+    // added by me
+    /**
+     * To switch between any dispatcher, coroutines uses withContext. Calling withContext switches to the other
+     * dispatcher just for the lambda then comes back to the dispatcher that called it with the result of that lambda.
+     * The IO dispatcher is optimized for IO work like reading from the network or disk, while the Default dispatcher
+     * is optimized for CPU intensive tasks.
+     */
+    @AnyThread
+    suspend fun List<Plant>.applyMainSafeSort(customSortOrder: List<String>) =
+        withContext(defaultDispatcher) {
+            this@applyMainSafeSort.applySort(customSortOrder)
+        }
 
 
 
