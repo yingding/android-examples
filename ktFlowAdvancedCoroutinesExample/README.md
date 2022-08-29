@@ -15,6 +15,9 @@ This project codes are updated and modified by the author of this project.
 ## LiveData
 * Difference between emit() and emitSource(): https://stackoverflow.com/questions/58546944/what-is-the-difference-between-emit-and-emitsource-with-livedata-as-in-real/58950866#58950866
 
+## Kotlin coroutines Cancellation and timeouts
+* https://kotlinlang.org/docs/cancellation-and-timeouts.html
+
 ## Retrofit
 
 Refer to the `NetworkService.kt`:
@@ -39,8 +42,17 @@ LiveData Source means the object from where livedata gets it's value
 By default, a Flow will restart from the top every time a terminal operator is applied.
 This is important if the Flow performs expensive work, such as making a network request.
 ```
-
 * https://developer.android.com/codelabs/advanced-kotlin-coroutines#7
+```
+Flow supports structured concurrency
+
+Because a flow allows you to consume values only with terminal operators, it can support structured concurrency.
+When the consumer of a flow is cancelled, the entire Flow is cancelled. Due to structured concurrency,
+it is impossible to leak a coroutine from an intermediate step.
+```
+* https://developer.android.com/codelabs/advanced-kotlin-coroutines#8
+
+
 
 # Reference:
 * Original codelab `Learn advanced coroutines with Kotlin Flow and LiveData` https://developer.android.com/codelabs/advanced-kotlin-coroutines#0
