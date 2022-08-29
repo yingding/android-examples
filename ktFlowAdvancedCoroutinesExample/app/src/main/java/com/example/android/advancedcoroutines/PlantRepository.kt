@@ -25,7 +25,14 @@ import com.example.android.advancedcoroutines.util.CacheOnSuccess
 import com.example.android.advancedcoroutines.utils.ComparablePair
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.conflate
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.withContext
 
 /**
@@ -62,8 +69,23 @@ class PlantRepository private constructor(
        })
     }
 
+/*    val plantsFlow: Flow<List<Plant>>
+        get() = plantDao.getPlantsFlow()*/
+
+    /**
+     * When the result of customSortFlow is availabe,
+     * this will combine it with the latest value from the flow above.
+     * Thus, as ong as both `plants` and `sortOrder` are have an initial value
+     * (their flow has emitted at least one value), any change to either `plants` or `sortOrder`
+     * will call `plants.applySort(sortOrder)`
+     */
     val plantsFlow: Flow<List<Plant>>
         get() = plantDao.getPlantsFlow()
+            .combine(customSortFlow) {plants, sortOrder ->
+                plants.applySort(sortOrder) // this will run on the collecting dispatcher (in our case Dispatchers.Main)
+            }
+            .flowOn(defaultDispatcher) // it is important to be aware of the buffer when using flowOn with large objects such as Room
+            .conflate()
 
     /**
      * Fetch a list of [Plant]s from the database that matches a given [GrowZone].
@@ -145,6 +167,19 @@ class PlantRepository private constructor(
     private var plantsListSortOrderCache =
         CacheOnSuccess(onErrorFallback = { listOf<String>() }) {
             plantService.customPlantSortOrder()
+        }
+
+    /* private val customSortFlow = flow { emit(plantsListSortOrderCache.getOrAwait()) }
+     * declarative API style https://developer.android.com/codelabs/advanced-kotlin-coroutines#10
+     *
+     * You can use onStart to run suspending code before a flow runs. It can be even emit extra values
+     * into the flow, so you could use it to emit a Loading state on a network request flow
+     */
+    // added by me
+    private val customSortFlow = plantsListSortOrderCache::getOrAwait.asFlow()
+        .onStart {
+            emit(listOf())
+            delay(1500)
         }
 
     // added by me

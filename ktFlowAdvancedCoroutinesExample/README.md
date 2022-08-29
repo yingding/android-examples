@@ -10,7 +10,7 @@ This project codes are updated and modified by the author of this project.
 * Added app folder for the author of this project to practice
 
 ## Learning progress
-* https://developer.android.com/codelabs/advanced-kotlin-coroutines#10
+* https://developer.android.com/codelabs/advanced-kotlin-coroutines#11
 
 ## LiveData
 * Difference between emit() and emitSource(): https://stackoverflow.com/questions/58546944/what-is-the-difference-between-emit-and-emitsource-with-livedata-as-in-real/58950866#58950866
@@ -21,7 +21,7 @@ This project codes are updated and modified by the author of this project.
 ## Declarative API
 ```console
 Declarative is an API style that means describing what your program should do instead of how to do it.
-ONe of the more commonly known declarative languages is SQL, which allows developers to express
+One of the more commonly known declarative languages is SQL, which allows developers to express
 what they would like the database to query instead of how to perform the query.
 ```
 
