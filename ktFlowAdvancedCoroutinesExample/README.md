@@ -18,6 +18,13 @@ This project codes are updated and modified by the author of this project.
 ## Kotlin coroutines Cancellation and timeouts
 * https://kotlinlang.org/docs/cancellation-and-timeouts.html
 
+## Declarative API
+```console
+Declarative is an API style that means describing what your program should do instead of how to do it.
+ONe of the more commonly known declarative languages is SQL, which allows developers to express
+what they would like the database to query instead of how to perform the query.
+```
+
 ## Retrofit
 
 Refer to the `NetworkService.kt`:
