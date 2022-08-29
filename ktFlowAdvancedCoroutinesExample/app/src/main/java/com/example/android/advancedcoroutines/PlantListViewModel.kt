@@ -23,6 +23,8 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 
 /**
@@ -74,7 +76,30 @@ class PlantListViewModel internal constructor(
     // The asLiveData operator converts a Flow into a LiveData with a configurable timeout
     // Just like the liveData builder, the timeout will help the Flow survive restart.
     // If another screen observes before the timeout, the Flow won't be cancelled.
-    val plantsUsingFlow: LiveData<List<Plant>> = plantRepository.plantsFlow.asLiveData()
+    // val plantsUsingFlow: LiveData<List<Plant>> = plantRepository.plantsFlow.asLiveData()
+
+    /* MutableStateFlow is a special kind of Flow value holder that holds only the latest value
+     * it was given. It's a thread-safe concurrency primitive, so you can write to it from multiple
+     * threads at the same time (and whichever is considered "last" will win)
+     *
+     * StateFlow is different from a regular flow created using, for example, the flow{} builder.
+     * A StateFlow is created with an initial value and keeps its state even without being collected
+     * and between subsequent collections.
+     *
+     * You can use the MutableStateFlow interface to change the value (state) of a StateFlow.
+     *
+     * You will often find that flows that behave like StateFlow are called hot, as opposed to regular,
+     * cold flows which only execute when they're collected.
+     */
+    private val growZoneFlow = MutableStateFlow<GrowZone>(NoGrowZone)
+
+    val plantsUsingFlow: LiveData<List<Plant>> = growZoneFlow.flatMapLatest { growZone ->
+        if (growZone == NoGrowZone) {
+            plantRepository.plantsFlow
+        } else {
+            plantRepository.getPlantsWithGrowZoneFlow(growZone)
+        }
+    }.asLiveData()
 
     init {
         // When creating a new ViewModel, clear the grow zone and perform any related updates
@@ -92,9 +117,11 @@ class PlantListViewModel internal constructor(
      */
     fun setGrowZoneNumber(num: Int) {
         growZone.value = GrowZone(num)
+        growZoneFlow.value = GrowZone(num)
 
         // initial code version, will move during flow rewrite
-        launchDataLoad { plantRepository.tryUpdateRecentPlantsCache() }
+        // launchDataLoad { plantRepository.tryUpdateRecentPlantsCache() }
+        launchDataLoad { plantRepository.tryUpdateRecentPlantsForGrowZoneCache(GrowZone(num)) }
     }
 
     /**
@@ -105,6 +132,7 @@ class PlantListViewModel internal constructor(
      */
     fun clearGrowZoneNumber() {
         growZone.value = NoGrowZone
+        growZoneFlow.value = NoGrowZone
 
         // initial code version, will move during flow rewrite
         launchDataLoad { plantRepository.tryUpdateRecentPlantsCache() }
