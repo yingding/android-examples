@@ -28,6 +28,9 @@ Reference:
 * https://github.com/diffplug/spotless/tree/main/plugin-gradle
 * https://github.com/diffplug/spotless
 
+### Compose References
+* Lifecycle of compose: https://developer.android.com/jetpack/compose/lifecycle
+* State of compose: https://developer.android.com/jetpack/compose/state
 
 # (original README content of codelabe) Advanced State in Jetpack Compose Codelab
 
