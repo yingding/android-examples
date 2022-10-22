@@ -1,0 +1,73 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace rootProject.applicationId
+    compileSdk rootProject.compileSdk
+
+    defaultConfig {
+        applicationId rootProject.applicationId
+        minSdk rootProject.minSdk
+        targetSdk rootProject.targetSdk
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    /* compose buildFeatures and composeOptions */
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        // only activate this when you added androidx.compose.compiler
+        kotlinCompilerExtensionVersion "$compose_compiler_version"
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+
+    implementation "androidx.core:core-ktx:$ktx_core_version"
+    implementation "androidx.activity:activity-compose:$activity_compose_version"
+    implementation "com.google.android.material:material:$material_version"
+
+    implementation "androidx.appcompat:appcompat:1.5.1"
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    // compose
+    implementation "androidx.compose.material:material:$compose_version"
+    implementation "androidx.compose.ui:ui:$compose_version"
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
+    implementation "androidx.compose.foundation:foundation:$compose_version"
+    // accompanist pager
+    // https://google.github.io/accompanist/pager/
+    // implementation "com.google.accompanist:accompanist:$accompanist_version"
+    implementation "com.google.accompanist:accompanist-pager:$accompanist_version"
+    // If using indicators, also depend on
+    implementation "com.google.accompanist:accompanist-pager-indicators:$accompanist_version"
+    // compiler
+    implementation "androidx.compose.compiler:compiler:$compose_compiler_version"
+
+    // debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}
