@@ -1,0 +1,6 @@
+saved_model/
+saved_model/**
+# ignore the tflite flat buffer file
+*.tflite
+# mac file 
+.DS_Store
