@@ -144,8 +144,6 @@ fun PageUI(page: Page) {
     }
 }
 
-
-// @OptIn(ExperimentalFoundationApi::class)
 @Preview(
     device = Devices.NEXUS_5X,
     showSystemUi = true,
