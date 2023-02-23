@@ -4,9 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerDefaults
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.OutlinedButton
@@ -19,11 +24,14 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ktcomposepagerexample.main.Page
 import com.example.ktcomposepagerexample.main.onboardPages
-import com.google.accompanist.pager.*
+// import com.google.accompanist.pager.ExperimentalPagerApi
+// import com.google.accompanist.pager.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -32,7 +40,8 @@ class MainActivity : ComponentActivity() {
     // https://stackoverflow.com/a/59060691
     private val scope = CoroutineScope(Dispatchers.Main)
 
-    @OptIn(ExperimentalPagerApi::class)
+    // @OptIn(ExperimentalPagerApi::class)
+    @OptIn(ExperimentalFoundationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_main)
@@ -46,14 +55,14 @@ class MainActivity : ComponentActivity() {
                             pagerState.scrollToPage(pagerState.currentPage + 1, 0f)
                         }
                     }
-
                 }
             )
         }
     }
 }
 
-@OptIn(ExperimentalPagerApi::class)
+// @OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnboardingUI(
     onGettingStartedClick:() -> Unit,
@@ -61,34 +70,36 @@ fun OnboardingUI(
 ) {
     val pagerState = rememberPagerState(initialPage = 0)
 
-    Column() {
+    Column {
         Text(
             text = "Skip",
             fontSize = 24.sp,
             textAlign = TextAlign.End,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(all=8.dp)
+                .padding(all = 8.dp)
                 .clickable { onSkipClicked(pagerState) }
         )
 
         HorizontalPager(
-            count = 3,
+            pageCount = 3,
             state = pagerState,
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f)
+                .weight(1f),
+            userScrollEnabled = true,
+            flingBehavior = PagerDefaults.flingBehavior(state = pagerState)
         ) { page ->
             PageUI(page = onboardPages[page])
         }
 
-        HorizontalPagerIndicator(
-            pagerState = pagerState,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(16.dp),
-            activeColor = colorResource(R.color.purple_500)
-        )
+//        HorizontalPagerIndicator(
+//            pagerState = pagerState,
+//            modifier = Modifier
+//                .align(Alignment.CenterHorizontally)
+//                .padding(16.dp),
+//            activeColor = colorResource(R.color.purple_500)
+//        )
 
         AnimatedVisibility(visible = pagerState.currentPage == 2) {
             OutlinedButton(
@@ -131,4 +142,27 @@ fun PageUI(page: Page) {
         Spacer(modifier = Modifier.height(12.dp))
 
     }
+}
+
+
+// @OptIn(ExperimentalFoundationApi::class)
+@Preview(
+    device = Devices.NEXUS_5X,
+    showSystemUi = true,
+    showBackground = true
+)
+@Composable
+@OptIn(ExperimentalFoundationApi::class)
+fun OnboardingUIPreview() {
+    val scope = CoroutineScope(Dispatchers.Main)
+    OnboardingUI(
+        onGettingStartedClick = { /*TODO*/ },
+        onSkipClicked = { pagerState ->
+            if (pagerState.currentPage < 3) {
+                scope.launch {
+                    pagerState.scrollToPage(pagerState.currentPage + 1, 0f)
+                }
+            }
+        }
+    )
 }

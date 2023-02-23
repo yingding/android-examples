@@ -31,11 +31,15 @@ android {
 
     composeOptions {
         // only activate this when you added androidx.compose.compiler
-        kotlinCompilerExtensionVersion "$compose_compiler_version"
+        kotlinCompilerExtensionVersion = "$compose_compiler_version"
     }
+
 
     kotlinOptions {
         jvmTarget = '1.8'
+        // freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
+        // freeCompilerArgs += "-opt-in=androidx.compose.foundation.RequiresOptIn"
+        freeCompilerArgs += "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi"
     }
 
     compileOptions {
@@ -50,24 +54,31 @@ dependencies {
     implementation "androidx.activity:activity-compose:$activity_compose_version"
     implementation "com.google.android.material:material:$material_version"
 
-    implementation "androidx.appcompat:appcompat:1.5.1"
+    implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     // compose
     implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.compose.ui:ui:$compose_version"
-    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
+    implementation "androidx.compose.ui:ui-tooling:$compose_version"
     implementation "androidx.compose.foundation:foundation:$compose_version"
+
+    // compose preview
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+    // production release build dependency for preview
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
     // accompanist pager
     // https://google.github.io/accompanist/pager/
     // implementation "com.google.accompanist:accompanist:$accompanist_version"
-    implementation "com.google.accompanist:accompanist-pager:$accompanist_version"
+
+    // implementation "com.google.accompanist:accompanist-pager:$accompanist_version"
     // If using indicators, also depend on
-    implementation "com.google.accompanist:accompanist-pager-indicators:$accompanist_version"
+    // implementation "com.google.accompanist:accompanist-pager-indicators:$accompanist_version"
+
     // compiler
     implementation "androidx.compose.compiler:compiler:$compose_compiler_version"
 
     // debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
