@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             OnboardingUI(
-                onGettingStartedClick = { /*TODO*/ },
+                onGettingStartedClick = { /* Do nothing */ },
                 onSkipClicked = { pagerState ->
                     if (pagerState.currentPage < 3) {
                         scope.launch {
@@ -151,7 +151,7 @@ fun PageUI(page: Page) {
 fun OnboardingUIPreview() {
     val scope = CoroutineScope(Dispatchers.Main)
     OnboardingUI(
-        onGettingStartedClick = { /*TODO*/ },
+        onGettingStartedClick = { /* Do nothing */ },
         onSkipClicked = { pagerState ->
             if (pagerState.currentPage < 3) {
                 scope.launch {
