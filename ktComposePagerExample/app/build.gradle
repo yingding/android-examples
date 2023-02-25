@@ -72,7 +72,7 @@ dependencies {
 
     // implementation "com.google.accompanist:accompanist-pager:$accompanist_version"
     // If using indicators, also depend on
-    // implementation "com.google.accompanist:accompanist-pager-indicators:$accompanist_version"
+    implementation "com.google.accompanist:accompanist-pager-indicators:$accompanist_version"
 
     // compiler
     implementation "androidx.compose.compiler:compiler:$compose_compiler_version"

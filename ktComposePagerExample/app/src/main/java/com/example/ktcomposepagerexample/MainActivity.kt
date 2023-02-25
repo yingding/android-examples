@@ -30,6 +30,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ktcomposepagerexample.main.Page
 import com.example.ktcomposepagerexample.main.onboardPages
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPagerIndicator
 // import com.google.accompanist.pager.ExperimentalPagerApi
 // import com.google.accompanist.pager.*
 import kotlinx.coroutines.CoroutineScope
@@ -62,14 +64,14 @@ class MainActivity : ComponentActivity() {
 }
 
 // @OptIn(ExperimentalPagerApi::class)
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalPagerApi::class)
 @Composable
 fun OnboardingUI(
     onGettingStartedClick:() -> Unit,
     onSkipClicked: (PagerState) -> Unit
 ) {
     val pagerState = rememberPagerState(initialPage = 0)
-
+    val pageCount = 3
     Column {
         Text(
             text = "Skip",
@@ -82,7 +84,7 @@ fun OnboardingUI(
         )
 
         HorizontalPager(
-            pageCount = 3,
+            pageCount = pageCount,
             state = pagerState,
             modifier = Modifier
                 .fillMaxWidth()
@@ -93,13 +95,14 @@ fun OnboardingUI(
             PageUI(page = onboardPages[page])
         }
 
-//        HorizontalPagerIndicator(
-//            pagerState = pagerState,
-//            modifier = Modifier
-//                .align(Alignment.CenterHorizontally)
-//                .padding(16.dp),
-//            activeColor = colorResource(R.color.purple_500)
-//        )
+        HorizontalPagerIndicator(
+            pagerState = pagerState,
+            pageCount = pageCount,
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(16.dp),
+            activeColor = colorResource(R.color.purple_500)
+        )
 
         AnimatedVisibility(visible = pagerState.currentPage == 2) {
             OutlinedButton(
