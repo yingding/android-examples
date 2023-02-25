@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -32,8 +31,6 @@ import com.example.ktcomposepagerexample.main.Page
 import com.example.ktcomposepagerexample.main.onboardPages
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPagerIndicator
-// import com.google.accompanist.pager.ExperimentalPagerApi
-// import com.google.accompanist.pager.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -42,8 +39,6 @@ class MainActivity : ComponentActivity() {
     // https://stackoverflow.com/a/59060691
     private val scope = CoroutineScope(Dispatchers.Main)
 
-    // @OptIn(ExperimentalPagerApi::class)
-    @OptIn(ExperimentalFoundationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_main)
@@ -63,8 +58,8 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-// @OptIn(ExperimentalPagerApi::class)
-@OptIn(ExperimentalFoundationApi::class, ExperimentalPagerApi::class)
+
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun OnboardingUI(
     onGettingStartedClick:() -> Unit,
@@ -153,7 +148,6 @@ fun PageUI(page: Page) {
     showBackground = true
 )
 @Composable
-@OptIn(ExperimentalFoundationApi::class)
 fun OnboardingUIPreview() {
     val scope = CoroutineScope(Dispatchers.Main)
     OnboardingUI(
