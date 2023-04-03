@@ -8,8 +8,8 @@ buildscript {
         material_version = '1.8.0'
         // compose
         activity_compose_version = '1.6.1'
-        compose_version = '1.4.0-beta02' // '1.3.3'
-        compose_compiler_version = '1.4.3' // "1.3.2"
+        compose_version = '1.4.0' // '1.3.3'
+        compose_compiler_version = '1.4.4' // "1.3.2"
         // https://github.com/google/accompanist
         accompanist_version = "0.29.1-alpha" //"0.28.0" // works with Compose UI 1.2.x, pager
 
@@ -24,8 +24,8 @@ buildscript {
 }
 
 plugins {
-    id 'com.android.application' version '7.4.1' apply false
-    id 'com.android.library' version '7.4.1' apply false
+    id 'com.android.application' version '7.4.2' apply false
+    id 'com.android.library' version '7.4.2' apply false
     id 'org.jetbrains.kotlin.android' version "$kotlin_version" apply false
 }
 
